@@ -1,0 +1,6 @@
+@BrightFocus_HostAddress = http://localhost:5180
+
+GET {{BrightFocus_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
