@@ -1,0 +1,11 @@
+global using System;
+global using Muonroi.BuildingBlock.External.Entity;
+global using System.Threading.Tasks;
+global using System.Linq;
+global using System.ComponentModel.DataAnnotations;
+global using System.ComponentModel.DataAnnotations.Schema;
+global using Microsoft.EntityFrameworkCore;
+global using System.Text;
+global using System.Collections.Generic;
+global using BrightFocus.Core.Enums;
+global using System.Linq.Expressions;

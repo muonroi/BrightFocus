@@ -1,21 +1,58 @@
-var builder = WebApplication.CreateBuilder(args);
 
-builder.AddServiceDefaults();
 
-// Add services to the container.
 
-builder.Services.AddControllers();
 
-var app = builder.Build();
 
-app.MapDefaultEndpoints();
 
-// Configure the HTTP request pipeline.
 
-app.UseHttpsRedirection();
 
-app.UseAuthorization();
 
-app.MapControllers();
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+Assembly assembly = Assembly.GetExecutingAssembly();
+ConfigurationManager configuration = builder.Configuration;
 
-app.Run();
+builder.AddAppConfigurations();
+builder.AddAutofacConfiguration();
+builder.Host.UseSerilog((context, services, loggerConfiguration) =>
+{
+    MSerilogAction.Configure(context, services, loggerConfiguration, false);
+});
+
+Log.Information("Starting {ApplicationName} API up", builder.Environment.ApplicationName);
+
+try
+{
+    IServiceCollection services = builder.Services;
+
+    // Register services
+    _ = services.AddApplication(assembly);
+    _ = services.AddInfrastructure<Program>(configuration);
+    _ = services.SwaggerConfig(builder.Environment.ApplicationName);
+    _ = services.AddScopeServices(typeof(BrightFocusDbContext).Assembly);
+    _ = services.AddValidateBearerToken<MTokenInfo>(configuration);
+    _ = services.AddDbContextConfigure<BrightFocusDbContext>(configuration);
+    _ = services.AddCors(configuration);
+    services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+
+    WebApplication app = builder.Build();
+    _ = app.UseCors("MAllowDomains");
+    _ = app.UseDefaultMiddleware();
+    _ = app.AddLocalization(assembly);
+    _ = app.UseRouting();
+    _ = app.UseAuthentication();
+    _ = app.UseAuthorization();
+    _ = app.ConfigureEndpoints();
+    _ = app.MigrateDatabase<BrightFocusDbContext>();
+
+    await app.RunAsync();
+}
+catch (Exception ex)
+{
+    Log.Fatal(ex, "Unhandled exception: {Message}", ex.Message);
+}
+finally
+{
+    Log.Information("Shut down {ApplicationName} complete", builder.Environment.ApplicationName);
+    await Log.CloseAndFlushAsync();
+}

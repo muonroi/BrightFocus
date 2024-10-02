@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: brightfocus
+    environment:
+      MYSQL_ROOT_PASSWORD: 0967442142
+      MYSQL_DATABASE: brightfocus
+    ports:
+      - "3307:3306"
+    volumes:
+      - bright_data:/var/lib/mysql
+    networks:
+      - brightfocus_network
+
+volumes:
+  bright_data:
+
+networks:
+  brightfocus_network:

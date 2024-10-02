@@ -1,0 +1,16 @@
+global using BrightFocus.Core.Domain.Inventory;
+global using BrightFocus.Core.Domain.Tasks;
+global using BrightFocus.Core.SeedWorks;
+global using BrightFocus.Data.Interfaces;
+global using BrightFocus.Data.Persistance;
+global using MediatR;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.EntityFrameworkCore.Metadata;
+global using Microsoft.EntityFrameworkCore.Migrations;
+global using Muonroi.BuildingBlock.External;
+global using Muonroi.BuildingBlock.External.Default;
+global using Muonroi.BuildingBlock.External.Entity;
+global using Muonroi.BuildingBlock.External.Interfaces;
+global using Muonroi.BuildingBlock.External.SeedWorks;
+global using System;
+global using System.Threading.Tasks;
