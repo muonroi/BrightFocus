@@ -1,7 +1,10 @@
-﻿namespace BrightFocus.Core.SeedWorks
+﻿
+
+namespace BrightFocus.Core.SeedWorks
 {
     public interface IUnitOfWork
     {
+        ITaskListRepository TaskListRepository { get; }
         Task<int> CompleteAsync();
     }
 }

@@ -7,6 +7,8 @@
 
 
 
+
+
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 Assembly assembly = Assembly.GetExecutingAssembly();
 ConfigurationManager configuration = builder.Configuration;
@@ -33,6 +35,8 @@ try
     _ = services.AddDbContextConfigure<BrightFocusDbContext>(configuration);
     _ = services.AddCors(configuration);
     services.AddScoped<IUnitOfWork, UnitOfWork>();
+    services.AddAutoMapper(typeof(TaskInListDto));
+
 
 
     WebApplication app = builder.Build();

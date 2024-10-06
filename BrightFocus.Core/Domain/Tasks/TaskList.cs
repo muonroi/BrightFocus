@@ -3,13 +3,13 @@
 namespace BrightFocus.Core.Domain.Tasks
 {
     [Table("TaskList")]
-    [Index(nameof(TaskName), additionalPropertyNames: nameof(ProductName))]
+    [Index(nameof(Name), additionalPropertyNames: nameof(ProductName))]
     public class TaskList : MEntity
     {
         [Required]
         [MaxLength(255)]
         [Column(TypeName = "nvarchar")]
-        public string TaskName { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
 
         [MaxLength(255)]
         [Required]
