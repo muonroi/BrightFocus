@@ -12,3 +12,8 @@ global using System.ComponentModel.DataAnnotations;
 global using System.ComponentModel.DataAnnotations.Schema;
 global using System.Threading.Tasks;
 global using Muonroi.BuildingBlock.External.Extensions;
+global using System.Linq;
+global using System.Text;
+global using System.Collections.Generic;
+global using Elastic.CommonSchema;
+global using BrightFocus.Core.Domain.Inventory;

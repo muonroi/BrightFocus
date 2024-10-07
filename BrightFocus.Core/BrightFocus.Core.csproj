@@ -9,6 +9,17 @@
     <PackageReference Include="Muonroi.BuildingBlock" Version="1.2.1" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Models\Inventory\Chemicals\Request\" />
+    <Folder Include="Models\Inventory\Chemicals\Response\" />
+    <Folder Include="Models\Inventory\Fibers\Response\" />
+    <Folder Include="Models\Inventory\Fibers\Request\" />
+    <Folder Include="Models\Inventory\FinishProduct\Request\" />
+    <Folder Include="Models\Inventory\FinishProduct\Response\" />
+    <Folder Include="Models\Inventory\PaperTube\Request\" />
+    <Folder Include="Models\Inventory\PaperTube\Response\" />
+    <Folder Include="Models\Inventory\WasteProduct\Request\" />
+    <Folder Include="Models\Inventory\WasteProduct\Response\" />
+    <Folder Include="Models\TaskLists\Response\" />
     <Folder Include="Models\TaskLists\Response\" />
   </ItemGroup>
 </Project>
