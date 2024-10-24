@@ -61,7 +61,7 @@ namespace BrightFocus.Controllers
             {
                 Fiber? fiber = await unitOfWork.FibersRepository.GetByGuidAsync(id);
                 if (fiber == null)
-                {
+{
                     return NotFound();
                 }
                 _ = await unitOfWork.FibersRepository.DeleteAsync(fiber);

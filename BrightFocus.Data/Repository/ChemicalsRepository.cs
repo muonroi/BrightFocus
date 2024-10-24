@@ -2,8 +2,8 @@
 
 namespace BrightFocus.Data.Repository
 {
-    public class ChemicalsRepository(BrightFocusDbContext dbContext, MAuthenticateInfoContext authContext, IMapper mapper) : MRepository<Chemicals>(dbContext, authContext), IChemicalsRepository
-    {
+public class ChemicalsRepository(BrightFocusDbContext dbContext, MAuthenticateInfoContext authContext, IMapper mapper) : MRepository<Chemicals>(dbContext, authContext), IChemicalsRepository
+{
         public async Task<MResponse<MPagedResult<ChemicalsInListDto>>> GetChemicalListPagingAsync(int pageIndex, int pageSize, string keyword)
         {
             MResponse<MPagedResult<ChemicalsInListDto>> result = new();

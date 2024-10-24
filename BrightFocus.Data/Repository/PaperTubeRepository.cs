@@ -2,8 +2,8 @@
 
 namespace BrightFocus.Data.Repository
 {
-    public class PaperTubeRepository(BrightFocusDbContext dbContext, MAuthenticateInfoContext authContext, IMapper mapper) : MRepository<PaperTube>(dbContext, authContext), IPaperTubeRepository
-    {
+public class PaperTubeRepository(BrightFocusDbContext dbContext, MAuthenticateInfoContext authContext, IMapper mapper) : MRepository<PaperTube>(dbContext, authContext), IPaperTubeRepository
+{
         public async Task<MResponse<MPagedResult<PaperTubeInListDto>>> GetPaperTubeListPagingAsync(int pageIndex, int pageSize, string keyword)
         {
             MResponse<MPagedResult<PaperTubeInListDto>> result = new();

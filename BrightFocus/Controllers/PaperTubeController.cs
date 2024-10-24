@@ -61,7 +61,7 @@ namespace BrightFocus.Controllers
             {
                 PaperTube? paperTube = await unitOfWork.PaperTubeRepository.GetByGuidAsync(id);
                 if (paperTube == null)
-                {
+{
                     return NotFound();
                 }
                 _ = await unitOfWork.PaperTubeRepository.DeleteAsync(paperTube);

@@ -6,17 +6,17 @@ namespace BrightFocus.Core.Models.TaskLists.Models
     {
         public string Name { get; set; } = string.Empty;
 
-        public string ProductName { get; set; } = string.Empty;
+    public string ProductName { get; set; } = string.Empty;
 
         public int Quantity { get; set; }
 
-        public string Description { get; set; } = string.Empty;
+    public string Description { get; set; } = string.Empty;
 
-        public DateTime DeadlineDate { get; set; }
+    public DateTime DeadlineDate { get; set; }
 
         public string Note { get; set; } = string.Empty;
 
-        public TaskType TaskType { get; set; }
+    public TaskType TaskType { get; set; }
 
         public class AutoMapperProfiles : Profile
         {

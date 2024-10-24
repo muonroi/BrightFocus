@@ -61,7 +61,7 @@ namespace BrightFocus.Controllers
             {
                 Wood? wood = await unitOfWork.WoodsRepository.GetByGuidAsync(id);
                 if (wood == null)
-                {
+{
                     return NotFound();
                 }
                 _ = await unitOfWork.WoodsRepository.DeleteAsync(wood);

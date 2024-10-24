@@ -63,7 +63,7 @@ namespace BrightFocus.Controllers
             {
                 FinishProduct? finishProduct = await unitOfWork.FinishedRepository.GetByGuidAsync(id);
                 if (finishProduct == null)
-                {
+{
                     return NotFound();
                 }
                 _ = await unitOfWork.FinishedRepository.DeleteAsync(finishProduct);
