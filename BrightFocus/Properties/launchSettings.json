@@ -10,10 +10,10 @@
       "dotnetRunMessages": true,
       "applicationUrl": "http://localhost:5180"
     },
-    "https": {
+    "BrightFocus": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "weatherforecast",
+      "launchUrl": "brightfocus",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

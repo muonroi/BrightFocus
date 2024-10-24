@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\Chemicals\Response\" />
+    <Folder Include="Models\Fabrics\Response\" />
+    <Folder Include="Models\Fibers\Response\" />
+    <Folder Include="Models\Finished\Response\" />
+    <Folder Include="Models\PaperTube\Response\" />
+    <Folder Include="Models\Wastes\Response\" />
+    <Folder Include="Models\TaskLists\Response\" />
+    <Folder Include="Models\Woods\Response\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Extensions\MuonroiBuildingBlock\Muonroi.BuildingBlock.csproj" />
+  </ItemGroup>
+</Project>
