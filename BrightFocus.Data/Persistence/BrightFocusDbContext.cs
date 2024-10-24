@@ -3,13 +3,13 @@
 
 
 
-namespace BrightFocus.Data.Persistance
+namespace BrightFocus.Data.Persistence
 {
     public class BrightFocusDbContext : MDbContext
     {
         public DbSet<TaskList> TaskLists { get; set; }
         public DbSet<Wood> Woods { get; set; }
-        public DbSet<WasteProduct> WasteProducts { get; set; }
+        public DbSet<WastesProduct> WasteProducts { get; set; }
         public DbSet<Chemicals> Chemicals { get; set; }
         public DbSet<Fiber> Fibers { get; set; }
         public DbSet<PaperTube> PaperTubes { get; set; }

@@ -1,3 +1,9 @@
 ﻿{
-  "SYS00": "Đã xảy ra ngoại lệ chưa được xử lý trong khi xử lý yêu cầu."
+  "UnhandledException": "Đã xảy ra ngoại lệ chưa được xử lý trong khi xử lý yêu cầu",
+  "InvalidCredentials": "Tài khoản hoặc mật khẩu không chính xác",
+  "PermissionNotFound": "Không tìm thấy quyền của người dùng này",
+  "RoleAlreadyExists": "Vai trò đã tồn tại.",
+  "RoleNotFound": "Không tìm thấy vai trò.",
+  "UserNotFound": "Không tìm thấy người dùng.",
+  "UserHasNoPermissions": "Người dùng không có quyền."
 }

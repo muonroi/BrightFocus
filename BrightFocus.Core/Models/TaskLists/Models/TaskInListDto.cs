@@ -2,21 +2,17 @@
 
 namespace BrightFocus.Core.Models.TaskLists.Models
 {
-    public class TaskInListDto
+    public class TaskInListDto : BaseModel
     {
-        public Guid EntityId { get; set; }
-
         public string Name { get; set; } = string.Empty;
 
         public string ProductName { get; set; } = string.Empty;
 
-        public int Quatity { get; set; }
+        public int Quantity { get; set; }
 
         public string Description { get; set; } = string.Empty;
 
         public DateTime DeadlineDate { get; set; }
-
-        public DateTime CreateDateTS { get; set; }
 
         public string Note { get; set; } = string.Empty;
 
@@ -26,8 +22,8 @@ namespace BrightFocus.Core.Models.TaskLists.Models
         {
             public AutoMapperProfiles()
             {
-                CreateMap<TaskList, TaskInListDto>().ForMember(dest => dest.CreateDateTS, opt => opt.MapFrom(src => src.CreatedDateTS.TimeStampToDateTime()));
-                CreateMap<TaskList, TaskListDto>().ForMember(dest => dest.CreateDateTS, opt => opt.MapFrom(src => src.CreatedDateTS.TimeStampToDateTime()));
+                _ = CreateMap<TaskList, TaskInListDto>();
+                _ = CreateMap<TaskList, TaskListDto>();
             }
         }
     }

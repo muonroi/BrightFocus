@@ -27,7 +27,7 @@ namespace BrightFocus.Controllers
         [HttpGet("paging")]
         public async Task<IActionResult> GetTaskListPaging([FromQuery] string keyword, int pageIndex, int pageSize)
         {
-            MPagedResult<TaskInListDto> result = await unitOfWork.TaskListRepository.GetTaskListPagingAsync(pageIndex, pageSize, keyword);
+            MResponse<MPagedResult<TaskInListDto>> result = await unitOfWork.TaskListRepository.GetTaskListPagingAsync(pageIndex, pageSize, keyword);
             return Ok(result);
         }
 
@@ -36,7 +36,7 @@ namespace BrightFocus.Controllers
         {
             TaskList task = mapper.Map<CreateOrUpdateTaskRequest, TaskList>(request);
 
-            unitOfWork.TaskListRepository.Add(task);
+            _ = unitOfWork.TaskListRepository.Add(task);
 
             int result = await unitOfWork.CompleteAsync();
             return result > 0 ? Ok() : BadRequest();
@@ -50,7 +50,7 @@ namespace BrightFocus.Controllers
             {
                 return NotFound();
             }
-            mapper.Map(request, task);
+            _ = mapper.Map(request, task);
 
             int result = await unitOfWork.CompleteAsync();
             return result > 0 ? Ok() : BadRequest();
@@ -66,7 +66,7 @@ namespace BrightFocus.Controllers
                 {
                     return NotFound();
                 }
-                await unitOfWork.TaskListRepository.DeleteAsync(task);
+                _ = await unitOfWork.TaskListRepository.DeleteAsync(task);
             }
             int result = await unitOfWork.CompleteAsync();
             return result > 0 ? Ok() : BadRequest();

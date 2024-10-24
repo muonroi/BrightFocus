@@ -9,7 +9,7 @@
 
         public string Type { get; set; } = string.Empty;
 
-        public int Quatity { get; set; }
+        public int Quantity { get; set; }
 
         public decimal UnitPrice { get; set; }
         public double Vat { get; set; }

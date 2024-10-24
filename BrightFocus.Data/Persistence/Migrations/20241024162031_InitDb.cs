@@ -1,9 +1,13 @@
-﻿#nullable disable
+﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace BrightFocus.Data.Persistance.Migrations
+#nullable disable
+
+namespace BrightFocus.Data.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class initDb : Migration
+    public partial class InitDb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -18,25 +22,6 @@ namespace BrightFocus.Data.Persistance.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     EntityId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    CreatedUserId = table.Column<int>(type: "int", nullable: true),
-                    UpdatedUserId = table.Column<int>(type: "int", nullable: true),
-                    DeletedUserId = table.Column<int>(type: "int", nullable: true),
-                    CreatedUserName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    UpdatedUserName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    DeletedUserName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    CreatedDateTS = table.Column<double>(type: "double", nullable: false),
-                    LastModificationTimeTs = table.Column<double>(type: "double", nullable: true),
-                    DeletedDateTS = table.Column<double>(type: "double", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    CreationTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    CreatorUserId = table.Column<int>(type: "int", nullable: true),
-                    LastModificationTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    LastModifierUserId = table.Column<int>(type: "int", nullable: true),
-                    DeleterUserId = table.Column<int>(type: "int", nullable: true),
-                    DeletionTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     Name = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Uses = table.Column<string>(type: "longtext", nullable: false)
@@ -53,7 +38,26 @@ namespace BrightFocus.Data.Persistance.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     ReceiptExport = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Note = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false)
+                    Note = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    CreatedUserId = table.Column<int>(type: "int", nullable: true),
+                    UpdatedUserId = table.Column<int>(type: "int", nullable: true),
+                    DeletedUserId = table.Column<int>(type: "int", nullable: true),
+                    CreatedUserName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    UpdatedUserName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    DeletedUserName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    CreatedDateTS = table.Column<double>(type: "double", nullable: false),
+                    LastModificationTimeTs = table.Column<double>(type: "double", nullable: true),
+                    DeletedDateTS = table.Column<double>(type: "double", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    CreationTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    CreatorUserId = table.Column<int>(type: "int", nullable: true),
+                    LastModificationTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    LastModifierUserId = table.Column<int>(type: "int", nullable: true),
+                    DeleteUserId = table.Column<int>(type: "int", nullable: true),
+                    DeletionTime = table.Column<DateTime>(type: "datetime(6)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -68,6 +72,25 @@ namespace BrightFocus.Data.Persistance.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     EntityId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    ProductId = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Type = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Index = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    ColorCode = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    Volume = table.Column<int>(type: "int", nullable: false),
+                    TotalVolume = table.Column<int>(type: "int", nullable: false),
+                    FactoryName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    Note = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    ReceiptImport = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    ReceiptExport = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    FactoryImport = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    FactoryExport = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     CreatedUserId = table.Column<int>(type: "int", nullable: true),
                     UpdatedUserId = table.Column<int>(type: "int", nullable: true),
                     DeletedUserId = table.Column<int>(type: "int", nullable: true),
@@ -85,27 +108,8 @@ namespace BrightFocus.Data.Persistance.Migrations
                     CreatorUserId = table.Column<int>(type: "int", nullable: true),
                     LastModificationTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     LastModifierUserId = table.Column<int>(type: "int", nullable: true),
-                    DeleterUserId = table.Column<int>(type: "int", nullable: true),
-                    DeletionTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    ProductId = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Type = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Index = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    ColorCode = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Quatity = table.Column<int>(type: "int", nullable: false),
-                    Volume = table.Column<int>(type: "int", nullable: false),
-                    TotalVolume = table.Column<int>(type: "int", nullable: false),
-                    FactoryName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    Note = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
-                    ReceiptImport = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    ReceiptExport = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    FactoryImport = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    FactoryExport = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false)
+                    DeleteUserId = table.Column<int>(type: "int", nullable: true),
+                    DeletionTime = table.Column<DateTime>(type: "datetime(6)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -120,25 +124,6 @@ namespace BrightFocus.Data.Persistance.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     EntityId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    CreatedUserId = table.Column<int>(type: "int", nullable: true),
-                    UpdatedUserId = table.Column<int>(type: "int", nullable: true),
-                    DeletedUserId = table.Column<int>(type: "int", nullable: true),
-                    CreatedUserName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    UpdatedUserName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    DeletedUserName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    CreatedDateTS = table.Column<double>(type: "double", nullable: false),
-                    LastModificationTimeTs = table.Column<double>(type: "double", nullable: true),
-                    DeletedDateTS = table.Column<double>(type: "double", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    CreationTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    CreatorUserId = table.Column<int>(type: "int", nullable: true),
-                    LastModificationTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    LastModifierUserId = table.Column<int>(type: "int", nullable: true),
-                    DeleterUserId = table.Column<int>(type: "int", nullable: true),
-                    DeletionTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     ClothId = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     ClothType = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
@@ -159,7 +144,26 @@ namespace BrightFocus.Data.Persistance.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     ReceiptExport = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Note = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false)
+                    Note = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    CreatedUserId = table.Column<int>(type: "int", nullable: true),
+                    UpdatedUserId = table.Column<int>(type: "int", nullable: true),
+                    DeletedUserId = table.Column<int>(type: "int", nullable: true),
+                    CreatedUserName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    UpdatedUserName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    DeletedUserName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    CreatedDateTS = table.Column<double>(type: "double", nullable: false),
+                    LastModificationTimeTs = table.Column<double>(type: "double", nullable: true),
+                    DeletedDateTS = table.Column<double>(type: "double", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    CreationTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    CreatorUserId = table.Column<int>(type: "int", nullable: true),
+                    LastModificationTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    LastModifierUserId = table.Column<int>(type: "int", nullable: true),
+                    DeleteUserId = table.Column<int>(type: "int", nullable: true),
+                    DeletionTime = table.Column<DateTime>(type: "datetime(6)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -174,6 +178,13 @@ namespace BrightFocus.Data.Persistance.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     EntityId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    Name = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    DisplayName = table.Column<string>(type: "varchar(64)", maxLength: 64, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Icon = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    IsDisabled = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     CreatedUserId = table.Column<int>(type: "int", nullable: true),
                     UpdatedUserId = table.Column<int>(type: "int", nullable: true),
                     DeletedUserId = table.Column<int>(type: "int", nullable: true),
@@ -191,15 +202,8 @@ namespace BrightFocus.Data.Persistance.Migrations
                     CreatorUserId = table.Column<int>(type: "int", nullable: true),
                     LastModificationTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     LastModifierUserId = table.Column<int>(type: "int", nullable: true),
-                    DeleterUserId = table.Column<int>(type: "int", nullable: true),
-                    DeletionTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    Name = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    DisplayName = table.Column<string>(type: "varchar(64)", maxLength: 64, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Icon = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    IsDisabled = table.Column<bool>(type: "tinyint(1)", nullable: false)
+                    DeleteUserId = table.Column<int>(type: "int", nullable: true),
+                    DeletionTime = table.Column<DateTime>(type: "datetime(6)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -214,6 +218,11 @@ namespace BrightFocus.Data.Persistance.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     EntityId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    Name = table.Column<string>(type: "varchar(64)", maxLength: 64, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    IsGranted = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    Discriminator = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     CreatedUserId = table.Column<int>(type: "int", nullable: true),
                     UpdatedUserId = table.Column<int>(type: "int", nullable: true),
                     DeletedUserId = table.Column<int>(type: "int", nullable: true),
@@ -231,19 +240,47 @@ namespace BrightFocus.Data.Persistance.Migrations
                     CreatorUserId = table.Column<int>(type: "int", nullable: true),
                     LastModificationTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     LastModifierUserId = table.Column<int>(type: "int", nullable: true),
-                    DeleterUserId = table.Column<int>(type: "int", nullable: true),
-                    DeletionTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    Name = table.Column<string>(type: "varchar(64)", maxLength: 64, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    IsGranted = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    Discriminator = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    RoleId = table.Column<int>(type: "int", nullable: true),
-                    UserId = table.Column<int>(type: "int", nullable: true)
+                    DeleteUserId = table.Column<int>(type: "int", nullable: true),
+                    DeletionTime = table.Column<DateTime>(type: "datetime(6)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_MPermissions", x => x.Id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "MRolePermissions",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    EntityId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    RoleId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    PermissionId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    CreatedUserId = table.Column<int>(type: "int", nullable: true),
+                    UpdatedUserId = table.Column<int>(type: "int", nullable: true),
+                    DeletedUserId = table.Column<int>(type: "int", nullable: true),
+                    CreatedUserName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    UpdatedUserName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    DeletedUserName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    CreatedDateTS = table.Column<double>(type: "double", nullable: false),
+                    LastModificationTimeTs = table.Column<double>(type: "double", nullable: true),
+                    DeletedDateTS = table.Column<double>(type: "double", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    CreationTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    CreatorUserId = table.Column<int>(type: "int", nullable: true),
+                    LastModificationTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    LastModifierUserId = table.Column<int>(type: "int", nullable: true),
+                    DeleteUserId = table.Column<int>(type: "int", nullable: true),
+                    DeletionTime = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MRolePermissions", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -254,6 +291,16 @@ namespace BrightFocus.Data.Persistance.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     EntityId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    Name = table.Column<string>(type: "varchar(64)", maxLength: 64, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    DisplayName = table.Column<string>(type: "varchar(64)", maxLength: 64, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    NormalizedName = table.Column<string>(type: "varchar(64)", maxLength: 64, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    IsStatic = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    IsDefault = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    ConcurrencyStamp = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     CreatedUserId = table.Column<int>(type: "int", nullable: true),
                     UpdatedUserId = table.Column<int>(type: "int", nullable: true),
                     DeletedUserId = table.Column<int>(type: "int", nullable: true),
@@ -271,18 +318,8 @@ namespace BrightFocus.Data.Persistance.Migrations
                     CreatorUserId = table.Column<int>(type: "int", nullable: true),
                     LastModificationTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     LastModifierUserId = table.Column<int>(type: "int", nullable: true),
-                    DeleterUserId = table.Column<int>(type: "int", nullable: true),
-                    DeletionTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    Name = table.Column<string>(type: "varchar(255)", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    DisplayName = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    IsStatic = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    IsDefault = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    NormalizedName = table.Column<string>(type: "varchar(64)", maxLength: 64, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    ConcurrencyStamp = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4")
+                    DeleteUserId = table.Column<int>(type: "int", nullable: true),
+                    DeletionTime = table.Column<DateTime>(type: "datetime(6)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -297,6 +334,12 @@ namespace BrightFocus.Data.Persistance.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     EntityId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    UserId = table.Column<long>(type: "bigint", nullable: false),
+                    UserLinkId = table.Column<long>(type: "bigint", nullable: true),
+                    UserName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    EmailAddress = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     CreatedUserId = table.Column<int>(type: "int", nullable: true),
                     UpdatedUserId = table.Column<int>(type: "int", nullable: true),
                     DeletedUserId = table.Column<int>(type: "int", nullable: true),
@@ -314,14 +357,8 @@ namespace BrightFocus.Data.Persistance.Migrations
                     CreatorUserId = table.Column<int>(type: "int", nullable: true),
                     LastModificationTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     LastModifierUserId = table.Column<int>(type: "int", nullable: true),
-                    DeleterUserId = table.Column<int>(type: "int", nullable: true),
-                    DeletionTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    UserId = table.Column<long>(type: "bigint", nullable: false),
-                    UserLinkId = table.Column<long>(type: "bigint", nullable: true),
-                    UserName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    EmailAddress = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4")
+                    DeleteUserId = table.Column<int>(type: "int", nullable: true),
+                    DeletionTime = table.Column<DateTime>(type: "datetime(6)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -336,6 +373,16 @@ namespace BrightFocus.Data.Persistance.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     EntityId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    UserId = table.Column<long>(type: "bigint", nullable: true),
+                    UserNameOrEmailAddress = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    ClientIpAddress = table.Column<string>(type: "varchar(64)", maxLength: 64, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    ClientName = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    BrowserInfo = table.Column<string>(type: "varchar(512)", maxLength: 512, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Result = table.Column<byte>(type: "tinyint unsigned", nullable: false),
                     CreatedUserId = table.Column<int>(type: "int", nullable: true),
                     UpdatedUserId = table.Column<int>(type: "int", nullable: true),
                     DeletedUserId = table.Column<int>(type: "int", nullable: true),
@@ -349,22 +396,12 @@ namespace BrightFocus.Data.Persistance.Migrations
                     LastModificationTimeTs = table.Column<double>(type: "double", nullable: true),
                     DeletedDateTS = table.Column<double>(type: "double", nullable: true),
                     IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    CreationTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     CreatorUserId = table.Column<int>(type: "int", nullable: true),
                     LastModificationTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     LastModifierUserId = table.Column<int>(type: "int", nullable: true),
-                    DeleterUserId = table.Column<int>(type: "int", nullable: true),
-                    DeletionTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    UserId = table.Column<long>(type: "bigint", nullable: true),
-                    UserNameOrEmailAddress = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    ClientIpAddress = table.Column<string>(type: "varchar(64)", maxLength: 64, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    ClientName = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    BrowserInfo = table.Column<string>(type: "varchar(512)", maxLength: 512, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Result = table.Column<byte>(type: "tinyint unsigned", nullable: false),
-                    CreationTime = table.Column<DateTime>(type: "datetime(6)", nullable: false)
+                    DeleteUserId = table.Column<int>(type: "int", nullable: true),
+                    DeletionTime = table.Column<DateTime>(type: "datetime(6)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -379,6 +416,11 @@ namespace BrightFocus.Data.Persistance.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     EntityId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    UserId = table.Column<long>(type: "bigint", nullable: false),
+                    LoginProvider = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    ProviderKey = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     CreatedUserId = table.Column<int>(type: "int", nullable: true),
                     UpdatedUserId = table.Column<int>(type: "int", nullable: true),
                     DeletedUserId = table.Column<int>(type: "int", nullable: true),
@@ -396,13 +438,8 @@ namespace BrightFocus.Data.Persistance.Migrations
                     CreatorUserId = table.Column<int>(type: "int", nullable: true),
                     LastModificationTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     LastModifierUserId = table.Column<int>(type: "int", nullable: true),
-                    DeleterUserId = table.Column<int>(type: "int", nullable: true),
-                    DeletionTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    UserId = table.Column<long>(type: "bigint", nullable: false),
-                    LoginProvider = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    ProviderKey = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4")
+                    DeleteUserId = table.Column<int>(type: "int", nullable: true),
+                    DeletionTime = table.Column<DateTime>(type: "datetime(6)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -415,6 +452,8 @@ namespace BrightFocus.Data.Persistance.Migrations
                 columns: table => new
                 {
                     EntityId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    UserId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    RoleId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     CreatedUserId = table.Column<int>(type: "int", nullable: true),
                     UpdatedUserId = table.Column<int>(type: "int", nullable: true),
                     DeletedUserId = table.Column<int>(type: "int", nullable: true),
@@ -432,10 +471,8 @@ namespace BrightFocus.Data.Persistance.Migrations
                     CreatorUserId = table.Column<int>(type: "int", nullable: true),
                     LastModificationTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     LastModifierUserId = table.Column<int>(type: "int", nullable: true),
-                    DeleterUserId = table.Column<int>(type: "int", nullable: true),
-                    DeletionTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    UserId = table.Column<long>(type: "bigint", nullable: false),
-                    RoleId = table.Column<long>(type: "bigint", nullable: false)
+                    DeleteUserId = table.Column<int>(type: "int", nullable: true),
+                    DeletionTime = table.Column<DateTime>(type: "datetime(6)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -450,36 +487,6 @@ namespace BrightFocus.Data.Persistance.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     EntityId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    CreatedUserId = table.Column<int>(type: "int", nullable: true),
-                    UpdatedUserId = table.Column<int>(type: "int", nullable: true),
-                    DeletedUserId = table.Column<int>(type: "int", nullable: true),
-                    CreatedUserName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    UpdatedUserName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    DeletedUserName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    CreatedDateTS = table.Column<double>(type: "double", nullable: false),
-                    LastModificationTimeTs = table.Column<double>(type: "double", nullable: true),
-                    DeletedDateTS = table.Column<double>(type: "double", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    CreationTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    CreatorUserId = table.Column<int>(type: "int", nullable: true),
-                    LastModificationTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    LastModifierUserId = table.Column<int>(type: "int", nullable: true),
-                    DeleterUserId = table.Column<int>(type: "int", nullable: true),
-                    DeletionTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    ProfilePictureId = table.Column<int>(type: "int", nullable: true),
-                    ShouldChangePasswordOnNextLogin = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    SignInTokenExpireTimeUtc = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    SignInToken = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    GoogleAuthenticatorKey = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    RecoveryCode = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    AuthenticationSource = table.Column<string>(type: "varchar(64)", maxLength: 64, nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
                     UserName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     EmailAddress = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: false)
@@ -511,8 +518,38 @@ namespace BrightFocus.Data.Persistance.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     ConcurrencyStamp = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Salf = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4")
+                    Salt = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    ProfilePictureId = table.Column<int>(type: "int", nullable: true),
+                    ShouldChangePasswordOnNextLogin = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    SignInTokenExpireTimeUtc = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    SignInToken = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    GoogleAuthenticatorKey = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    RecoveryCode = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    AuthenticationSource = table.Column<string>(type: "varchar(64)", maxLength: 64, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    CreatedUserId = table.Column<int>(type: "int", nullable: true),
+                    UpdatedUserId = table.Column<int>(type: "int", nullable: true),
+                    DeletedUserId = table.Column<int>(type: "int", nullable: true),
+                    CreatedUserName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    UpdatedUserName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    DeletedUserName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    CreatedDateTS = table.Column<double>(type: "double", nullable: false),
+                    LastModificationTimeTs = table.Column<double>(type: "double", nullable: true),
+                    DeletedDateTS = table.Column<double>(type: "double", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    CreationTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    CreatorUserId = table.Column<int>(type: "int", nullable: true),
+                    LastModificationTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    LastModifierUserId = table.Column<int>(type: "int", nullable: true),
+                    DeleteUserId = table.Column<int>(type: "int", nullable: true),
+                    DeletionTime = table.Column<DateTime>(type: "datetime(6)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -527,6 +564,14 @@ namespace BrightFocus.Data.Persistance.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     EntityId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    UserId = table.Column<long>(type: "bigint", nullable: false),
+                    LoginProvider = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Name = table.Column<string>(type: "varchar(64)", maxLength: 64, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Value = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    ExpireDate = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     CreatedUserId = table.Column<int>(type: "int", nullable: true),
                     UpdatedUserId = table.Column<int>(type: "int", nullable: true),
                     DeletedUserId = table.Column<int>(type: "int", nullable: true),
@@ -544,16 +589,8 @@ namespace BrightFocus.Data.Persistance.Migrations
                     CreatorUserId = table.Column<int>(type: "int", nullable: true),
                     LastModificationTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     LastModifierUserId = table.Column<int>(type: "int", nullable: true),
-                    DeleterUserId = table.Column<int>(type: "int", nullable: true),
-                    DeletionTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    UserId = table.Column<long>(type: "bigint", nullable: false),
-                    LoginProvider = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Name = table.Column<string>(type: "varchar(64)", maxLength: 64, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Value = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    ExpireDate = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                    DeleteUserId = table.Column<int>(type: "int", nullable: true),
+                    DeletionTime = table.Column<DateTime>(type: "datetime(6)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -568,6 +605,25 @@ namespace BrightFocus.Data.Persistance.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     EntityId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    Name = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Type = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    UnitPrice = table.Column<decimal>(type: "decimal(65,30)", nullable: false),
+                    Vat = table.Column<double>(type: "double", nullable: false),
+                    UnitPriceVat = table.Column<decimal>(type: "decimal(65,30)", nullable: false),
+                    ManufacturingPlant = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    FactoryImport = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    ExportDateTs = table.Column<double>(type: "double", nullable: false),
+                    ImportDateTs = table.Column<double>(type: "double", nullable: false),
+                    ReceiptImport = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    ReceiptExport = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Note = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     CreatedUserId = table.Column<int>(type: "int", nullable: true),
                     UpdatedUserId = table.Column<int>(type: "int", nullable: true),
                     DeletedUserId = table.Column<int>(type: "int", nullable: true),
@@ -585,27 +641,8 @@ namespace BrightFocus.Data.Persistance.Migrations
                     CreatorUserId = table.Column<int>(type: "int", nullable: true),
                     LastModificationTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     LastModifierUserId = table.Column<int>(type: "int", nullable: true),
-                    DeleterUserId = table.Column<int>(type: "int", nullable: true),
-                    DeletionTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    Name = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Type = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Quatity = table.Column<int>(type: "int", nullable: false),
-                    UnitPrice = table.Column<decimal>(type: "decimal(65,30)", nullable: false),
-                    Vat = table.Column<double>(type: "double", nullable: false),
-                    UnitPriceVat = table.Column<decimal>(type: "decimal(65,30)", nullable: false),
-                    ManufacturingPlant = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    FactoryImport = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    ExportDateTs = table.Column<double>(type: "double", nullable: false),
-                    ImportDateTs = table.Column<double>(type: "double", nullable: false),
-                    ReceiptImport = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    ReceiptExport = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Note = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false)
+                    DeleteUserId = table.Column<int>(type: "int", nullable: true),
+                    DeletionTime = table.Column<DateTime>(type: "datetime(6)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -620,6 +657,13 @@ namespace BrightFocus.Data.Persistance.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     EntityId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    Name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    ProductName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    DeadlineDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    Note = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    TaskType = table.Column<int>(type: "int", nullable: false),
                     CreatedUserId = table.Column<int>(type: "int", nullable: true),
                     UpdatedUserId = table.Column<int>(type: "int", nullable: true),
                     DeletedUserId = table.Column<int>(type: "int", nullable: true),
@@ -637,15 +681,8 @@ namespace BrightFocus.Data.Persistance.Migrations
                     CreatorUserId = table.Column<int>(type: "int", nullable: true),
                     LastModificationTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     LastModifierUserId = table.Column<int>(type: "int", nullable: true),
-                    DeleterUserId = table.Column<int>(type: "int", nullable: true),
-                    DeletionTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    TaskName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    ProductName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    Quatity = table.Column<int>(type: "int", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
-                    DeadlineDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    Note = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
-                    TaskType = table.Column<int>(type: "int", nullable: false)
+                    DeleteUserId = table.Column<int>(type: "int", nullable: true),
+                    DeletionTime = table.Column<DateTime>(type: "datetime(6)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -654,31 +691,12 @@ namespace BrightFocus.Data.Persistance.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "WasteProduct",
+                name: "WastesProduct",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     EntityId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    CreatedUserId = table.Column<int>(type: "int", nullable: true),
-                    UpdatedUserId = table.Column<int>(type: "int", nullable: true),
-                    DeletedUserId = table.Column<int>(type: "int", nullable: true),
-                    CreatedUserName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    UpdatedUserName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    DeletedUserName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    CreatedDateTS = table.Column<double>(type: "double", nullable: false),
-                    LastModificationTimeTs = table.Column<double>(type: "double", nullable: true),
-                    DeletedDateTS = table.Column<double>(type: "double", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    CreationTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    CreatorUserId = table.Column<int>(type: "int", nullable: true),
-                    LastModificationTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    LastModifierUserId = table.Column<int>(type: "int", nullable: true),
-                    DeleterUserId = table.Column<int>(type: "int", nullable: true),
-                    DeletionTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     ClothId = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     ClothType = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
@@ -699,11 +717,30 @@ namespace BrightFocus.Data.Persistance.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     ReceiptExport = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Note = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false)
+                    Note = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    CreatedUserId = table.Column<int>(type: "int", nullable: true),
+                    UpdatedUserId = table.Column<int>(type: "int", nullable: true),
+                    DeletedUserId = table.Column<int>(type: "int", nullable: true),
+                    CreatedUserName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    UpdatedUserName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    DeletedUserName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    CreatedDateTS = table.Column<double>(type: "double", nullable: false),
+                    LastModificationTimeTs = table.Column<double>(type: "double", nullable: true),
+                    DeletedDateTS = table.Column<double>(type: "double", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    CreationTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    CreatorUserId = table.Column<int>(type: "int", nullable: true),
+                    LastModificationTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    LastModifierUserId = table.Column<int>(type: "int", nullable: true),
+                    DeleteUserId = table.Column<int>(type: "int", nullable: true),
+                    DeletionTime = table.Column<DateTime>(type: "datetime(6)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_WasteProduct", x => x.Id);
+                    table.PrimaryKey("PK_WastesProduct", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -714,25 +751,6 @@ namespace BrightFocus.Data.Persistance.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     EntityId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    CreatedUserId = table.Column<int>(type: "int", nullable: true),
-                    UpdatedUserId = table.Column<int>(type: "int", nullable: true),
-                    DeletedUserId = table.Column<int>(type: "int", nullable: true),
-                    CreatedUserName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    UpdatedUserName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    DeletedUserName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    CreatedDateTS = table.Column<double>(type: "double", nullable: false),
-                    LastModificationTimeTs = table.Column<double>(type: "double", nullable: true),
-                    DeletedDateTS = table.Column<double>(type: "double", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    CreationTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    CreatorUserId = table.Column<int>(type: "int", nullable: true),
-                    LastModificationTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    LastModifierUserId = table.Column<int>(type: "int", nullable: true),
-                    DeleterUserId = table.Column<int>(type: "int", nullable: true),
-                    DeletionTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     ClothId = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     ClothType = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
@@ -753,7 +771,26 @@ namespace BrightFocus.Data.Persistance.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     ReceiptExport = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Note = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false)
+                    Note = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    CreatedUserId = table.Column<int>(type: "int", nullable: true),
+                    UpdatedUserId = table.Column<int>(type: "int", nullable: true),
+                    DeletedUserId = table.Column<int>(type: "int", nullable: true),
+                    CreatedUserName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    UpdatedUserName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    DeletedUserName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    CreatedDateTS = table.Column<double>(type: "double", nullable: false),
+                    LastModificationTimeTs = table.Column<double>(type: "double", nullable: true),
+                    DeletedDateTS = table.Column<double>(type: "double", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    CreationTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    CreatorUserId = table.Column<int>(type: "int", nullable: true),
+                    LastModificationTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    LastModifierUserId = table.Column<int>(type: "int", nullable: true),
+                    DeleteUserId = table.Column<int>(type: "int", nullable: true),
+                    DeletionTime = table.Column<DateTime>(type: "datetime(6)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -808,9 +845,9 @@ namespace BrightFocus.Data.Persistance.Migrations
                 column: "LoginProvider");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TaskList_TaskName_ProductName",
+                name: "IX_TaskList_Name_ProductName",
                 table: "TaskList",
-                columns: new[] { "TaskName", "ProductName" });
+                columns: new[] { "Name", "ProductName" });
         }
 
         /// <inheritdoc />
@@ -830,6 +867,9 @@ namespace BrightFocus.Data.Persistance.Migrations
 
             migrationBuilder.DropTable(
                 name: "MPermissions");
+
+            migrationBuilder.DropTable(
+                name: "MRolePermissions");
 
             migrationBuilder.DropTable(
                 name: "MRoles");
@@ -859,7 +899,7 @@ namespace BrightFocus.Data.Persistance.Migrations
                 name: "TaskList");
 
             migrationBuilder.DropTable(
-                name: "WasteProduct");
+                name: "WastesProduct");
 
             migrationBuilder.DropTable(
                 name: "Wood");

@@ -15,7 +15,7 @@
         [Required]
         [MaxLength(255)]
         public string ColorCode { get; set; } = string.Empty;
-        public int Quatity { get; set; }
+        public int Quantity { get; set; }
         public int Volume { get; set; }
         public int TotalVolume { get; set; }
         [Required]

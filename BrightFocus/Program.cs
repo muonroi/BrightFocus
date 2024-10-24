@@ -4,11 +4,6 @@
 
 
 
-
-
-
-
-
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 Assembly assembly = Assembly.GetExecutingAssembly();
 ConfigurationManager configuration = builder.Configuration;
@@ -31,13 +26,18 @@ try
     _ = services.AddInfrastructure<Program>(configuration);
     _ = services.SwaggerConfig(builder.Environment.ApplicationName);
     _ = services.AddScopeServices(typeof(BrightFocusDbContext).Assembly);
-    _ = services.AddValidateBearerToken<MTokenInfo>(configuration);
+    _ = services.AddValidateBearerToken<MTokenInfo, Permission>(configuration);
     _ = services.AddDbContextConfigure<BrightFocusDbContext>(configuration);
     _ = services.AddCors(configuration);
-    services.AddScoped<IUnitOfWork, UnitOfWork>();
-    services.AddAutoMapper(typeof(TaskInListDto));
-
-
+    _ = services.AddScoped<IUnitOfWork, UnitOfWork>();
+    _ = services.AddAutoMapper(typeof(TaskInListDto),
+                               typeof(ChemicalsInListDto),
+                               typeof(FibersInListDto),
+                               typeof(FinishedProductInListDto),
+                               typeof(PaperTubeInListDto),
+                               typeof(WastesInListDto),
+                               typeof(WoodsInListDto));
+    _ = services.AddPermissionFilter<Permission>();
 
     WebApplication app = builder.Build();
     _ = app.UseCors("MAllowDomains");

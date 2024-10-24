@@ -1,4 +1,4 @@
-﻿using BrightFocus.Data.Persistance;
+﻿using BrightFocus.Data.Persistence;
 
 namespace BrightFocus.Persistance
 {

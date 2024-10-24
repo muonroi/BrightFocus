@@ -16,7 +16,7 @@ namespace BrightFocus.Core.Domain.Tasks
         [Column(TypeName = "nvarchar")]
         public string ProductName { get; set; } = string.Empty;
 
-        public int Quatity { get; set; }
+        public int Quantity { get; set; }
 
         [MaxLength(500)]
         [Column(TypeName = "nvarchar")]

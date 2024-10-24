@@ -8,7 +8,7 @@ namespace BrightFocus.Core.Models.TaskLists.Request
 
         public string ProductName { get; set; } = string.Empty;
 
-        public int Quatity { get; set; }
+        public int Quantity { get; set; }
 
         [MaxLength(500)]
         public string Description { get; set; } = string.Empty;
@@ -23,7 +23,7 @@ namespace BrightFocus.Core.Models.TaskLists.Request
         {
             public AutoMapperProfile()
             {
-                CreateMap<CreateOrUpdateTaskRequest, Domain.Tasks.TaskList>();
+                _ = CreateMap<CreateOrUpdateTaskRequest, TaskList>();
             }
         }
     }
