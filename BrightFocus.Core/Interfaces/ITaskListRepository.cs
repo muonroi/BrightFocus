@@ -2,6 +2,8 @@
 
 
 
+
+
 namespace BrightFocus.Core.Interfaces
 {
     public interface ITaskListRepository : IMRepository<TaskList>

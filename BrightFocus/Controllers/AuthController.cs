@@ -6,8 +6,32 @@ namespace BrightFocus.Controllers
 {
     [ApiVersion("1.0")]
     [ApiVersion(0.9, Deprecated = true)]
-    public class AuthController(BrightFocusDbContext dbContext, MAuthenticateTokenHelper<Permission> tokenHelper) : MAuthControllerBase<Permission>(dbContext, tokenHelper)
+    public class AuthController(BrightFocusDbContext dbContext,
+        IUnitOfWork unitOfWork,
+        MAuthenticateInfoContext infoContext,
+        IAuthenticateRepository authenticateRepository) :
+        MAuthControllerBase<Permission>(dbContext, infoContext, authenticateRepository)
     {
+        [HttpPost("login")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Login([FromBody] LoginRequestModel command, CancellationToken cancellationToken)
+        {
+            MResponse<LoginResponseModel> result = await unitOfWork.AuthenticateRepository.Login(command, cancellationToken).ConfigureAwait(false);
+            return result.GetActionResult();
+        }
+
+        [HttpPost("logout")]
+        public override Task<IActionResult> Logout()
+        {
+            return base.Logout();
+        }
+
+        [HttpPost("register")]
+        public override Task<IActionResult> Register([FromBody] RegisterRequestModel request, CancellationToken cancellationToken)
+        {
+            return base.Register(request, cancellationToken);
+        }
+
         [HttpPost("create-role")]
         [Permission<Permission>(Permission.Auth_CreateRole)]
         public override Task<IActionResult> CreateRole([FromBody] CreateRoleRequestModel request)
@@ -24,7 +48,7 @@ namespace BrightFocus.Controllers
 
         [HttpGet("user-permissions/{userId}")]
         [Permission<Permission>(Permission.Auth_GetPermissions)]
-        public override Task<IActionResult> GetUserPermissions(long userId)
+        public override Task<IActionResult> GetUserPermissions(Guid userId)
         {
             return base.GetUserPermissions(userId);
         }
@@ -36,9 +60,16 @@ namespace BrightFocus.Controllers
             return base.UpdateRole(request);
         }
 
+        [HttpPost("assign-role")]
+        [Permission<Permission>(Permission.Auth_AssignRoleUser)]
+        public override Task<IActionResult> AssignRoleToUser([FromBody] AssignRoleRequestModel request)
+        {
+            return base.AssignRoleToUser(request);
+        }
+
         [HttpDelete("delete-role/{roleId}")]
         [Permission<Permission>(Permission.Auth_DeleteRole)]
-        public override Task<IActionResult> DeleteRole(long roleId)
+        public override Task<IActionResult> DeleteRole(Guid roleId)
         {
             return base.DeleteRole(roleId);
         }
@@ -62,6 +93,13 @@ namespace BrightFocus.Controllers
         public override Task<IActionResult> GetRoleUsers(Guid roleId)
         {
             return base.GetRoleUsers(roleId);
+        }
+
+        [HttpDelete("remove-permission/{roleId}/{permissionId}")]
+        [Permission<Permission>(Permission.Auth_RemovePermissionFromRole)]
+        public override Task<IActionResult> RemovePermissionFromRole(Guid roleId, Guid permissionId)
+        {
+            return base.RemovePermissionFromRole(roleId, permissionId);
         }
     }
 }

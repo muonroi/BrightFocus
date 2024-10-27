@@ -14,7 +14,14 @@
         Auth_GetRolePermissions = 1L << 7, // 128
         Auth_GetRoleUsers = 1L << 8,       // 256
         Chemist_Create = 1L << 9,          // 512
+        Task_Create = 1L << 10,            // 1024
+        Auth_AssignRoleUser = 1L << 11,  // 2048
+        Auth_RemovePermissionFromRole = 1L << 12, // 4096
 
-        Auth_Admin = Auth_CreateRole | Auth_UpdateRole | Auth_DeleteRole | Auth_GetRoles | Auth_GetRoleById | Auth_AssignPermission | Auth_GetPermissions | Auth_GetRolePermissions | Auth_GetRoleUsers
+        Auth_Admin = Auth_CreateRole | Auth_UpdateRole | Auth_DeleteRole | Auth_GetRoles | Auth_GetRoleById | Auth_AssignPermission | Auth_GetPermissions | Auth_GetRolePermissions | Auth_GetRoleUsers,
+
+        Auth_Moderator = Auth_GetRoles | Auth_GetRoleById | Auth_AssignPermission | Auth_GetPermissions | Auth_GetRolePermissions | Auth_GetRoleUsers,
+
+        Auth_User = Auth_GetRoles | Auth_GetRoleById | Auth_GetRolePermissions | Auth_GetRoleUsers,
     }
 }

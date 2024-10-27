@@ -1,6 +1,4 @@
-﻿using BrightFocus.Data.Persistence;
-
-namespace BrightFocus.Persistance
+﻿namespace BrightFocus.Data.Persistence
 {
     public class BrightFocusDbContextFactory : SharedDbContextFactory<BrightFocusDbContext>
     {

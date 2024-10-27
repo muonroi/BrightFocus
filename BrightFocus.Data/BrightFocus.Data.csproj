@@ -5,8 +5,12 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
+
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Extensions\MuonroiBuildingBlock\Muonroi.BuildingBlock.csproj" />
+    <PackageReference Include="Muonroi.BuildingBlock" Version="1.2.8" />
+    <PackageReference Include="System.Text.Json" Version="8.0.5" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\BrightFocus.Core\BrightFocus.Core.csproj" />
   </ItemGroup>
 </Project>

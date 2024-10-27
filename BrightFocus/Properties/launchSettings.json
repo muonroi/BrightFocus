@@ -12,7 +12,7 @@
     },
     "BrightFocus": {
       "commandName": "Project",
-      "launchBrowser": true,
+      "launchBrowser": false,
       "launchUrl": "brightfocus",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"

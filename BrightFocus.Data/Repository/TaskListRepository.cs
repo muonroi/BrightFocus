@@ -3,6 +3,8 @@
 
 
 
+
+
 namespace BrightFocus.Data.Repository
 {
     public class TaskListRepository(BrightFocusDbContext dbContext, MAuthenticateInfoContext authContext, IMapper mapper) : MRepository<TaskList>(dbContext, authContext), ITaskListRepository
@@ -12,17 +14,17 @@ namespace BrightFocus.Data.Repository
             MResponse<MPagedResult<TaskInListDto>> result = new();
             IQueryable<TaskList> query = dbContext.TaskLists.AsQueryable();
 
-        if (!string.IsNullOrEmpty(keyword))
-        {
-            query = query.Where(x => x.Name.Contains(keyword));
-        }
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                query = query.Where(x => x.Name.Contains(keyword));
+            }
 
-        int rowCount = await query.CountAsync();
+            int rowCount = await query.CountAsync();
 
-        IQueryable<TaskList> items = query
-            .OrderBy(x => x.Name)
-            .Skip((pageIndex - 1) * pageSize)
-            .Take(pageSize);
+            IQueryable<TaskList> items = query
+                .OrderBy(x => x.Name)
+                .Skip((pageIndex - 1) * pageSize)
+                .Take(pageSize);
 
             MPagedResult<TaskInListDto> data = new()
             {
@@ -35,5 +37,5 @@ namespace BrightFocus.Data.Repository
             return result;
         }
 
-
+    }
 }

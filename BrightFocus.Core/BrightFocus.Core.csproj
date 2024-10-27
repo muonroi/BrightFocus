@@ -6,18 +6,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\Chemicals\Response\" />
-    <Folder Include="Models\Fabrics\Response\" />
-    <Folder Include="Models\Fibers\Response\" />
-    <Folder Include="Models\Finished\Response\" />
-    <Folder Include="Models\PaperTube\Response\" />
-    <Folder Include="Models\Wastes\Response\" />
     <Folder Include="Models\TaskLists\Response\" />
-    <Folder Include="Models\Woods\Response\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Extensions\MuonroiBuildingBlock\Muonroi.BuildingBlock.csproj" />
+    <PackageReference Include="Muonroi.BuildingBlock" Version="1.2.8" />
+    <PackageReference Include="System.Text.Json" Version="8.0.5" />
   </ItemGroup>
 </Project>

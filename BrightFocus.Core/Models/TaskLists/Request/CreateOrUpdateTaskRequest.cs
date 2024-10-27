@@ -1,5 +1,7 @@
 ﻿
 
+using BrightFocus.Core.Domain;
+
 namespace BrightFocus.Core.Models.TaskLists.Request
 {
     public class CreateOrUpdateTaskRequest
