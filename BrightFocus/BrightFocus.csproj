@@ -35,4 +35,8 @@
     <ProjectReference Include="..\BrightFocus.Data\BrightFocus.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Application\Query\" />
+  </ItemGroup>
+
 </Project>

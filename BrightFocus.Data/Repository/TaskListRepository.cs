@@ -5,6 +5,8 @@
 
 
 
+
+
 namespace BrightFocus.Data.Repository
 {
     public class TaskListRepository(BrightFocusDbContext dbContext, MAuthenticateInfoContext authContext, IMapper mapper) : MRepository<TaskList>(dbContext, authContext), ITaskListRepository
@@ -16,13 +18,13 @@ namespace BrightFocus.Data.Repository
 
             if (!string.IsNullOrEmpty(keyword))
             {
-                query = query.Where(x => x.Name.Contains(keyword));
+                query = query.Where(x => x.ProductName.Contains(keyword));
             }
 
             int rowCount = await query.CountAsync();
 
             IQueryable<TaskList> items = query
-                .OrderBy(x => x.Name)
+                .OrderBy(x => x.ProductName)
                 .Skip((pageIndex - 1) * pageSize)
                 .Take(pageSize);
 

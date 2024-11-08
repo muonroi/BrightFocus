@@ -31,3 +31,5 @@ global using System.Threading;
 global using Log = Serilog.Log;
 global using Muonroi.BuildingBlock.External.Common.Models.Requests.Registers;
 global using Muonroi.BuildingBlock.External.Interfaces;
+global using FluentValidation;
+global using BrightFocus.Application.Command.Login;

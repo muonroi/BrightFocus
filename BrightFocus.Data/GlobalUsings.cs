@@ -21,3 +21,4 @@ global using Muonroi.BuildingBlock.External.SeedWorks;
 global using System;
 global using System.Linq;
 global using System.Threading.Tasks;
+global using BrightFocus.Core.Interfaces.Repository;

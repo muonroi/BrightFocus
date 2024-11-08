@@ -1,4 +1,6 @@
-﻿namespace BrightFocus.Data.SeedWorks;
+﻿using BrightFocus.Core.Interfaces.Repository;
+
+namespace BrightFocus.Data.SeedWorks;
 
 public class UnitOfWork(BrightFocusDbContext context,
     MAuthenticateInfoContext authContext,

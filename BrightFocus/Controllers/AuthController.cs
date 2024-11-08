@@ -1,22 +1,18 @@
-﻿
-
-
-
-namespace BrightFocus.Controllers
+﻿namespace BrightFocus.Controllers
 {
     [ApiVersion("1.0")]
     [ApiVersion(0.9, Deprecated = true)]
     public class AuthController(BrightFocusDbContext dbContext,
-        IUnitOfWork unitOfWork,
         MAuthenticateInfoContext infoContext,
-        IAuthenticateRepository authenticateRepository) :
+        IAuthenticateRepository authenticateRepository,
+        IMediator mediator) :
         MAuthControllerBase<Permission>(dbContext, infoContext, authenticateRepository)
     {
         [HttpPost("login")]
         [AllowAnonymous]
-        public async Task<IActionResult> Login([FromBody] LoginRequestModel command, CancellationToken cancellationToken)
+        public async Task<IActionResult> Login([FromBody] LoginCommand command, CancellationToken cancellationToken)
         {
-            MResponse<LoginResponseModel> result = await unitOfWork.AuthenticateRepository.Login(command, cancellationToken).ConfigureAwait(false);
+            MResponse<LoginResponseModel> result = await mediator.Send(command, cancellationToken).ConfigureAwait(false);
             return result.GetActionResult();
         }
 

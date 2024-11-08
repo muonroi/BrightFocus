@@ -316,16 +316,21 @@ namespace BrightFocus.Data.Persistence.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "TaskList",
+                name: "TaskDetail",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     EntityId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    Name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     ProductName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    Quantity = table.Column<int>(type: "int", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    Material = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    Size = table.Column<double>(type: "double", maxLength: 255, nullable: false),
+                    FabricMeter = table.Column<double>(type: "double", maxLength: 255, nullable: false),
+                    Weight = table.Column<double>(type: "double", maxLength: 255, nullable: false),
+                    Color = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Employee = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    Warehouse = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     DeadlineDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     Note = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     TaskType = table.Column<int>(type: "int", nullable: false),
@@ -342,7 +347,77 @@ namespace BrightFocus.Data.Persistence.Migrations
                 },
                 constraints: table =>
                 {
+                    table.PrimaryKey("PK_TaskDetail", x => x.Id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "TaskList",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    EntityId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    ProductName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    Material = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    Size = table.Column<double>(type: "double", maxLength: 255, nullable: false),
+                    Weight = table.Column<double>(type: "double", maxLength: 255, nullable: false),
+                    Color = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Employee = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    FactoryName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    Warehouse = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    DeadlineDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    Note = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    File = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    TaskType = table.Column<int>(type: "int", nullable: false),
+                    CreatedDateTS = table.Column<double>(type: "double", nullable: false),
+                    LastModificationTimeTs = table.Column<double>(type: "double", nullable: true),
+                    DeletedDateTS = table.Column<double>(type: "double", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    CreationTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    CreatorUserId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    LastModificationTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    LastModificationUserId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    DeletionTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    DeletedUserId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci")
+                },
+                constraints: table =>
+                {
                     table.PrimaryKey("PK_TaskList", x => x.Id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "warehouse",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    EntityId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    Name = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Description = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    FactoryName = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Address = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    CreatedDateTS = table.Column<double>(type: "double", nullable: false),
+                    LastModificationTimeTs = table.Column<double>(type: "double", nullable: true),
+                    DeletedDateTS = table.Column<double>(type: "double", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    CreationTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    CreatorUserId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    LastModificationTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    LastModificationUserId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    DeletionTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    DeletedUserId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_warehouse", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -381,9 +456,14 @@ namespace BrightFocus.Data.Persistence.Migrations
                 column: "LoginProvider");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TaskList_Name_ProductName",
+                name: "IX_TaskDetail_ProductName",
+                table: "TaskDetail",
+                column: "ProductName");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TaskList_ProductName",
                 table: "TaskList",
-                columns: new[] { "Name", "ProductName" });
+                column: "ProductName");
         }
 
         /// <inheritdoc />
@@ -417,7 +497,13 @@ namespace BrightFocus.Data.Persistence.Migrations
                 name: "MUserTokens");
 
             migrationBuilder.DropTable(
+                name: "TaskDetail");
+
+            migrationBuilder.DropTable(
                 name: "TaskList");
+
+            migrationBuilder.DropTable(
+                name: "warehouse");
         }
     }
 }
