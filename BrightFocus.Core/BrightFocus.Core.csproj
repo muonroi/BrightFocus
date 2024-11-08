@@ -11,7 +11,7 @@
     <Folder Include="Models\Warehouses\Response\" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Muonroi.BuildingBlock" Version="1.2.8" />
+    <PackageReference Include="Muonroi.BuildingBlock" Version="1.2.9" />
     <PackageReference Include="System.Text.Json" Version="8.0.5" />
   </ItemGroup>
 </Project>

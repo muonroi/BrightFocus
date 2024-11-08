@@ -1,6 +1,7 @@
 ﻿namespace BrightFocus.Core.Models.TaskDetails.Models
 {
-    internal class TaskDetailDto
+    public class TaskDetailDto : TaskDetailInListDto
     {
+
     }
 }

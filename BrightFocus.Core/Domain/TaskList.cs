@@ -16,11 +16,9 @@ public class TaskList : MEntity
     [Column(TypeName = "nvarchar")]
     public string Material { get; set; } = string.Empty;
 
-    [MaxLength(255)]
     [Required]
     public double Size { get; set; }
 
-    [MaxLength(255)]
     [Required]
     public double Weight { get; set; }
 

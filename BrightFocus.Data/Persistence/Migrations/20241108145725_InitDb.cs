@@ -334,6 +334,7 @@ namespace BrightFocus.Data.Persistence.Migrations
                     DeadlineDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     Note = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     TaskType = table.Column<int>(type: "int", nullable: false),
+                    TaskId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     CreatedDateTS = table.Column<double>(type: "double", nullable: false),
                     LastModificationTimeTs = table.Column<double>(type: "double", nullable: true),
                     DeletedDateTS = table.Column<double>(type: "double", nullable: true),

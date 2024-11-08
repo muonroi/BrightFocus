@@ -22,3 +22,6 @@ global using System;
 global using System.Linq;
 global using System.Threading.Tasks;
 global using BrightFocus.Core.Interfaces.Repository;
+global using System.Collections.Generic;
+global using System.Text;
+global using BrightFocus.Core.Models.TaskDetails.Models;

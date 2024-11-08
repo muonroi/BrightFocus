@@ -17,14 +17,5 @@ namespace BrightFocus.Core.Models.TaskLists.Models
         public string Note { get; set; } = string.Empty;
 
         public TaskType TaskType { get; set; }
-
-        public class AutoMapperProfiles : Profile
-        {
-            public AutoMapperProfiles()
-            {
-                _ = CreateMap<TaskList, TaskInListDto>();
-                _ = CreateMap<TaskList, TaskListDto>();
-            }
-        }
     }
 }

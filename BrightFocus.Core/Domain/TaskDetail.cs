@@ -47,5 +47,8 @@
         public string Note { get; set; } = string.Empty;
 
         public TaskType TaskType { get; set; }
+
+        [Required]
+        public Guid TaskId { get; set; }
     }
 }

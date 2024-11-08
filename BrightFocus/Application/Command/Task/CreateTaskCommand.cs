@@ -1,6 +1,10 @@
-﻿namespace BrightFocus.Core.Models.TaskDetails.Models
+﻿
+
+
+
+namespace BrightFocus.Application.Command.Task
 {
-    public class TaskDetailInListDto
+    public class CreateTaskCommand : IRequest<MResponse<bool>>
     {
         public string ProductName { get; set; } = string.Empty;
 
@@ -8,13 +12,13 @@
 
         public double Size { get; set; }
 
-        public double FabricMeter { get; set; }
-
         public double Weight { get; set; }
 
         public string Color { get; set; } = string.Empty;
 
         public string Employee { get; set; } = string.Empty;
+
+        public string FactoryName { get; set; } = string.Empty;
 
         public string Warehouse { get; set; } = string.Empty;
 
@@ -22,6 +26,8 @@
 
         public string Note { get; set; } = string.Empty;
 
-        public TaskType TaskType { get; set; }
+        public string File { get; set; } = string.Empty;
+
+        public List<TaskDetailDto>? TaskDetails { get; set; }
     }
 }

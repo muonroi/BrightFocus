@@ -1,3 +1,5 @@
+
+
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 Assembly assembly = Assembly.GetExecutingAssembly();
 ConfigurationManager configuration = builder.Configuration;
@@ -24,7 +26,7 @@ try
     _ = services.AddDbContextConfigure<BrightFocusDbContext, Permission>(configuration);
     _ = services.AddCors(configuration);
     _ = services.AddScoped<IUnitOfWork, UnitOfWork>();
-    _ = services.AddAutoMapper(typeof(TaskInListDto));
+    _ = services.AddDapperConfig();
     _ = services.AddPermissionFilter<Permission>();
 
     WebApplication app = builder.Build();

@@ -1,7 +1,5 @@
 ﻿namespace BrightFocus.Controllers
 {
-    [ApiVersion("1.0")]
-    [ApiVersion(0.9, Deprecated = true)]
     public class AuthController(BrightFocusDbContext dbContext,
         MAuthenticateInfoContext infoContext,
         IAuthenticateRepository authenticateRepository,

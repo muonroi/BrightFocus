@@ -1,13 +1,23 @@
 ﻿
 
+
+
 namespace BrightFocus.Controllers;
 
-[Route("dashboard")]
-[ApiVersion("1")]
 public class DashboardController(IMediator mediator, Serilog.ILogger logger
 , IMapper mapper
 , IUnitOfWork unitOfWork) : MControllerBase(mediator, logger)
 {
+
+    [HttpPost("task")]
+    [AllowAnonymous]
+    public async Task<IActionResult> CreateTask([FromBody] CreateTaskCommand command, CancellationToken cancellationToken)
+    {
+        IActionResult result = await SendAsync<CreateTaskCommand, MResponse<bool>>(command, cancellationToken);
+
+        return Ok(result);
+    }
+
     [HttpGet]
     public async Task<IActionResult> GetTaskById([FromQuery] Guid id)
     {
