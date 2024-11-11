@@ -1,6 +1,6 @@
 ﻿
 
-using BrightFocus.Core.Interfaces.Repository;
+
 
 namespace BrightFocus.Core.SeedWorks
 {

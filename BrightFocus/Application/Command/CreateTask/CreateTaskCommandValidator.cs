@@ -1,4 +1,4 @@
-﻿namespace BrightFocus.Application.Command.Task
+﻿namespace BrightFocus.Application.Command.CreateTask
 {
     public class CreateTaskCommandValidator
         : AbstractValidator<CreateTaskCommand>
@@ -40,9 +40,6 @@
 
             _ = RuleFor(x => x.Note)
                 .MaximumLength(1000);
-
-            _ = RuleFor(x => x.File)
-                .MaximumLength(100);
 
             _ = RuleFor(x => x.TaskDetails)
                 .NotEmpty();

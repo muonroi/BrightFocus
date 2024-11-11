@@ -1,18 +1,18 @@
-﻿using BrightFocus.Core.Interfaces.Repository;
+﻿
 
 namespace BrightFocus.Data.SeedWorks;
 
 public class UnitOfWork(BrightFocusDbContext context,
     MAuthenticateInfoContext authContext,
     MAuthenticateTokenHelper<Permission> tokenHelper,
-    MTokenInfo mTokenInfo, IMapper mapper) :
+    MTokenInfo mTokenInfo) :
     IUnitOfWork, IDisposable
 {
     private readonly BrightFocusDbContext _context = context;
     private bool _disposed = false;
 
     public ITaskListRepository TaskListRepository { get; private set; }
-        = new TaskListRepository(context, authContext, mapper);
+        = new TaskListRepository(context, authContext);
 
     public IAuthenticateRepository AuthenticateRepository { get; private set; }
     = new AuthenticateRepository<BrightFocusDbContext, Permission>(tokenHelper, context, authContext, mTokenInfo);

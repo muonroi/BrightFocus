@@ -11,5 +11,6 @@
   "UserAlreadyExists": "User already exists",
   "UserAlreadyHasRole": "User already has role",
   "RoleAlreadyHasPermission": "User does not have role",
-  "RolePermissionNotFound": "Role does not have permission"
+  "RolePermissionNotFound": "Role does not have permission",
+  "TaskNotFound": "Task not found"
 }

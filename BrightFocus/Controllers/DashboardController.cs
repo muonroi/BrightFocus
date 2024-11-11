@@ -2,82 +2,60 @@
 
 
 
+
+
+
+
 namespace BrightFocus.Controllers;
 
-public class DashboardController(IMediator mediator, Serilog.ILogger logger
-, IMapper mapper
-, IUnitOfWork unitOfWork) : MControllerBase(mediator, logger)
+[AllowAnonymous]
+public class DashboardController(
+    IMediator mediator,
+    IMapper mapper,
+    Serilog.ILogger logger) : MControllerBase(mediator, logger, mapper)
 {
-
-    [HttpPost("task")]
-    [AllowAnonymous]
+    [HttpPost("task", Name = nameof(CreateTask))]
     public async Task<IActionResult> CreateTask([FromBody] CreateTaskCommand command, CancellationToken cancellationToken)
     {
-        IActionResult result = await SendAsync<CreateTaskCommand, MResponse<bool>>(command, cancellationToken);
-
-        return Ok(result);
+        MResponse<bool> result = await Mediator.Send(command, cancellationToken).ConfigureAwait(false);
+        return result.GetActionResult();
     }
 
-    [HttpGet]
-    public async Task<IActionResult> GetTaskById([FromQuery] Guid id)
+    [HttpGet("task")]
+    public async Task<IActionResult> GetTaskById([FromQuery] GetTaskDetailCommand command, CancellationToken cancellationToken)
     {
-        MResponse<TaskInListDto> response = new();
-        TaskList? task = await unitOfWork.TaskListRepository.GetByGuidAsync(id);
-        if (task == null)
-        {
-            return NotFound();
-        }
-        TaskInListDto result = mapper.Map<TaskList, TaskInListDto>(task);
-        response.Result = result;
-        return Ok(response);
+        MResponse<TaskDetailDto> result = await Mediator.Send(command, cancellationToken).ConfigureAwait(false);
+        return result.GetActionResult();
     }
 
-    [HttpGet("paging")]
-    public async Task<IActionResult> GetTaskListPaging([FromQuery] string keyword, int pageIndex, int pageSize)
+    [HttpGet("task/paging")]
+    public async Task<IActionResult> GetTaskListPaging([FromQuery] GetTaskListCommand command, CancellationToken cancellationToken)
     {
-        MResponse<MPagedResult<TaskInListDto>> result = await unitOfWork.TaskListRepository.GetTaskListPagingAsync(pageIndex, pageSize, keyword);
-        return Ok(result);
+        MResponse<MPagedResult<TaskListDto>> result = await Mediator.Send(command, cancellationToken).ConfigureAwait(false);
+        return result.GetActionResult();
+
     }
 
-    [HttpPost]
-    [Permission<Permission>(Permission.Task_Create)]
-    public async Task<IActionResult> CreateTask([FromBody] CreateOrUpdateTaskRequest request)
+    //[HttpPut("task")]
+    //public async Task<IActionResult> UpdateTask([FromQuery] Guid taskId, [FromBody] CreateOrUpdateTaskRequest request, CancellationToken cancellationToken)
+    //{
+    //    UpdateTaskCommand command = Mapper.Map<UpdateTaskCommand>(request);
+    //    command.TaskId = taskId;
+    //    MResponse<bool> result = await Mediator.Send(command, cancellationToken).ConfigureAwait(false);
+    //    return result.GetActionResult();
+    //}
+
+    [HttpDelete("task")]
+    public async Task<IActionResult> DeleteTask([FromQuery] DeleteTaskCommand command, CancellationToken cancellationToken)
     {
-        TaskList task = mapper.Map<CreateOrUpdateTaskRequest, TaskList>(request);
-
-        _ = unitOfWork.TaskListRepository.Add(task);
-
-        int result = await unitOfWork.CompleteAsync();
-        return result > 0 ? Ok() : BadRequest();
+        MResponse<bool> result = await Mediator.Send(command, cancellationToken).ConfigureAwait(false);
+        return result.GetActionResult();
     }
 
-    [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateTask(Guid id, [FromBody] CreateOrUpdateTaskRequest request)
+    [HttpDelete("task-detail")]
+    public async Task<IActionResult> DeleteTaskDetail([FromQuery] DeleteTaskDetailCommand command, CancellationToken cancellationToken)
     {
-        TaskList? task = await unitOfWork.TaskListRepository.GetByGuidAsync(id);
-        if (task == null)
-        {
-            return NotFound();
-        }
-        _ = mapper.Map(request, task);
-
-        int result = await unitOfWork.CompleteAsync();
-        return result > 0 ? Ok() : BadRequest();
-    }
-
-    [HttpDelete]
-    public async Task<IActionResult> DeleteTask([FromQuery] Guid[] ids)
-    {
-        foreach (Guid id in ids)
-        {
-            TaskList? task = await unitOfWork.TaskListRepository.GetByGuidAsync(id);
-            if (task == null)
-            {
-                return NotFound();
-            }
-            _ = await unitOfWork.TaskListRepository.DeleteAsync(task);
-        }
-        int result = await unitOfWork.CompleteAsync();
-        return result > 0 ? Ok() : BadRequest();
+        MResponse<bool> result = await Mediator.Send(command, cancellationToken).ConfigureAwait(false);
+        return result.GetActionResult();
     }
 }

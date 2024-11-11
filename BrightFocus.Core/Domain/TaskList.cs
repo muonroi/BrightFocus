@@ -48,7 +48,7 @@ public class TaskList : MEntity
     public string Note { get; set; } = string.Empty;
 
     [MaxLength(255)]
-    public string File { get; set; } = string.Empty;
+    public string FileUrl { get; set; } = string.Empty;
 
     public TaskType TaskType { get; set; }
 

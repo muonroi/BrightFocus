@@ -1,7 +1,4 @@
-﻿
-
-
-namespace BrightFocus.Application.Command.Task
+﻿namespace BrightFocus.Application.Command.CreateTask
 {
     public class CreateTaskCommandHandler(IMapper mapper,
         ITaskListRepository taskListRepository,
