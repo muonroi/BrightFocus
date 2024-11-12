@@ -5,11 +5,9 @@ VisualStudioVersion = 17.10.35122.118
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BrightFocus", "BrightFocus\BrightFocus.csproj", "{0D4E69DD-3F69-46D9-938C-35D99CA52908}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrightFocus.Core", "BrightFocus.Core\BrightFocus.Core.csproj", "{CD1645C6-1A00-40DF-80CF-25364A5B27DA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BrightFocus.Core", "BrightFocus.Core\BrightFocus.Core.csproj", "{CD1645C6-1A00-40DF-80CF-25364A5B27DA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrightFocus.Data", "BrightFocus.Data\BrightFocus.Data.csproj", "{D2345475-6A09-478E-A7E2-FA3B7DA2BD97}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Muonroi.BuildingBlock", "..\..\Extensions\MuonroiBuildingBlock\Muonroi.BuildingBlock.csproj", "{F398A242-6797-455E-876B-99D9339C8183}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BrightFocus.Data", "BrightFocus.Data\BrightFocus.Data.csproj", "{D2345475-6A09-478E-A7E2-FA3B7DA2BD97}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +27,6 @@ Global
 		{D2345475-6A09-478E-A7E2-FA3B7DA2BD97}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D2345475-6A09-478E-A7E2-FA3B7DA2BD97}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D2345475-6A09-478E-A7E2-FA3B7DA2BD97}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F398A242-6797-455E-876B-99D9339C8183}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F398A242-6797-455E-876B-99D9339C8183}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F398A242-6797-455E-876B-99D9339C8183}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F398A242-6797-455E-876B-99D9339C8183}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

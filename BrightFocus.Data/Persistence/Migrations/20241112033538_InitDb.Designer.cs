@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BrightFocus.Data.Persistence.Migrations
 {
     [DbContext(typeof(BrightFocusDbContext))]
-    [Migration("20241108145725_InitDb")]
+    [Migration("20241112033538_InitDb")]
     partial class InitDb
     {
         /// <inheritdoc />
@@ -207,7 +207,7 @@ namespace BrightFocus.Data.Persistence.Migrations
                         .HasColumnType("nvarchar")
                         .HasColumnOrder(8);
 
-                    b.Property<string>("File")
+                    b.Property<string>("FileUrl")
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)")
@@ -248,7 +248,6 @@ namespace BrightFocus.Data.Persistence.Migrations
                         .HasColumnOrder(2);
 
                     b.Property<double>("Size")
-                        .HasMaxLength(255)
                         .HasColumnType("double")
                         .HasColumnOrder(4);
 
@@ -263,7 +262,6 @@ namespace BrightFocus.Data.Persistence.Migrations
                         .HasColumnOrder(9);
 
                     b.Property<double>("Weight")
-                        .HasMaxLength(255)
                         .HasColumnType("double")
                         .HasColumnOrder(5);
 
@@ -349,7 +347,7 @@ namespace BrightFocus.Data.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("warehouse");
+                    b.ToTable("Warehouse");
                 });
 
             modelBuilder.Entity("Muonroi.BuildingBlock.External.Entity.Identity.MLanguage", b =>

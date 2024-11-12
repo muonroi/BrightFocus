@@ -6,14 +6,12 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Muonroi.BuildingBlock" Version="1.3.6" />
     <PackageReference Include="System.Text.Json" Version="8.0.5" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\TaskDetails\Response\" />
     <Folder Include="Models\TaskLists\Response\" />
     <Folder Include="Models\Warehouses\Response\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Extensions\MuonroiBuildingBlock\Muonroi.BuildingBlock.csproj" />
   </ItemGroup>
 </Project>

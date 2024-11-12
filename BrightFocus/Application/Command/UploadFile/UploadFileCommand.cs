@@ -1,7 +1,6 @@
-﻿namespace BrightFocus.Application.Command.UploadFile
+﻿namespace BrightFocus.Application.Command.UploadFile;
+
+public class UploadFileCommand : IRequest<MResponse<string>>
 {
-    public class UploadFileCommand : IRequest<MResponse<string>>
-    {
-        public required IFormFile File { get; set; }
-    }
+    public required IFormFile File { get; set; }
 }

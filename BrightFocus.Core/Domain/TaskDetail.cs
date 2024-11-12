@@ -1,54 +1,53 @@
-﻿namespace BrightFocus.Core.Domain
+﻿namespace BrightFocus.Core.Domain;
+
+[Table("TaskDetail")]
+[Index(nameof(ProductName))]
+public class TaskDetail : MEntity
 {
-    [Table("TaskDetail")]
-    [Index(nameof(ProductName))]
-    public class TaskDetail : MEntity
-    {
-        [MaxLength(255)]
-        [Required]
-        [Column(TypeName = "nvarchar")]
-        public string ProductName { get; set; } = string.Empty;
+    [MaxLength(255)]
+    [Required]
+    [Column(TypeName = "nvarchar")]
+    public string ProductName { get; set; } = string.Empty;
 
-        [MaxLength(255)]
-        [Required]
-        [Column(TypeName = "nvarchar")]
-        public string Material { get; set; } = string.Empty;
+    [MaxLength(255)]
+    [Required]
+    [Column(TypeName = "nvarchar")]
+    public string Material { get; set; } = string.Empty;
 
-        [MaxLength(255)]
-        [Required]
-        public double Size { get; set; }
+    [MaxLength(255)]
+    [Required]
+    public double Size { get; set; }
 
-        [MaxLength(255)]
-        [Required]
-        public double FabricMeter { get; set; }
+    [MaxLength(255)]
+    [Required]
+    public double FabricMeter { get; set; }
 
-        [MaxLength(255)]
-        [Required]
-        public double Weight { get; set; }
+    [MaxLength(255)]
+    [Required]
+    public double Weight { get; set; }
 
-        [MaxLength(255)]
-        [Required]
-        public string Color { get; set; } = string.Empty;
+    [MaxLength(255)]
+    [Required]
+    public string Color { get; set; } = string.Empty;
 
-        [MaxLength(255)]
-        [Required]
-        [Column(TypeName = "nvarchar")]
-        public string Employee { get; set; } = string.Empty;
+    [MaxLength(255)]
+    [Required]
+    [Column(TypeName = "nvarchar")]
+    public string Employee { get; set; } = string.Empty;
 
-        [MaxLength(255)]
-        [Required]
-        [Column(TypeName = "nvarchar")]
-        public string Warehouse { get; set; } = string.Empty;
+    [MaxLength(255)]
+    [Required]
+    [Column(TypeName = "nvarchar")]
+    public string Warehouse { get; set; } = string.Empty;
 
-        public DateTime DeadlineDate { get; set; }
+    public DateTime DeadlineDate { get; set; }
 
-        [MaxLength(500)]
-        [Column(TypeName = "nvarchar")]
-        public string Note { get; set; } = string.Empty;
+    [MaxLength(500)]
+    [Column(TypeName = "nvarchar")]
+    public string Note { get; set; } = string.Empty;
 
-        public TaskType TaskType { get; set; }
+    public TaskType TaskType { get; set; }
 
-        [Required]
-        public Guid TaskId { get; set; }
-    }
+    [Required]
+    public Guid TaskId { get; set; }
 }

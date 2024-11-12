@@ -1,6 +1,5 @@
-﻿namespace BrightFocus.Application.Command.CreateTask
+﻿namespace BrightFocus.Application.Command.CreateTask;
+
+public class CreateTaskCommand : CreateOrUpdateTaskRequest, IMapFrom<TaskList>, IRequest<MResponse<bool>>
 {
-    public class CreateTaskCommand : CreateOrUpdateTaskRequest, IMapFrom<TaskList>, IRequest<MResponse<bool>>
-    {
-    }
 }

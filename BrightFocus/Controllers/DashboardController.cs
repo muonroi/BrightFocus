@@ -36,14 +36,14 @@ public class DashboardController(
 
     }
 
-    //[HttpPut("task")]
-    //public async Task<IActionResult> UpdateTask([FromQuery] Guid taskId, [FromBody] CreateOrUpdateTaskRequest request, CancellationToken cancellationToken)
-    //{
-    //    UpdateTaskCommand command = Mapper.Map<UpdateTaskCommand>(request);
-    //    command.TaskId = taskId;
-    //    MResponse<bool> result = await Mediator.Send(command, cancellationToken).ConfigureAwait(false);
-    //    return result.GetActionResult();
-    //}
+    [HttpPut("task")]
+    public async Task<IActionResult> UpdateTask([FromQuery] Guid taskId, [FromBody] CreateOrUpdateTaskRequest request, CancellationToken cancellationToken)
+    {
+        UpdateTaskCommand command = Mapper.Map<UpdateTaskCommand>(request);
+        command.TaskId = taskId;
+        MResponse<bool> result = await Mediator.Send(command, cancellationToken).ConfigureAwait(false);
+        return result.GetActionResult();
+    }
 
     [HttpDelete("task")]
     public async Task<IActionResult> DeleteTask([FromQuery] DeleteTaskCommand command, CancellationToken cancellationToken)
