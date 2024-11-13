@@ -1,6 +1,6 @@
 ﻿namespace BrightFocus.Core.Domain;
 
-[Table("TaskDetail")]
+[Table("TaskDetails")]
 [Index(nameof(ProductName))]
 public class TaskDetail : MEntity
 {
@@ -8,45 +8,46 @@ public class TaskDetail : MEntity
     [Required]
     [Column(TypeName = "nvarchar")]
     public string ProductName { get; set; } = string.Empty;
-
     [MaxLength(255)]
     [Required]
-    [Column(TypeName = "nvarchar")]
     public string Material { get; set; } = string.Empty;
-
     [MaxLength(255)]
     [Required]
-    public double Size { get; set; }
-
+    public string Quantification { get; set; } = string.Empty;
     [MaxLength(255)]
     [Required]
-    public double FabricMeter { get; set; }
-
-    [MaxLength(255)]
-    [Required]
-    public double Weight { get; set; }
-
+    public string Width { get; set; } = string.Empty;
     [MaxLength(255)]
     [Required]
     public string Color { get; set; } = string.Empty;
-
     [MaxLength(255)]
     [Required]
-    [Column(TypeName = "nvarchar")]
+    public string Characteristic { get; set; } = string.Empty;
+    [MaxLength(255)]
+    [Required]
+    public string Quantity { get; set; } = string.Empty;
+    [MaxLength(255)]
+    [Required]
+    public string Factory { get; set; } = string.Empty;
+    [MaxLength(255)]
+    [Required]
+    public string Warehouse { get; set; } = string.Empty;
+    [MaxLength(255)]
+    [Required]
+    public string ReceiptNumber { get; set; } = string.Empty;
+
+    public DateTime? EntryDate { get; set; }
+    [MaxLength(255)]
+    [Required]
     public string Employee { get; set; } = string.Empty;
 
-    [MaxLength(255)]
-    [Required]
-    [Column(TypeName = "nvarchar")]
-    public string Warehouse { get; set; } = string.Empty;
-
     public DateTime DeadlineDate { get; set; }
-
     [MaxLength(500)]
-    [Column(TypeName = "nvarchar")]
-    public string Note { get; set; } = string.Empty;
-
-    public TaskType TaskType { get; set; }
+    [Required]
+    public string FileNumber { get; set; } = string.Empty;
+    [MaxLength(500)]
+    [Required]
+    public string Notes { get; set; } = string.Empty;
 
     [Required]
     public Guid TaskId { get; set; }

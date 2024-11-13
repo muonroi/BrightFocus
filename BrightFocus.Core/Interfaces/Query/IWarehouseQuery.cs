@@ -1,6 +1,6 @@
 ﻿namespace BrightFocus.Core.Interfaces.Query
 {
-    public interface IWarehouseQuery : IMQueries<Warehouse>
+    public interface IWarehouseQuery : IMQueries<InventoryItem>
     {
     }
 }

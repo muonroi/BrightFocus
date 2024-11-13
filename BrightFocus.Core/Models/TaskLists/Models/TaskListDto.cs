@@ -2,6 +2,7 @@
 {
     public class TaskListDto : IMapFrom<TaskList>
     {
+        public Guid EntityId { get; set; }
         public string ProductName { get; set; } = string.Empty;
 
         public string Material { get; set; } = string.Empty;
@@ -12,11 +13,12 @@
 
         public string Color { get; set; } = string.Empty;
 
-        public string Employee { get; set; } = string.Empty;
 
         public string FactoryName { get; set; } = string.Empty;
 
         public string Warehouse { get; set; } = string.Empty;
+        public string Employee { get; set; } = string.Empty;
+
 
         public DateTime DeadlineDate { get; set; }
 

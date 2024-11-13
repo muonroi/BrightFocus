@@ -11,7 +11,7 @@ namespace BrightFocus.Data.Persistence
     {
         public DbSet<TaskList> TaskLists { get; set; }
         public DbSet<TaskDetail> TaskDetails { get; set; }
-        public DbSet<Warehouse> Warehouses { get; set; }
+        public DbSet<InventoryItem> Warehouses { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)

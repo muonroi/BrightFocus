@@ -26,3 +26,4 @@ global using System.Linq;
 global using System.Threading.Tasks;
 global using Microsoft.EntityFrameworkCore.Migrations;
 global using Microsoft.EntityFrameworkCore.Metadata;
+global using System.Reflection.PortableExecutable;

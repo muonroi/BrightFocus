@@ -1,4 +1,6 @@
-﻿namespace BrightFocus.Data.Query;
+﻿
+
+namespace BrightFocus.Data.Query;
 
 public class TaskListQuery(BrightFocusDbContext dbContext, MAuthenticateInfoContext authContext) : MQuery<TaskList>(dbContext, authContext), ITaskListQuery
 {
@@ -23,6 +25,7 @@ public class TaskListQuery(BrightFocusDbContext dbContext, MAuthenticateInfoCont
         List<TaskListDto> taskListDtos = await items
        .Select(taskList => new TaskListDto
        {
+           EntityId = taskList.EntityId,
            ProductName = taskList.ProductName,
            Material = taskList.Material,
            Size = taskList.Size,
@@ -34,19 +37,24 @@ public class TaskListQuery(BrightFocusDbContext dbContext, MAuthenticateInfoCont
            DeadlineDate = taskList.DeadlineDate,
            Note = taskList.Note,
            FileUrl = taskList.FileUrl,
+
            TaskDetails = dbContext.TaskDetails
+
                .Where(td => td.TaskId == taskList.EntityId)
                .Select(td => new TaskDetailDto
                {
+                   EntityId = td.EntityId,
                    ProductName = td.ProductName,
                    Material = td.Material,
-                   Size = td.Size,
-                   Weight = td.Weight,
+                   Quantification = td.Quantification,
+                   Width = td.Width,
                    Color = td.Color,
+                   Characteristic = td.Characteristic,
+                   Quantity = td.Quantity,
                    Employee = td.Employee,
                    Warehouse = td.Warehouse,
                    DeadlineDate = td.DeadlineDate,
-                   Note = td.Note,
+                   TaskId = td.TaskId
                }).ToList()
        }).ToListAsync();
 

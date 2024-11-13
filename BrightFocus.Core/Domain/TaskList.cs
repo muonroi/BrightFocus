@@ -2,7 +2,7 @@
 
 namespace BrightFocus.Core.Domain;
 
-[Table("TaskList")]
+[Table("TaskLists")]
 [Index(nameof(ProductName))]
 public class TaskList : MEntity
 {
