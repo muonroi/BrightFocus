@@ -7,11 +7,10 @@
 
 
 
-namespace BrightFocus.Data.Repository
+namespace BrightFocus.Data.Repository;
+
+public class TaskListRepository(BrightFocusDbContext dbContext, MAuthenticateInfoContext authContext) : MRepository<TaskList>(dbContext, authContext), ITaskListRepository
 {
-    public class TaskListRepository(BrightFocusDbContext dbContext, MAuthenticateInfoContext authContext) : MRepository<TaskList>(dbContext, authContext), ITaskListRepository
-    {
 
 
-    }
 }
