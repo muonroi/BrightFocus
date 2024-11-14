@@ -415,6 +415,7 @@ namespace BrightFocus.Data.Persistence.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     EntityId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    TaskName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     ProductName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Material = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Size = table.Column<double>(type: "double", nullable: false),
@@ -486,9 +487,9 @@ namespace BrightFocus.Data.Persistence.Migrations
                 column: "ProductName");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TaskLists_ProductName",
+                name: "IX_TaskLists_ProductName_TaskName",
                 table: "TaskLists",
-                column: "ProductName");
+                columns: new[] { "ProductName", "TaskName" });
         }
 
         /// <inheritdoc />

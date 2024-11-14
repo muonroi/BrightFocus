@@ -4,6 +4,8 @@ public class CreateOrUpdateTaskRequest : IMapFrom<TaskList>
 {
     public Guid? EntityId { get; set; }
 
+    public string TaskName { get; set; } = string.Empty;
+
     public string ProductName { get; set; } = string.Empty;
 
     public string Material { get; set; } = string.Empty;
