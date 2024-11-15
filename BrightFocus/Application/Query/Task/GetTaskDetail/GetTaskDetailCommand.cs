@@ -1,7 +1,6 @@
-﻿namespace BrightFocus.Application.Query.Task.GetTaskDetail
+﻿namespace BrightFocus.Application.Query.Task.GetTaskDetail;
+
+public class GetTaskDetailCommand : IRequest<MResponse<TaskListDto>>
 {
-    public class GetTaskDetailCommand : IRequest<MResponse<TaskDetailDto>>
-    {
-        public Guid TaskId { get; set; }
-    }
+    public Guid TaskId { get; set; }
 }

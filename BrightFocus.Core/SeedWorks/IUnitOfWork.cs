@@ -2,6 +2,8 @@
 
 
 
+using BrightFocus.Core.Interfaces.Repository.Task;
+
 namespace BrightFocus.Core.SeedWorks
 {
     public interface IUnitOfWork

@@ -1,6 +1,6 @@
 ﻿namespace BrightFocus.Core.Models.TaskDetails.Request
 {
-    public class CreateOrUpdateTaskDetail : IMapFrom<TaskDetail>
+    public class CreateOrUpdateTaskDetail : IMapFrom<TaskDetailEntity>
     {
         public string ProductName { get; set; } = string.Empty;
 

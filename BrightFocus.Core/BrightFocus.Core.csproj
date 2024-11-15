@@ -12,6 +12,6 @@
   <ItemGroup>
     <Folder Include="Models\TaskDetails\Response\" />
     <Folder Include="Models\TaskLists\Response\" />
-    <Folder Include="Models\Warehouses\Response\" />
+    <Folder Include="Models\MaterialWarehouses\Response\" />
   </ItemGroup>
 </Project>

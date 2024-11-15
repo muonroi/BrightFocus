@@ -6,6 +6,11 @@
 
 
 
+
+
+
+
+
 namespace BrightFocus.Controllers;
 
 [AllowAnonymous]
@@ -24,7 +29,7 @@ public class DashboardController(
     [HttpGet("task")]
     public async Task<IActionResult> GetTaskById([FromQuery] GetTaskDetailCommand command, CancellationToken cancellationToken)
     {
-        MResponse<TaskDetailDto> result = await Mediator.Send(command, cancellationToken).ConfigureAwait(false);
+        MResponse<TaskListDto> result = await Mediator.Send(command, cancellationToken).ConfigureAwait(false);
         return result.GetActionResult();
     }
 

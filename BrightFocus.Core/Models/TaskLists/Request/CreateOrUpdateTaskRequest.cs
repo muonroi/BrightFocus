@@ -1,6 +1,6 @@
 ﻿namespace BrightFocus.Core.Models.TaskLists.Request;
 
-public class CreateOrUpdateTaskRequest : IMapFrom<TaskList>
+public class CreateOrUpdateTaskRequest : IMapFrom<TaskListEntity>
 {
     public Guid? EntityId { get; set; }
 

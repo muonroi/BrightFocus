@@ -1,5 +1,7 @@
 ﻿
 
+using BrightFocus.Core.Interfaces.Repository.Task;
+
 namespace BrightFocus.Data.SeedWorks;
 
 public class UnitOfWork(BrightFocusDbContext context,
