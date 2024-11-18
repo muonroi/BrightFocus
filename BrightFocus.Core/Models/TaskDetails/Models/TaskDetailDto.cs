@@ -28,13 +28,7 @@ public class TaskDetailDto : IMapFrom<TaskDetailEntity>
 
     public string UnitQuantity { get; set; } = string.Empty;
 
-
-    public string Factory { get; set; } = string.Empty;
-
     public string Warehouse { get; set; } = string.Empty;
-
-
-    public string? ReceiptNumber { get; set; } = string.Empty;
 
     public DateTime? EntryDate { get; set; }
 

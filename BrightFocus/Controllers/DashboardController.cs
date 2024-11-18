@@ -29,10 +29,25 @@ public class DashboardController(
     }
 
     [HttpPut("task")]
-    public async Task<IActionResult> UpdateTask([FromQuery] Guid taskId, [FromBody] CreateOrUpdateTaskRequest request, CancellationToken cancellationToken)
+    public async Task<IActionResult> UpdateTask([FromBody] CreateOrUpdateTaskRequest request, CancellationToken cancellationToken)
     {
-        UpdateTaskCommand command = Mapper.Map<UpdateTaskCommand>(request);
-        command.TaskId = taskId;
+        UpdateTaskCommand command = new()
+        {
+            EntityId = request.EntityId,
+            TaskName = request.TaskName,
+            ProductName = request.ProductName,
+            Material = request.Material,
+            Size = request.Size,
+            Weight = request.Weight,
+            Color = request.Color,
+            Employee = request.Employee,
+            FactoryName = request.FactoryName,
+            Warehouse = request.Warehouse,
+            DeadlineDate = request.DeadlineDate,
+            Note = request.Note,
+            TaskDetails = request.TaskDetails,
+            FileUrl = request.FileUrl
+        };
         MResponse<bool> result = await Mediator.Send(command, cancellationToken).ConfigureAwait(false);
         return result.GetActionResult();
     }

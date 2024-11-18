@@ -19,8 +19,14 @@ public class UpdateTaskCommandHandler(IMapper mapper, MAuthenticateInfoContext t
             result.AddResultFromErrorList(taskEntity.ErrorMessages);
             return result;
         }
+        if (request.EntityId is null)
+        {
+            result.StatusCode = StatusCodes.Status400BadRequest;
+            result.AddResultFromErrorList(taskEntity.ErrorMessages);
+            return result;
+        }
 
-        TaskListEntity? existTask = await taskListQuery.GetByGuidAsync(request.TaskId);
+        TaskListEntity? existTask = await taskListQuery.GetByGuidAsync(request.EntityId ?? Guid.Empty);
         if (existTask is null)
         {
             result.StatusCode = StatusCodes.Status404NotFound;
@@ -36,22 +42,25 @@ public class UpdateTaskCommandHandler(IMapper mapper, MAuthenticateInfoContext t
 
             if (request.TaskDetails is not null)
             {
-                List<TaskDetailEntity>? taskDetails = await taskDetailQuery.GetTaskDetailByTaskNoAsync(request.TaskId);
+                List<TaskDetailEntity>? taskDetails = await taskDetailQuery.GetTaskDetailByTaskNoAsync(request.EntityId ?? Guid.Empty);
 
-                if (taskDetails is null)
-                {
-                    result.StatusCode = StatusCodes.Status404NotFound;
-                    result.AddErrorMessage(nameof(AllTaskError.NotFound));
-                    return result;
-                }
+                taskDetails ??= [];
 
-                foreach (TaskDetailEntity taskDetail in taskDetails)
+                foreach (TaskDetailDto detailDto in request.TaskDetails)
                 {
-                    TaskDetailDto? matchedDetail = request.TaskDetails.FirstOrDefault(x => x.EntityId == taskDetail.EntityId);
+                    TaskDetailEntity? matchedDetail = taskDetails.FirstOrDefault(x => x.EntityId == detailDto.EntityId);
+
                     if (matchedDetail is not null)
                     {
-                        _ = Mapper.Map(matchedDetail, taskDetail);
-                        _ = taskDetailRepository.Update(taskDetail);
+                        _ = Mapper.Map(detailDto, matchedDetail);
+                        matchedDetail.TaskId = existTask.EntityId;
+                        _ = taskDetailRepository.Update(matchedDetail);
+                    }
+                    else
+                    {
+                        TaskDetailEntity newDetail = Mapper.Map<TaskDetailEntity>(detailDto);
+                        newDetail.TaskId = existTask.EntityId;
+                        _ = taskDetailRepository.Add(newDetail);
                     }
                 }
             }
@@ -65,4 +74,5 @@ public class UpdateTaskCommandHandler(IMapper mapper, MAuthenticateInfoContext t
 
         return result;
     }
+
 }
