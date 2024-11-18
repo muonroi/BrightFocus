@@ -56,7 +56,6 @@ public class TaskListQuery(BrightFocusDbContext dbContext, MAuthenticateInfoCont
                 .Select(td => new TaskDetailDto
                 {
                     EntityId = td.EntityId,
-                    ProductCode = td.ProductCode,
                     ProductName = td.ProductName,
                     Material = td.Material,
                     Quantification = td.Quantification,

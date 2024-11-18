@@ -1,4 +1,6 @@
-﻿namespace BrightFocus.Application.Query.MaterialWarehouse.GetMaterialWarehouseListCommand
+﻿
+
+namespace BrightFocus.Application.Query.MaterialWarehouse.GetMaterialWarehouseListCommand
 {
     public class GetMaterialWarehouseListCommandHandler(IMapper mapper, MAuthenticateInfoContext tokenInfo, IAuthenticateRepository authenticateRepository, Serilog.ILogger logger, IMediator mediator, MPaginationConfig paginationConfig,
         IMaterialWarehouseQuery materialWarehouseQuery) :
@@ -7,8 +9,9 @@
     {
         public async Task<MResponse<MPagedResult<MaterialWarehousesDto>>> Handle(GetMaterialWarehouseListCommand request, CancellationToken cancellationToken)
         {
+
             MResponse<MPagedResult<MaterialWarehousesDto>>? pagedResult = await materialWarehouseQuery.GetMaterialListPagingAsync(
-                request.Page, DefaultPageSize, request.Search, request.SortBy, request.SortOrder);
+                request.Page, request.PageSize ?? DefaultPageSize, request.Search, request.SortBy, request.SortOrder);
             if (!pagedResult.IsOK)
             {
                 pagedResult.StatusCode = StatusCodes.Status404NotFound;

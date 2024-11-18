@@ -6,8 +6,6 @@ public class TaskDetailDto : IMapFrom<TaskDetailEntity>
 {
     public Guid? EntityId { get; set; }
 
-    public string ProductCode { get; set; } = string.Empty;
-
     public string ProductName { get; set; } = string.Empty;
 
     public string Material { get; set; } = string.Empty;
@@ -20,9 +18,9 @@ public class TaskDetailDto : IMapFrom<TaskDetailEntity>
 
     public string UnitWidth { get; set; } = string.Empty;
 
-    public string Color { get; set; } = string.Empty;
+    public string? Color { get; set; } = string.Empty;
 
-    public string Characteristic { get; set; } = string.Empty;
+    public string? Characteristic { get; set; } = string.Empty;
 
 
     public double Quantity { get; set; }

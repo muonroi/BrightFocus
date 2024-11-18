@@ -57,3 +57,4 @@ global using System.Threading;
 global using Log = Serilog.Log;
 global using Muonroi.BuildingBlock.External.Entity.DataSample;
 global using Microsoft.AspNetCore.Diagnostics;
+global using System.Net.WebSockets;
