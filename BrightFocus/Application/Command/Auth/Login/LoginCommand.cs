@@ -1,4 +1,4 @@
-﻿namespace BrightFocus.Application.Command.Login
+﻿namespace BrightFocus.Application.Command.Auth.Login
 {
     public class LoginCommand : IRequest<MResponse<LoginResponseModel>>
     {

@@ -1,9 +1,8 @@
 global using BrightFocus.Core.Domain;
 global using BrightFocus.Core.Enums;
-global using BrightFocus.Core.Interfaces.Repository;
+global using BrightFocus.Core.Models.MaterialWarehouses.Models;
 global using BrightFocus.Core.Models.TaskDetails.Models;
 global using BrightFocus.Core.Models.TaskLists.Models;
-global using Microsoft.AspNetCore.Http;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.Extensions.DependencyInjection;
 global using Muonroi.BuildingBlock.External.DI;
@@ -16,6 +15,3 @@ global using System.Collections.Generic;
 global using System.ComponentModel.DataAnnotations;
 global using System.ComponentModel.DataAnnotations.Schema;
 global using System.Threading.Tasks;
-global using System.Linq;
-global using System.Text;
-global using BrightFocus.Core.Models.MaterialWarehouses.Models;

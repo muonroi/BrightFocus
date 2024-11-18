@@ -1,17 +1,4 @@
-﻿
-
-
-
-
-
-
-
-
-
-
-
-
-namespace BrightFocus.Controllers;
+﻿namespace BrightFocus.Controllers;
 
 [AllowAnonymous]
 public class DashboardController(

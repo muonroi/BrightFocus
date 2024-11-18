@@ -8,44 +8,38 @@ public class MaterialWarehouseQuery(BrightFocusDbContext dbContext, MAuthenticat
     {
         MResponse<MPagedResult<MaterialWarehousesDto>> result = new();
 
-        IQueryable<MaterialWarehouseEntity> query = dbContext.MaterialWarehouses.AsQueryable();
 
-        if (!string.IsNullOrEmpty(keyword))
+        MPagedResult<MaterialWarehousesDto> pagedResult = await GetPagedAsync(
+            Queryable,
+            pageIndex,
+            pageSize,
+            materialWarehouse => new MaterialWarehousesDto()
+            {
+                EntityId = materialWarehouse.EntityId,
+                ProductCode = materialWarehouse.ProductCode,
+                ProductName = materialWarehouse.ProductName,
+                Material = materialWarehouse.Material,
+                Quantification = materialWarehouse.Quantification,
+                UnitQuantification = materialWarehouse.UnitQuantification,
+                Width = materialWarehouse.Width,
+                UnitWidth = materialWarehouse.UnitWidth,
+                Color = materialWarehouse.Color,
+                Characteristic = materialWarehouse.Characteristic,
+                Quantity = materialWarehouse.Quantity,
+                UnitQuantity = materialWarehouse.UnitQuantity,
+                Warehouse = materialWarehouse.Warehouse,
+            },
+            keyword,
+        x => string.IsNullOrEmpty(keyword) || x.ProductName.Contains(keyword),
+        queryable =>
         {
-            query = query.Where(x => x.ProductName.Contains(keyword));
-        }
+            string validSortBy = string.IsNullOrWhiteSpace(sortBy) ? "CreationTime" : sortBy;
+            return sortOrder.Equals("desc", StringComparison.CurrentCultureIgnoreCase)
+                ? queryable.OrderByDescending(x => EF.Property<object>(x, validSortBy))
+                : queryable.OrderBy(x => EF.Property<object>(x, validSortBy));
+        });
 
-        int rowCount = await query.CountAsync();
-
-        IQueryable<MaterialWarehouseEntity> items = query
-            .OrderBy(x => x.ProductName)
-            .Skip((pageIndex - 1) * pageSize)
-            .Take(pageSize);
-
-        List<MaterialWarehousesDto> taskListDtos = await items
-       .Select(materialWarehouse => new MaterialWarehousesDto()
-       {
-           ProductName = materialWarehouse.ProductName,
-           Material = materialWarehouse.Material,
-           Quantification = materialWarehouse.Quantification,
-           UnitQuantification = materialWarehouse.UnitQuantification,
-           Width = materialWarehouse.Width,
-           UnitWidth = materialWarehouse.UnitWidth,
-           Color = materialWarehouse.Color,
-           Characteristic = materialWarehouse.Characteristic,
-           Quantity = materialWarehouse.Quantity,
-           UnitQuantity = materialWarehouse.UnitQuantity,
-           Warehouse = materialWarehouse.Warehouse,
-       }).ToListAsync();
-
-        MPagedResult<MaterialWarehousesDto> data = new()
-        {
-            CurrentPage = pageIndex,
-            PageSize = pageSize,
-            RowCount = rowCount,
-            Items = taskListDtos
-        };
-        result.Result = data;
+        result.Result = pagedResult;
         return result;
     }
 }

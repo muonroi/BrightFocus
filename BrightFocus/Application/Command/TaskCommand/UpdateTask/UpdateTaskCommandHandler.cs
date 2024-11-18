@@ -2,6 +2,7 @@
 
 public class UpdateTaskCommandHandler(IMapper mapper, MAuthenticateInfoContext tokenInfo, IAuthenticateRepository authenticateRepository, Serilog.ILogger logger, IMediator mediator, MPaginationConfig paginationConfig,
     ITaskListRepository taskListRepository,
+    ITaskListQuery taskListQuery,
     ITaskDetailRepository taskDetailRepository,
     ITaskDetailQuery taskDetailQuery) :
     BaseCommandHandler(mapper, tokenInfo, authenticateRepository, logger, mediator, paginationConfig),
@@ -19,7 +20,7 @@ public class UpdateTaskCommandHandler(IMapper mapper, MAuthenticateInfoContext t
             return result;
         }
 
-        TaskListEntity? existTask = await taskListRepository.GetByGuidAsync(request.TaskId);
+        TaskListEntity? existTask = await taskListQuery.GetByGuidAsync(request.TaskId);
         if (existTask is null)
         {
             result.StatusCode = StatusCodes.Status404NotFound;

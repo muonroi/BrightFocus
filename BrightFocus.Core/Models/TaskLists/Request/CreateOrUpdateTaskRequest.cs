@@ -24,9 +24,9 @@ public class CreateOrUpdateTaskRequest : IMapFrom<TaskListEntity>
 
     public DateTime DeadlineDate { get; set; }
 
-    public string Note { get; set; } = string.Empty;
+    public string? Note { get; set; } = string.Empty;
 
     public IEnumerable<TaskDetailDto> TaskDetails { get; set; } = [];
 
-    public string FileUrl { get; set; } = string.Empty;
+    public string? FileUrl { get; set; } = string.Empty;
 }

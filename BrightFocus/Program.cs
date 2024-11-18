@@ -2,6 +2,8 @@
 
 
 
+
+
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 Assembly assembly = Assembly.GetExecutingAssembly();
 ConfigurationManager configuration = builder.Configuration;
@@ -27,12 +29,11 @@ try
     _ = services.AddValidateBearerToken<MTokenInfo, Permission>(configuration);
     _ = services.AddDbContextConfigure<BrightFocusDbContext, Permission>(configuration);
     _ = services.AddCors(configuration);
-    _ = services.AddScoped<IUnitOfWork, UnitOfWork>();
     _ = services.AddPermissionFilter<Permission>();
     _ = services.ConfigureMapper();
     WebApplication app = builder.Build();
-    _ = app.UseCors("MAllowDomains");
     _ = app.UseDefaultMiddleware<BrightFocusDbContext, Permission>();
+    _ = app.UseCors("MAllowDomains");
     _ = app.AddLocalization(assembly);
     _ = app.UseRouting();
     _ = app.UseAuthentication();

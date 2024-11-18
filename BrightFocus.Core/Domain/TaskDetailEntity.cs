@@ -5,6 +5,11 @@
 public class TaskDetailEntity : MEntity
 {
     /// <summary>
+    /// Code of the product
+    /// </summary>
+    public string ProductCode { get; set; } = string.Empty;
+
+    /// <summary>
     /// Name of the product (supports Vietnamese characters, max 255 characters)
     /// </summary>
     [MaxLength(255)]
@@ -24,7 +29,7 @@ public class TaskDetailEntity : MEntity
     /// Quantification value as integer (e.g., quantity in numeric terms)
     /// </summary>
     [Required]
-    public int Quantification { get; set; }
+    public double Quantification { get; set; }
 
     /// <summary>
     /// Unit of quantification (e.g., kg, liters), stored as varchar
@@ -37,7 +42,7 @@ public class TaskDetailEntity : MEntity
     /// Width of the material in integer units (e.g., cm or mm)
     /// </summary>
     [Required]
-    public int Width { get; set; }
+    public double Width { get; set; }
 
     /// <summary>
     /// Unit of width (e.g., cm, inches), stored as varchar
@@ -64,7 +69,7 @@ public class TaskDetailEntity : MEntity
     /// Quantity of material available as integer
     /// </summary>
     [Required]
-    public int Quantity { get; set; }
+    public double Quantity { get; set; }
 
     /// <summary>
     /// Unit of quantity (e.g., pieces, boxes), stored as varchar

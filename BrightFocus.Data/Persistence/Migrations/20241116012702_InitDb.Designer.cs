@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BrightFocus.Data.Persistence.Migrations
 {
     [DbContext(typeof(BrightFocusDbContext))]
-    [Migration("20241115054201_InitDb")]
+    [Migration("20241116012702_InitDb")]
     partial class InitDb
     {
         /// <inheritdoc />
@@ -20,7 +20,7 @@ namespace BrightFocus.Data.Persistence.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.10")
+                .HasAnnotation("ProductVersion", "8.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
@@ -38,41 +38,41 @@ namespace BrightFocus.Data.Persistence.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)")
-                        .HasColumnOrder(9);
+                        .HasColumnOrder(10);
 
                     b.Property<string>("Color")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)")
-                        .HasColumnOrder(8);
+                        .HasColumnOrder(9);
 
                     b.Property<double>("CreatedDateTS")
                         .HasColumnType("double")
-                        .HasColumnOrder(29);
+                        .HasColumnOrder(30);
 
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime(6)")
-                        .HasColumnOrder(33);
+                        .HasColumnOrder(34);
 
                     b.Property<Guid>("CreatorUserId")
                         .HasColumnType("char(36)")
-                        .HasColumnOrder(34);
+                        .HasColumnOrder(35);
 
                     b.Property<DateTime>("DeadlineDate")
                         .HasColumnType("datetime")
-                        .HasColumnOrder(17);
+                        .HasColumnOrder(18);
 
                     b.Property<double?>("DeletedDateTS")
                         .HasColumnType("double")
-                        .HasColumnOrder(31);
+                        .HasColumnOrder(32);
 
                     b.Property<Guid?>("DeletedUserId")
                         .HasColumnType("char(36)")
-                        .HasColumnOrder(38);
+                        .HasColumnOrder(39);
 
                     b.Property<DateTime?>("DeletionTime")
                         .HasColumnType("datetime(6)")
-                        .HasColumnOrder(37);
+                        .HasColumnOrder(38);
 
                     b.Property<Guid>("EntityId")
                         .HasColumnType("char(36)")
@@ -80,95 +80,101 @@ namespace BrightFocus.Data.Persistence.Migrations
 
                     b.Property<DateTime?>("EntryDate")
                         .HasColumnType("datetime")
-                        .HasColumnOrder(15);
+                        .HasColumnOrder(16);
 
                     b.Property<string>("Factory")
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)")
-                        .HasColumnOrder(12);
+                        .HasColumnOrder(13);
 
                     b.Property<string>("FileNumber")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)")
-                        .HasColumnOrder(16);
+                        .HasColumnOrder(17);
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("tinyint(1)")
-                        .HasColumnOrder(32);
+                        .HasColumnOrder(33);
 
                     b.Property<DateTime?>("LastModificationTime")
                         .HasColumnType("datetime(6)")
-                        .HasColumnOrder(35);
+                        .HasColumnOrder(36);
 
                     b.Property<double?>("LastModificationTimeTs")
                         .HasColumnType("double")
-                        .HasColumnOrder(30);
+                        .HasColumnOrder(31);
 
                     b.Property<Guid?>("LastModificationUserId")
                         .HasColumnType("char(36)")
-                        .HasColumnOrder(36);
+                        .HasColumnOrder(37);
 
                     b.Property<string>("Material")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)")
-                        .HasColumnOrder(3);
+                        .HasColumnOrder(4);
 
                     b.Property<string>("Note")
                         .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)")
-                        .HasColumnOrder(18);
+                        .HasColumnOrder(19);
+
+                    b.Property<string>("ProductCode")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
+                        .HasColumnOrder(2);
 
                     b.Property<string>("ProductName")
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)")
-                        .HasColumnOrder(2);
+                        .HasColumnOrder(3);
 
-                    b.Property<int>("Quantification")
-                        .HasColumnType("int")
-                        .HasColumnOrder(4);
+                    b.Property<double>("Quantification")
+                        .HasColumnType("double")
+                        .HasColumnOrder(5);
 
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int")
-                        .HasColumnOrder(10);
+                    b.Property<double>("Quantity")
+                        .HasColumnType("double")
+                        .HasColumnOrder(11);
 
                     b.Property<string>("ReceiptNumber")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)")
-                        .HasColumnOrder(14);
+                        .HasColumnOrder(15);
 
                     b.Property<string>("UnitQuantification")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)")
-                        .HasColumnOrder(5);
+                        .HasColumnOrder(6);
 
                     b.Property<string>("UnitQuantity")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)")
-                        .HasColumnOrder(11);
+                        .HasColumnOrder(12);
 
                     b.Property<string>("UnitWidth")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)")
-                        .HasColumnOrder(7);
+                        .HasColumnOrder(8);
 
                     b.Property<string>("Warehouse")
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)")
-                        .HasColumnOrder(13);
+                        .HasColumnOrder(14);
 
-                    b.Property<int>("Width")
-                        .HasColumnType("int")
-                        .HasColumnOrder(6);
+                    b.Property<double>("Width")
+                        .HasColumnType("double")
+                        .HasColumnOrder(7);
 
                     b.HasKey("Id");
 
@@ -190,47 +196,47 @@ namespace BrightFocus.Data.Persistence.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)")
-                        .HasColumnOrder(9);
+                        .HasColumnOrder(10);
 
                     b.Property<string>("Color")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)")
-                        .HasColumnOrder(8);
+                        .HasColumnOrder(9);
 
                     b.Property<double>("CreatedDateTS")
                         .HasColumnType("double")
-                        .HasColumnOrder(31);
+                        .HasColumnOrder(32);
 
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime(6)")
-                        .HasColumnOrder(35);
+                        .HasColumnOrder(36);
 
                     b.Property<Guid>("CreatorUserId")
                         .HasColumnType("char(36)")
-                        .HasColumnOrder(36);
+                        .HasColumnOrder(37);
 
                     b.Property<DateTime>("DeadlineDate")
                         .HasColumnType("datetime")
-                        .HasColumnOrder(18);
+                        .HasColumnOrder(19);
 
                     b.Property<double?>("DeletedDateTS")
                         .HasColumnType("double")
-                        .HasColumnOrder(33);
+                        .HasColumnOrder(34);
 
                     b.Property<Guid?>("DeletedUserId")
                         .HasColumnType("char(36)")
-                        .HasColumnOrder(40);
+                        .HasColumnOrder(41);
 
                     b.Property<DateTime?>("DeletionTime")
                         .HasColumnType("datetime(6)")
-                        .HasColumnOrder(39);
+                        .HasColumnOrder(40);
 
                     b.Property<string>("Employee")
                         .IsRequired()
                         .HasMaxLength(150)
                         .HasColumnType("varchar(150)")
-                        .HasColumnOrder(17);
+                        .HasColumnOrder(18);
 
                     b.Property<Guid>("EntityId")
                         .HasColumnType("char(36)")
@@ -238,99 +244,104 @@ namespace BrightFocus.Data.Persistence.Migrations
 
                     b.Property<DateTime?>("EntryDate")
                         .HasColumnType("datetime")
-                        .HasColumnOrder(15);
+                        .HasColumnOrder(16);
 
                     b.Property<string>("Factory")
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)")
-                        .HasColumnOrder(12);
+                        .HasColumnOrder(13);
 
                     b.Property<string>("FileNumber")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)")
-                        .HasColumnOrder(16);
+                        .HasColumnOrder(17);
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("tinyint(1)")
-                        .HasColumnOrder(34);
+                        .HasColumnOrder(35);
 
                     b.Property<DateTime?>("LastModificationTime")
                         .HasColumnType("datetime(6)")
-                        .HasColumnOrder(37);
+                        .HasColumnOrder(38);
 
                     b.Property<double?>("LastModificationTimeTs")
                         .HasColumnType("double")
-                        .HasColumnOrder(32);
+                        .HasColumnOrder(33);
 
                     b.Property<Guid?>("LastModificationUserId")
                         .HasColumnType("char(36)")
-                        .HasColumnOrder(38);
+                        .HasColumnOrder(39);
 
                     b.Property<string>("Material")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)")
-                        .HasColumnOrder(3);
+                        .HasColumnOrder(4);
 
                     b.Property<string>("Note")
                         .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)")
-                        .HasColumnOrder(19);
+                        .HasColumnOrder(20);
+
+                    b.Property<string>("ProductCode")
+                        .IsRequired()
+                        .HasColumnType("longtext")
+                        .HasColumnOrder(2);
 
                     b.Property<string>("ProductName")
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)")
-                        .HasColumnOrder(2);
+                        .HasColumnOrder(3);
 
-                    b.Property<int>("Quantification")
-                        .HasColumnType("int")
-                        .HasColumnOrder(4);
+                    b.Property<double>("Quantification")
+                        .HasColumnType("double")
+                        .HasColumnOrder(5);
 
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int")
-                        .HasColumnOrder(10);
+                    b.Property<double>("Quantity")
+                        .HasColumnType("double")
+                        .HasColumnOrder(11);
 
                     b.Property<string>("ReceiptNumber")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)")
-                        .HasColumnOrder(14);
+                        .HasColumnOrder(15);
 
                     b.Property<Guid>("TaskId")
                         .HasColumnType("char(36)")
-                        .HasColumnOrder(20);
+                        .HasColumnOrder(21);
 
                     b.Property<string>("UnitQuantification")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)")
-                        .HasColumnOrder(5);
+                        .HasColumnOrder(6);
 
                     b.Property<string>("UnitQuantity")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)")
-                        .HasColumnOrder(11);
+                        .HasColumnOrder(12);
 
                     b.Property<string>("UnitWidth")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)")
-                        .HasColumnOrder(7);
+                        .HasColumnOrder(8);
 
                     b.Property<string>("Warehouse")
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)")
-                        .HasColumnOrder(13);
+                        .HasColumnOrder(14);
 
-                    b.Property<int>("Width")
-                        .HasColumnType("int")
-                        .HasColumnOrder(6);
+                    b.Property<double>("Width")
+                        .HasColumnType("double")
+                        .HasColumnOrder(7);
 
                     b.HasKey("Id");
 

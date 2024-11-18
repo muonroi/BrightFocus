@@ -24,6 +24,8 @@ public class TaskListDto : IMapFrom<TaskListEntity>
 
     public DateTime DeadlineDate { get; set; }
 
+    public DateTime CreationTime { get; set; }
+
     public string Note { get; set; } = string.Empty;
 
     public string? FileUrl { get; set; }

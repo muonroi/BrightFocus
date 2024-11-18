@@ -1,17 +1,21 @@
 ﻿namespace BrightFocus.Core.Models.MaterialWarehouses.Models;
 
-public class MaterialWarehousesDto
+public class MaterialWarehousesDto : IMapFrom<MaterialWarehouseEntity>
 {
+    public Guid EntityId { get; set; }
+
+    public string ProductCode { get; set; } = string.Empty;
+
     public string ProductName { get; set; } = string.Empty;
 
     public string Material { get; set; } = string.Empty;
 
-    public int Quantification { get; set; }
+    public double Quantification { get; set; }
 
 
     public string UnitQuantification { get; set; } = string.Empty;
 
-    public int Width { get; set; }
+    public double Width { get; set; }
 
     public string UnitWidth { get; set; } = string.Empty;
 
@@ -20,7 +24,7 @@ public class MaterialWarehousesDto
     public string Characteristic { get; set; } = string.Empty;
 
 
-    public int Quantity { get; set; }
+    public double Quantity { get; set; }
 
 
     public string UnitQuantity { get; set; } = string.Empty;

@@ -31,12 +31,12 @@ public class DeleteTaskCommandHandler(
 
         await taskListRepository.ExecuteTransactionAsync(async () =>
         {
-            List<TaskDetailEntity> taskDetails = await taskDetailQuery.GetTaskDetailsByTaskIdsAsync(foundTaskIds);
-            await taskDetailRepository.DeleteBatchAsync(taskDetails);
-            await taskListRepository.DeleteBatchAsync(allTasks);
+            List<TaskDetailEntity> taskDetails = await taskDetailQuery.GetByConditionAsync(x => foundTaskIds.Contains(x.TaskId));
+            _ = await taskDetailRepository.DeleteBatchAsync(x => taskDetails.Contains(x));
+            _ = await taskListRepository.DeleteBatchAsync(x => allTasks.Contains(x));
 
-            await taskListRepository.UnitOfWork.SaveChangesAsync();
-            await taskDetailRepository.UnitOfWork.SaveChangesAsync();
+            _ = await taskListRepository.UnitOfWork.SaveChangesAsync();
+            _ = await taskDetailRepository.UnitOfWork.SaveChangesAsync();
 
             result.Result = true;
             return result;

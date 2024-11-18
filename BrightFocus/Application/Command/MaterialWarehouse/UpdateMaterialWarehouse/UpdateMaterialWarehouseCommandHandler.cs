@@ -7,7 +7,8 @@
 namespace BrightFocus.Application.Command.MaterialWarehouse.UpdateMaterialWarehouse;
 
 public class UpdateMaterialWarehouseCommandHandler(IMapper mapper, MAuthenticateInfoContext tokenInfo, IAuthenticateRepository authenticateRepository, Serilog.ILogger logger, IMediator mediator, MPaginationConfig paginationConfig,
-    IMaterialWarehouseRepository materialWarehouseRepository) :
+    IMaterialWarehouseRepository materialWarehouseRepository,
+    IMaterialWarehouseQuery materialWarehouseQuery) :
     BaseCommandHandler(mapper, tokenInfo, authenticateRepository, logger, mediator, paginationConfig),
     IRequestHandler<UpdateMaterialWarehouseCommand, MResponse<bool>>
 {
@@ -23,7 +24,7 @@ public class UpdateMaterialWarehouseCommandHandler(IMapper mapper, MAuthenticate
             return result;
         }
 
-        MaterialWarehouseEntity? existMaterialEntity = await materialWarehouseRepository.GetByGuidAsync(request.TaskId);
+        MaterialWarehouseEntity? existMaterialEntity = await materialWarehouseQuery.GetByGuidAsync(request.MaterialWarehouseId);
         if (existMaterialEntity is null)
         {
             result.StatusCode = StatusCodes.Status404NotFound;
@@ -35,7 +36,7 @@ public class UpdateMaterialWarehouseCommandHandler(IMapper mapper, MAuthenticate
 
         _ = materialWarehouseRepository.Update(existMaterialEntity);
 
-        await materialWarehouseRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
+        _ = await materialWarehouseRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
 
         result.Result = true;
 

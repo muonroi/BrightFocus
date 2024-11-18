@@ -1,9 +1,10 @@
 ﻿
 
+
+
 namespace BrightFocus.Data.Query.TaskDetail;
 
-public class TaskDetailQuery(BrightFocusDbContext dbContext, MAuthenticateInfoContext authContext,
-    IMapper mapper) : MQuery<TaskDetailEntity>(dbContext, authContext), ITaskDetailQuery
+public class TaskDetailQuery(BrightFocusDbContext dbContext, MAuthenticateInfoContext authContext) : MQuery<TaskDetailEntity>(dbContext, authContext), ITaskDetailQuery
 {
     public async Task<List<TaskDetailEntity>> GetTaskDetailByTaskNoAsync(Guid taskId)
     {
@@ -11,48 +12,53 @@ public class TaskDetailQuery(BrightFocusDbContext dbContext, MAuthenticateInfoCo
     }
 
 
-    public async Task<MPagedResult<TaskDetailDto>> GetTaskDetailPagingAsync
+    public async Task<MResponse<MPagedResult<TaskDetailDto>>> GetTaskDetailPagingAsync
     (Guid taskId, int pageIndex, int pageSize, string keyword, string sortBy, string sortOrder)
     {
-        IQueryable<TaskDetailEntity> query = Queryable.Where(x => x.TaskId == taskId);
+        MResponse<MPagedResult<TaskDetailDto>> result = new();
 
-        if (!string.IsNullOrEmpty(keyword))
+        MPagedResult<TaskDetailDto> pagedResult = await GetPagedAsync(
+            Queryable,
+            pageIndex,
+            pageSize,
+            td => new TaskDetailDto
+            {
+                EntityId = td.EntityId,
+                ProductName = td.ProductName,
+                Material = td.Material,
+                Quantification = td.Quantification,
+                UnitQuantification = td.UnitQuantification,
+                Width = td.Width,
+                UnitWidth = td.UnitWidth,
+                Color = td.Color,
+                Characteristic = td.Characteristic,
+                Quantity = td.Quantity,
+                UnitQuantity = td.UnitQuantity,
+                Employee = td.Employee,
+                Warehouse = td.Warehouse,
+                DeadlineDate = td.DeadlineDate,
+                TaskId = td.TaskId
+            },
+            keyword,
+        x => string.IsNullOrEmpty(keyword) || x.ProductName.Contains(keyword),
+        queryable =>
         {
-            query = query.Where(x => x.ProductName.Contains(keyword));
-        }
+            string validSortBy = string.IsNullOrWhiteSpace(sortBy) ? "CreationTime" : sortBy;
+            return sortOrder.Equals("desc", StringComparison.CurrentCultureIgnoreCase)
+                ? queryable.OrderByDescending(x => EF.Property<object>(x, validSortBy))
+                : queryable.OrderBy(x => EF.Property<object>(x, validSortBy));
+        });
 
-        int rowCount = await query.CountAsync();
-
-        query = sortOrder.ToLower() switch
-        {
-            "desc" => query.OrderByDescending(x => EF.Property<object>(x, sortBy)),
-            _ => query.OrderBy(x => EF.Property<object>(x, sortBy)),
-        };
-
-        IQueryable<TaskDetailEntity> items = query
-            .Skip((pageIndex - 1) * pageSize)
-            .Take(pageSize);
-
-        MPagedResult<TaskDetailDto> result = new()
-        {
-            CurrentPage = pageIndex,
-            PageSize = pageSize,
-            RowCount = rowCount,
-            Items = await mapper.ProjectTo<TaskDetailDto>(items).ToListAsync()
-        };
-
+        result.Result = pagedResult;
         return result;
     }
 
 
     public async Task<List<TaskDetailEntity>> GetTaskDetailsByTaskIdsAsync(List<Guid> foundTaskIds)
     {
-        if (foundTaskIds == null || foundTaskIds.Count == 0)
-        {
-            return [];
-        }
-
-        return await Queryable
+        return foundTaskIds == null || foundTaskIds.Count == 0
+            ? ([])
+            : await Queryable
             .Where(x => foundTaskIds.Contains(x.TaskId))
             .ToListAsync();
     }

@@ -25,8 +25,8 @@ public class CreateMaterialWarehouseCommandHandler(
             result.AddResultFromErrorList(materialWarehouse.ErrorMessages);
             return result;
         }
-        materialWarehouseRepository.Add(materialWarehouse);
-        await materialWarehouseRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
+        _ = materialWarehouseRepository.Add(materialWarehouse);
+        _ = await materialWarehouseRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
         result.Result = true;
         return result;
     }

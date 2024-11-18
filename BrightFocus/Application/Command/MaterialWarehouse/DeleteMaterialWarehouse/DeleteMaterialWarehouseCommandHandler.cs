@@ -1,7 +1,10 @@
-﻿namespace BrightFocus.Application.Command.MaterialWarehouse.DeleteMaterialWarehouse;
+﻿
+
+namespace BrightFocus.Application.Command.MaterialWarehouse.DeleteMaterialWarehouse;
 
 public class DeleteMaterialWarehouseCommandHandler(IMapper mapper, MAuthenticateInfoContext tokenInfo, IAuthenticateRepository authenticateRepository, Serilog.ILogger logger, IMediator mediator, MPaginationConfig paginationConfig,
-    IMaterialWarehouseRepository materialWarehouseRepository) :
+    IMaterialWarehouseRepository materialWarehouseRepository,
+    IMaterialWarehouseQuery materialWarehouseQuery) :
     BaseCommandHandler(mapper, tokenInfo, authenticateRepository, logger, mediator, paginationConfig),
     IRequestHandler<DeleteMaterialWarehouseCommand, MResponse<bool>>
 {
@@ -12,7 +15,7 @@ public class DeleteMaterialWarehouseCommandHandler(IMapper mapper, MAuthenticate
 
         foreach (Guid taskId in request.Id)
         {
-            MaterialWarehouseEntity? taskDetail = await materialWarehouseRepository.GetByGuidAsync(taskId);
+            MaterialWarehouseEntity? taskDetail = await materialWarehouseQuery.GetByGuidAsync(taskId);
             if (taskDetail == null)
             {
                 notFoundIds.Add(taskId);

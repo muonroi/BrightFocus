@@ -1,4 +1,4 @@
-﻿using BrightFocus.Core.Interfaces.Repository.TaskDetail;
+﻿
 
 namespace BrightFocus.Application.Command.TaskCommand.DeleteTaskDetail
 {
@@ -9,7 +9,8 @@ namespace BrightFocus.Application.Command.TaskCommand.DeleteTaskDetail
         Serilog.ILogger logger,
         IMediator mediator,
         MPaginationConfig paginationConfig,
-        ITaskDetailRepository taskDetailRepository)
+        ITaskDetailRepository taskDetailRepository,
+        ITaskDetailQuery taskDetailQuery)
             : BaseCommandHandler(mapper, tokenInfo, authenticateRepository, logger, mediator, paginationConfig),
               IRequestHandler<DeleteTaskDetailCommand, MResponse<bool>>
     {
@@ -20,7 +21,7 @@ namespace BrightFocus.Application.Command.TaskCommand.DeleteTaskDetail
 
             foreach (Guid taskId in request.TaskDetailIds)
             {
-                TaskDetailEntity? taskDetail = await taskDetailRepository.GetByGuidAsync(taskId);
+                TaskDetailEntity? taskDetail = await taskDetailQuery.GetByGuidAsync(taskId);
                 if (taskDetail == null)
                 {
                     notFoundIds.Add(taskId);
