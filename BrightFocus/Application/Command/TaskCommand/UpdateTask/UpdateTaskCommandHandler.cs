@@ -42,13 +42,23 @@ public class UpdateTaskCommandHandler(IMapper mapper, MAuthenticateInfoContext t
 
             if (request.TaskDetails is not null)
             {
-                List<TaskDetailEntity>? taskDetails = await taskDetailQuery.GetTaskDetailByTaskNoAsync(request.EntityId ?? Guid.Empty);
+                List<TaskDetailEntity>? existingTaskDetails = await taskDetailQuery.GetTaskDetailByTaskNoAsync(request.EntityId ?? Guid.Empty);
+                existingTaskDetails ??= [];
 
-                taskDetails ??= [];
+                List<Guid?> requestDetailIds = request.TaskDetails.Select(d => d.EntityId).ToList();
+
+                List<TaskDetailEntity> toDelete = existingTaskDetails
+                    .Where(detail => !requestDetailIds.Contains(detail.EntityId))
+                    .ToList();
+
+                foreach (TaskDetailEntity detailToDelete in toDelete)
+                {
+                    _ = taskDetailRepository.DeleteAsync(detailToDelete);
+                }
 
                 foreach (TaskDetailDto detailDto in request.TaskDetails)
                 {
-                    TaskDetailEntity? matchedDetail = taskDetails.FirstOrDefault(x => x.EntityId == detailDto.EntityId);
+                    TaskDetailEntity? matchedDetail = existingTaskDetails.FirstOrDefault(x => x.EntityId == detailDto.EntityId);
 
                     if (matchedDetail is not null)
                     {
@@ -74,5 +84,6 @@ public class UpdateTaskCommandHandler(IMapper mapper, MAuthenticateInfoContext t
 
         return result;
     }
+
 
 }

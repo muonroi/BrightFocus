@@ -4,6 +4,10 @@
 
 
 
+
+
+
+
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 Assembly assembly = Assembly.GetExecutingAssembly();
 ConfigurationManager configuration = builder.Configuration;
@@ -32,6 +36,11 @@ try
     _ = services.AddPermissionFilter<Permission>();
     _ = services.ConfigureMapper();
     WebApplication app = builder.Build();
+    using (IServiceScope scope = app.Services.CreateScope())
+    {
+        BrightFocusDbContext dbContext = scope.ServiceProvider.GetRequiredService<BrightFocusDbContext>();
+        dbContext.Database.Migrate();
+    }
     _ = app.UseDefaultMiddleware<BrightFocusDbContext, Permission>();
     _ = app.UseCors("MAllowDomains");
     _ = app.AddLocalization(assembly);
