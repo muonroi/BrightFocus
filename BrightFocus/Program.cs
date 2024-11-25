@@ -12,7 +12,7 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 Assembly assembly = Assembly.GetExecutingAssembly();
 ConfigurationManager configuration = builder.Configuration;
 
-builder.AddAppConfigurations();
+builder.AddAppConfiguration();
 builder.AddAutofacConfiguration();
 builder.Host.UseSerilog((context, services, loggerConfiguration) =>
 {
@@ -48,6 +48,7 @@ try
     _ = app.UseAuthentication();
     _ = app.UseAuthorization();
     _ = app.ConfigureEndpoints();
+    _ = app.UseStaticFiles();
     _ = app.MigrateDatabase<BrightFocusDbContext>();
 
     await app.RunAsync();

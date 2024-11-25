@@ -24,23 +24,21 @@ public class TaskDetailQuery(BrightFocusDbContext dbContext, MAuthenticateInfoCo
             td => new TaskDetailDto
             {
                 EntityId = td.EntityId,
-                ProductName = td.ProductName,
-                Material = td.Material,
-                Quantification = td.Quantification,
-                UnitQuantification = td.UnitQuantification,
-                Width = td.Width,
-                UnitWidth = td.UnitWidth,
+                ProductName = td.ProductName ?? string.Empty,
+                Material = td.Material ?? string.Empty,
+                Quantification = td.Quantification ?? 0,
+                Width = td.Width ?? 0,
                 Color = td.Color,
                 Characteristic = td.Characteristic,
                 Quantity = td.Quantity,
-                UnitQuantity = td.UnitQuantity,
                 Employee = td.Employee,
                 Warehouse = td.Warehouse,
                 DeadlineDate = td.DeadlineDate,
+                Note = td.Note ?? string.Empty,
                 TaskId = td.TaskId
             },
             keyword,
-        x => string.IsNullOrEmpty(keyword) || x.ProductName.Contains(keyword),
+        x => string.IsNullOrEmpty(keyword) || (x.ProductName ?? string.Empty).Contains(keyword),
         queryable =>
         {
             string validSortBy = string.IsNullOrWhiteSpace(sortBy) ? "CreationTime" : sortBy;

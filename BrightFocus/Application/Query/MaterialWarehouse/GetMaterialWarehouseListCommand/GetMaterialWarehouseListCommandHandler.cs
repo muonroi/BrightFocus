@@ -10,8 +10,21 @@ namespace BrightFocus.Application.Query.MaterialWarehouse.GetMaterialWarehouseLi
         public async Task<MResponse<MPagedResult<MaterialWarehousesDto>>> Handle(GetMaterialWarehouseListCommand request, CancellationToken cancellationToken)
         {
 
-            MResponse<MPagedResult<MaterialWarehousesDto>>? pagedResult = await materialWarehouseQuery.GetMaterialListPagingAsync(
-                request.Page, request.PageSize ?? DefaultPageSize, request.Search, request.SortBy, request.SortOrder);
+            MResponse<MPagedResult<MaterialWarehousesDto>> pagedResult = await materialWarehouseQuery.GetMaterialListPagingAsync(
+                 request.Page,
+                 request.PageSize ?? DefaultPageSize,
+                 request.Search,
+                 request.SortBy,
+                 request.SortOrder,
+                 request.ProductCode,
+                 request.ProductName,
+                 request.Material,
+                 request.Quantification,
+                 request.Width,
+                 request.Color,
+                 request.Characteristic,
+                 request.Quantity,
+                 request.Warehouse);
             if (!pagedResult.IsOK)
             {
                 pagedResult.StatusCode = StatusCodes.Status404NotFound;

@@ -1,4 +1,6 @@
-﻿namespace BrightFocus.Core.Models.TaskLists.Request;
+﻿
+
+namespace BrightFocus.Core.Models.TaskLists.Request;
 
 public class CreateOrUpdateTaskRequest : IMapFrom<TaskListEntity>
 {
@@ -14,7 +16,13 @@ public class CreateOrUpdateTaskRequest : IMapFrom<TaskListEntity>
 
     public double Weight { get; set; }
 
+    public double Quantification { get; set; }
+
     public string Color { get; set; } = string.Empty;
+
+    public string? Characteristic { get; set; } = string.Empty;
+
+    public double Quantity { get; set; }
 
     public string Employee { get; set; } = string.Empty;
 
@@ -28,5 +36,5 @@ public class CreateOrUpdateTaskRequest : IMapFrom<TaskListEntity>
 
     public IEnumerable<TaskDetailDto> TaskDetails { get; set; } = [];
 
-    public string? FileUrl { get; set; } = string.Empty;
+    public IFormFile? File { get; set; }
 }

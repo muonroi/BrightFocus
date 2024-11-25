@@ -35,24 +35,10 @@ public class MaterialWarehouseEntity : MEntity
     public double Quantification { get; set; }
 
     /// <summary>
-    /// Unit of quantification (e.g., kg, liters), stored as varchar
-    /// </summary>
-    [MaxLength(50)]
-    [Column(TypeName = "varchar(50)")]
-    public string UnitQuantification { get; set; } = string.Empty;
-
-    /// <summary>
     /// Width of the material in integer units (e.g., cm or mm)
     /// </summary>
     [Required]
     public double Width { get; set; }
-
-    /// <summary>
-    /// Unit of width (e.g., cm, inches), stored as varchar
-    /// </summary>
-    [MaxLength(50)]
-    [Column(TypeName = "varchar(50)")]
-    public string UnitWidth { get; set; } = string.Empty;
 
     /// <summary>
     /// Color of the material, stored as varchar
@@ -73,13 +59,6 @@ public class MaterialWarehouseEntity : MEntity
     /// </summary>
     [Required]
     public double Quantity { get; set; }
-
-    /// <summary>
-    /// Unit of quantity (e.g., pieces, boxes), stored as varchar
-    /// </summary>
-    [MaxLength(50)]
-    [Column(TypeName = "varchar(50)")]
-    public string UnitQuantity { get; set; } = string.Empty;
 
     /// <summary>
     /// Factory where the item is produced or stored, stored as varchar
@@ -127,4 +106,10 @@ public class MaterialWarehouseEntity : MEntity
     [MaxLength(500)]
     [Column(TypeName = "nvarchar(500)")]
     public string Note { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Type of product
+    /// </summary>
+
+    public MaterialProductTypeEnum MaterialProductType { get; set; }
 }

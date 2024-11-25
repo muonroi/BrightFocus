@@ -1,4 +1,6 @@
-﻿namespace BrightFocus.Controllers;
+﻿
+
+namespace BrightFocus.Controllers;
 
 [AllowAnonymous]
 public class DashboardController(
@@ -7,7 +9,7 @@ public class DashboardController(
     Serilog.ILogger logger) : MControllerBase(mediator, logger, mapper)
 {
     [HttpPost("task", Name = nameof(CreateTask))]
-    public async Task<IActionResult> CreateTask([FromBody] CreateTaskCommand command, CancellationToken cancellationToken)
+    public async Task<IActionResult> CreateTask([FromForm] CreateTaskCommand command, CancellationToken cancellationToken)
     {
         MResponse<bool> result = await Mediator.Send(command, cancellationToken).ConfigureAwait(false);
         return result.GetActionResult();
@@ -29,7 +31,7 @@ public class DashboardController(
     }
 
     [HttpPut("task")]
-    public async Task<IActionResult> UpdateTask([FromBody] CreateOrUpdateTaskRequest request, CancellationToken cancellationToken)
+    public async Task<IActionResult> UpdateTask([FromForm] CreateOrUpdateTaskRequest request, CancellationToken cancellationToken)
     {
         UpdateTaskCommand command = new()
         {
@@ -46,7 +48,10 @@ public class DashboardController(
             DeadlineDate = request.DeadlineDate,
             Note = request.Note,
             TaskDetails = request.TaskDetails,
-            FileUrl = request.FileUrl
+            File = request.File,
+            Quantification = request.Quantification,
+            Quantity = request.Quantity,
+            Characteristic = request.Characteristic
         };
         MResponse<bool> result = await Mediator.Send(command, cancellationToken).ConfigureAwait(false);
         return result.GetActionResult();
@@ -63,6 +68,13 @@ public class DashboardController(
     public async Task<IActionResult> DeleteTaskDetail([FromQuery] DeleteTaskDetailCommand command, CancellationToken cancellationToken)
     {
         MResponse<bool> result = await Mediator.Send(command, cancellationToken).ConfigureAwait(false);
+        return result.GetActionResult();
+    }
+
+    [HttpGet("ship-task")]
+    public async Task<IActionResult> GetShipTask([FromQuery] GetDeliveryWarehouseCommand command, CancellationToken cancellationToken)
+    {
+        MResponse<IEnumerable<DeliveryWarehouseDto>> result = await Mediator.Send(command, cancellationToken).ConfigureAwait(false);
         return result.GetActionResult();
     }
 }

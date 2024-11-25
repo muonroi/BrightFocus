@@ -4,6 +4,7 @@ public class BrightFocusDbContext : MDbContext
 {
     public DbSet<TaskListEntity> TaskLists { get; set; }
     public DbSet<TaskDetailEntity> TaskDetails { get; set; }
+    public DbSet<DeliveryWarehouseEntity> DeliveryWarehouses { get; set; }
     public DbSet<MaterialWarehouseEntity> MaterialWarehouses { get; set; }
     public DbSet<WarehouseEntity> Warehouses { get; set; }
 

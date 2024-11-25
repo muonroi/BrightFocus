@@ -16,6 +16,40 @@ namespace BrightFocus.Data.Persistence.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "DeliveryWarehouses",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    EntityId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    FromWarehouse = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    ToWarehouse = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    ProductCode = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    ProductName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    Quantity = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Employee = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    DeliveryType = table.Column<int>(type: "int", nullable: false),
+                    TaskId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    CreatedDateTS = table.Column<double>(type: "double", nullable: false),
+                    LastModificationTimeTs = table.Column<double>(type: "double", nullable: true),
+                    DeletedDateTS = table.Column<double>(type: "double", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    CreationTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    CreatorUserId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    LastModificationTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    LastModificationUserId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    DeletionTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    DeletedUserId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DeliveryWarehouses", x => x.Id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "MaterialWarehouses",
                 columns: table => new
                 {
@@ -28,18 +62,12 @@ namespace BrightFocus.Data.Persistence.Migrations
                     Material = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Quantification = table.Column<double>(type: "double", nullable: false),
-                    UnitQuantification = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
                     Width = table.Column<double>(type: "double", nullable: false),
-                    UnitWidth = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
                     Color = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Characteristic = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Quantity = table.Column<double>(type: "double", nullable: false),
-                    UnitQuantity = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
                     Factory = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Warehouse = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
@@ -51,6 +79,7 @@ namespace BrightFocus.Data.Persistence.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     DeadlineDate = table.Column<DateTime>(type: "datetime", nullable: false),
                     Note = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    MaterialProductType = table.Column<int>(type: "int", nullable: false),
                     CreatedDateTS = table.Column<double>(type: "double", nullable: false),
                     LastModificationTimeTs = table.Column<double>(type: "double", nullable: true),
                     DeletedDateTS = table.Column<double>(type: "double", nullable: true),
@@ -375,37 +404,30 @@ namespace BrightFocus.Data.Persistence.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     EntityId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    ProductCode = table.Column<string>(type: "longtext", nullable: false)
+                    ProductName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    Material = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    ProductName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    Material = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
+                    Quantification = table.Column<double>(type: "double", nullable: true),
+                    Width = table.Column<double>(type: "double", nullable: true),
+                    Color = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Quantification = table.Column<double>(type: "double", nullable: false),
-                    UnitQuantification = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Width = table.Column<double>(type: "double", nullable: false),
-                    UnitWidth = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Color = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Characteristic = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
+                    Characteristic = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Quantity = table.Column<double>(type: "double", nullable: false),
-                    UnitQuantity = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Factory = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+                    Factory = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Warehouse = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    ReceiptNumber = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
+                    ReceiptNumber = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    EntryDate = table.Column<DateTime>(type: "datetime", nullable: true),
-                    FileNumber = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
+                    FileNumber = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Employee = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
+                    Source = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     DeadlineDate = table.Column<DateTime>(type: "datetime", nullable: false),
-                    Note = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    Note = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
                     TaskId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     CreatedDateTS = table.Column<double>(type: "double", nullable: false),
                     LastModificationTimeTs = table.Column<double>(type: "double", nullable: true),
@@ -436,13 +458,17 @@ namespace BrightFocus.Data.Persistence.Migrations
                     Material = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Size = table.Column<double>(type: "double", nullable: false),
                     Weight = table.Column<double>(type: "double", nullable: false),
+                    Quantification = table.Column<double>(type: "double", nullable: false),
                     Color = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
+                    Characteristic = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    Quantity = table.Column<double>(type: "double", nullable: false),
                     Employee = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    FactoryName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    Warehouse = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    FactoryName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    Warehouse = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    Customer = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     DeadlineDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    Note = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    Note = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
                     FileUrl = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     TaskType = table.Column<int>(type: "int", nullable: false),
@@ -561,6 +587,9 @@ namespace BrightFocus.Data.Persistence.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "DeliveryWarehouses");
+
             migrationBuilder.DropTable(
                 name: "MaterialWarehouses");
 

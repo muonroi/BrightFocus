@@ -11,10 +11,15 @@ public class TaskListDto : IMapFrom<TaskListEntity>
 
     public double Size { get; set; }
 
+    public double Quantification { get; set; }
+
+    public string Characteristic { get; set; } = string.Empty;
+
+    public double Quantity { get; set; }
+
     public double Weight { get; set; }
 
     public string Color { get; set; } = string.Empty;
-
 
     public string FactoryName { get; set; } = string.Empty;
 
