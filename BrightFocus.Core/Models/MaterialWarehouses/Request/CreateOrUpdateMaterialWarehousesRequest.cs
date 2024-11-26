@@ -10,23 +10,18 @@ public class CreateOrUpdateMaterialWarehousesRequest : IMapFrom<MaterialWarehous
 
     public double Quantification { get; set; }
 
-    public string UnitQuantification { get; set; } = string.Empty;
-
     public double Width { get; set; }
 
-    public string UnitWidth { get; set; } = string.Empty;
+    public string? Color { get; set; } = string.Empty;
 
-    public string Color { get; set; } = string.Empty;
-
-    public string Characteristic { get; set; } = string.Empty;
+    public string? Characteristic { get; set; } = string.Empty;
 
     public double Quantity { get; set; }
-    public string UnitQuantity { get; set; } = string.Empty;
     public string Factory { get; set; } = string.Empty;
     public string Warehouse { get; set; } = string.Empty;
     public string ReceiptNumber { get; set; } = string.Empty;
 
     public DateTime? EntryDate { get; set; }
 
-    public string FileNumber { get; set; } = string.Empty;
+    public MaterialProductType MaterialProductType { get; set; } = MaterialProductType.None;
 }

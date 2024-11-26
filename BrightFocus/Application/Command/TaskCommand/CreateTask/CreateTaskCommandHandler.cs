@@ -16,7 +16,8 @@ public class CreateTaskCommandHandler(IMapper mapper, MAuthenticateInfoContext t
     ITaskListRepository taskListRepository,
     ITaskDetailRepository taskDetailRepository,
     IDeliveryWarehouseRepository deliveryWarehouseRepository,
-    IWebHostEnvironment webHostEnvironment
+    IWebHostEnvironment webHostEnvironment,
+    IMJsonSerializeService mJsonSerializeService
     ) :
     BaseCommandHandler(mapper, tokenInfo, authenticateRepository, logger, mediator, paginationConfig),
     IRequestHandler<CreateTaskCommand, MResponse<bool>>
@@ -26,6 +27,8 @@ public class CreateTaskCommandHandler(IMapper mapper, MAuthenticateInfoContext t
         MResponse<bool> result = new();
 
         TaskListEntity taskEntity = Mapper.Map<CreateTaskCommand, TaskListEntity>(request);
+
+
         if (!taskEntity.IsValid())
         {
             result.StatusCode = StatusCodes.Status400BadRequest;
@@ -42,13 +45,19 @@ public class CreateTaskCommandHandler(IMapper mapper, MAuthenticateInfoContext t
             }
         }
 
+        IEnumerable<TaskDetailDto>? taskDetails = [];
+        if (!string.IsNullOrEmpty(request.TaskDetails))
+        {
+            taskDetails = mJsonSerializeService.Deserialize<IEnumerable<TaskDetailDto>>(request.TaskDetails);
+        }
+
         await taskListRepository.ExecuteTransactionAsync(async () =>
         {
             _ = taskListRepository.Add(taskEntity);
 
-            if (request.TaskDetails != null)
+            if (taskDetails is not null)
             {
-                await ProcessTaskDetailsAndDeliveryWarehouses(request, taskEntity.EntityId);
+                await ProcessTaskDetailsAndDeliveryWarehouses(request, taskDetails.ToList(), taskEntity.EntityId);
             }
 
             await SaveAllChangesAsync();
@@ -81,9 +90,9 @@ public class CreateTaskCommandHandler(IMapper mapper, MAuthenticateInfoContext t
         return Path.Combine("uploads", uniqueFileName);
     }
 
-    private async Task ProcessTaskDetailsAndDeliveryWarehouses(CreateTaskCommand request, Guid taskId)
+    private async Task ProcessTaskDetailsAndDeliveryWarehouses(CreateTaskCommand request, List<TaskDetailDto> taskDetailsRequest, Guid taskId)
     {
-        List<TaskDetailEntity> taskDetails = request.TaskDetails.Select(taskDetail =>
+        List<TaskDetailEntity> taskDetails = taskDetailsRequest.Select(taskDetail =>
         {
             TaskDetailEntity taskDetailEntity = Mapper.Map<TaskDetailDto, TaskDetailEntity>(taskDetail);
             taskDetailEntity.TaskId = taskId;
@@ -92,9 +101,9 @@ public class CreateTaskCommandHandler(IMapper mapper, MAuthenticateInfoContext t
 
         _ = await taskDetailRepository.AddBatchAsync(taskDetails);
 
-        List<(string FromWarehouse, string ToWarehouse)> warehousePairs = DeliveryWarehouseDto.GetWarehousePairs(request.TaskDetails);
+        List<(string FromWarehouse, string ToWarehouse)> warehousePairs = DeliveryWarehouseDto.GetWarehousePairs(taskDetailsRequest);
 
-        List<DeliveryWarehouseDto> deliveryWarehouses = GenerateDeliveryWarehousesForPair(request.TaskDetails, taskId, request.Warehouse).ToList();
+        List<DeliveryWarehouseDto> deliveryWarehouses = GenerateDeliveryWarehousesForPair(taskDetailsRequest, taskId, request.Warehouse).ToList();
 
         List<DeliveryWarehouseEntity> deliveryWarehouseEntities = deliveryWarehouses
             .Select(Mapper.Map<DeliveryWarehouseDto, DeliveryWarehouseEntity>)

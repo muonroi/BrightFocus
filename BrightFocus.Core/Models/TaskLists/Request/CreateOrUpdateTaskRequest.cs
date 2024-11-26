@@ -34,7 +34,7 @@ public class CreateOrUpdateTaskRequest : IMapFrom<TaskListEntity>
 
     public string? Note { get; set; } = string.Empty;
 
-    public IEnumerable<TaskDetailDto> TaskDetails { get; set; } = [];
+    public string? TaskDetails { get; set; } = string.Empty;
 
     public IFormFile? File { get; set; }
 }

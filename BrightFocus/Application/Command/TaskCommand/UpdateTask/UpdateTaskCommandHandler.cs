@@ -1,5 +1,9 @@
 ﻿
 
+
+
+
+
 namespace BrightFocus.Application.Command.TaskCommand.UpdateTask;
 
 public class UpdateTaskCommandHandler(IMapper mapper, MAuthenticateInfoContext tokenInfo, IAuthenticateRepository authenticateRepository, Serilog.ILogger logger, IMediator mediator, MPaginationConfig paginationConfig,
@@ -9,7 +13,8 @@ public class UpdateTaskCommandHandler(IMapper mapper, MAuthenticateInfoContext t
     ITaskDetailQuery taskDetailQuery,
     IDeliveryWarehouseRepository deliveryWarehouseRepository,
     IDeliveryWarehouseQuery deliveryWarehouseQuery,
-    IWebHostEnvironment webHostEnvironment) :
+    IWebHostEnvironment webHostEnvironment,
+    IMJsonSerializeService mJsonSerializeService) :
     BaseCommandHandler(mapper, tokenInfo, authenticateRepository, logger, mediator, paginationConfig),
     IRequestHandler<UpdateTaskCommand, MResponse<bool>>
 {
@@ -32,6 +37,7 @@ public class UpdateTaskCommandHandler(IMapper mapper, MAuthenticateInfoContext t
         }
 
         TaskListEntity? existTask = await taskListQuery.GetByGuidAsync(request.EntityId ?? Guid.Empty);
+
         if (existTask is null)
         {
             result.StatusCode = StatusCodes.Status404NotFound;
@@ -50,16 +56,23 @@ public class UpdateTaskCommandHandler(IMapper mapper, MAuthenticateInfoContext t
             }
         }
 
+        IEnumerable<TaskDetailDto>? taskDetails = [];
+        if (!string.IsNullOrEmpty(request.TaskDetails))
+        {
+
+            taskDetails = JsonConvert.DeserializeObject<List<TaskDetailDto>>(request.TaskDetails);////mJsonSerializeService.Deserialize<List<TaskDetailDto>>(request.TaskDetails);
+        }
+
         await taskListRepository.ExecuteTransactionAsync(async () =>
         {
             _ = taskListRepository.Update(existTask);
 
-            if (request.TaskDetails is not null)
+            if (taskDetails is not null)
             {
                 List<TaskDetailEntity>? existingTaskDetails = await taskDetailQuery.GetTaskDetailByTaskNoAsync(request.EntityId ?? Guid.Empty);
                 existingTaskDetails ??= [];
 
-                List<Guid?> requestDetailIds = request.TaskDetails.Select(d => d.EntityId).ToList();
+                List<Guid?> requestDetailIds = taskDetails.Select(d => d.EntityId).ToList();
 
                 List<TaskDetailEntity> toDelete = existingTaskDetails
                     .Where(detail => !requestDetailIds.Contains(detail.EntityId))
@@ -70,9 +83,9 @@ public class UpdateTaskCommandHandler(IMapper mapper, MAuthenticateInfoContext t
                     _ = await taskDetailRepository.DeleteAsync(detailToDelete);
                 }
 
-                foreach (TaskDetailDto detailDto in request.TaskDetails)
+                foreach (TaskDetailDto detailDto in taskDetails)
                 {
-                    TaskDetailEntity? matchedDetail = existingTaskDetails.FirstOrDefault(x => x.EntityId == detailDto.EntityId);
+                    TaskDetailEntity? matchedDetail = existingTaskDetails.Find(x => x.EntityId == detailDto.EntityId);
 
                     if (matchedDetail is not null)
                     {
@@ -88,7 +101,7 @@ public class UpdateTaskCommandHandler(IMapper mapper, MAuthenticateInfoContext t
                     }
                 }
 
-                await UpdateDeliveryWarehouses(request.TaskDetails, existTask.EntityId, existTask.Warehouse ?? string.Empty);
+                await UpdateDeliveryWarehouses(taskDetails, existTask.EntityId, existTask.Warehouse ?? string.Empty);
             }
 
             _ = await taskDetailRepository.UnitOfWork.SaveChangesAsync();

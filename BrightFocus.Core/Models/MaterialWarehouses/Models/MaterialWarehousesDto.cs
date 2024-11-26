@@ -24,5 +24,5 @@ public class MaterialWarehousesDto : IMapFrom<MaterialWarehouseEntity>
 
     public string Warehouse { get; set; } = string.Empty;
     public string ReceiptNumber { get; set; } = string.Empty;
-    public string FileNumber { get; set; } = string.Empty;
+    public MaterialProductType MaterialProductType { get; set; }
 }

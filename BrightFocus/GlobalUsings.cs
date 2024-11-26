@@ -62,3 +62,5 @@ global using BrightFocus.Core.Models.DeliveryWarehouses.Models;
 global using MySql.Data.MySqlClient;
 global using BrightFocus.Application.Query.DeliveryWarehouse.GetDeliveryWarehouse;
 global using Microsoft.AspNetCore.Hosting;
+global using Grpc.Core;
+global using Newtonsoft.Json;

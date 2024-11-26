@@ -1,6 +1,7 @@
-﻿namespace BrightFocus.Core.Interfaces.Repository.MaterialWarehouse;
+﻿
+
+namespace BrightFocus.Core.Interfaces.Repository.MaterialWarehouse;
 
 public interface IMaterialWarehouseRepository : IMRepository<MaterialWarehouseEntity>
 {
-
 }

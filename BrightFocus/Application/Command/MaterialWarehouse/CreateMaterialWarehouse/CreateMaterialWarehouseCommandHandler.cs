@@ -1,4 +1,6 @@
-﻿namespace BrightFocus.Application.Command.MaterialWarehouse.CreateMaterialWarehouse;
+﻿
+
+namespace BrightFocus.Application.Command.MaterialWarehouse.CreateMaterialWarehouse;
 
 public class CreateMaterialWarehouseCommandHandler(
     IMapper mapper,
@@ -7,7 +9,8 @@ public class CreateMaterialWarehouseCommandHandler(
     Serilog.ILogger logger,
     IMediator mediator,
     MPaginationConfig paginationConfig,
-    IMaterialWarehouseRepository materialWarehouseRepository
+    IMaterialWarehouseRepository materialWarehouseRepository,
+    IMaterialWarehouseQuery materialWarehouseQuery
     )
         : BaseCommandHandler(mapper, tokenInfo, authenticateRepository, logger, mediator, paginationConfig),
     IRequestHandler<CreateMaterialWarehouseCommand, MResponse<bool>>
@@ -23,6 +26,16 @@ public class CreateMaterialWarehouseCommandHandler(
         {
             result.StatusCode = StatusCodes.Status400BadRequest;
             result.AddResultFromErrorList(materialWarehouse.ErrorMessages);
+            return result;
+        }
+
+        bool isDuplicateProductCode = await materialWarehouseQuery
+            .ExistsAsync(m => m.ProductCode == materialWarehouse.ProductCode, cancellationToken);
+
+        if (isDuplicateProductCode)
+        {
+            result.StatusCode = StatusCodes.Status200OK;
+            result.AddErrorMessage("ProductCode đã tồn tại.");
             return result;
         }
         _ = materialWarehouseRepository.Add(materialWarehouse);

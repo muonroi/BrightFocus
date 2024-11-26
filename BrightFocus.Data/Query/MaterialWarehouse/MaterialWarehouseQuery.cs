@@ -1,5 +1,7 @@
 ﻿
 
+
+
 namespace BrightFocus.Data.Query.MaterialWarehouse;
 
 public class MaterialWarehouseQuery(BrightFocusDbContext dbContext, MAuthenticateInfoContext authContext) : MQuery<MaterialWarehouseEntity>(dbContext, authContext), IMaterialWarehouseQuery
@@ -72,11 +74,12 @@ public class MaterialWarehouseQuery(BrightFocusDbContext dbContext, MAuthenticat
                 Quantification = materialWarehouse.Quantification,
                 Width = materialWarehouse.Width,
                 Color = materialWarehouse.Color,
+                Factory = materialWarehouse.Factory,
                 Characteristic = materialWarehouse.Characteristic,
                 Quantity = materialWarehouse.Quantity,
                 Warehouse = materialWarehouse.Warehouse,
                 ReceiptNumber = materialWarehouse.ReceiptNumber,
-                FileNumber = materialWarehouse.FileNumber
+                MaterialProductType = materialWarehouse.MaterialProductType,
             },
             keyword,
             x => string.IsNullOrEmpty(keyword) || x.ProductName.Contains(keyword),
@@ -91,4 +94,10 @@ public class MaterialWarehouseQuery(BrightFocusDbContext dbContext, MAuthenticat
         result.Result = pagedResult;
         return result;
     }
+
+    public async Task<bool> ExistsAsync(Expression<Func<MaterialWarehouseEntity, bool>> predicate, CancellationToken cancellationToken = default)
+    {
+        return await Queryable.AnyAsync(predicate, cancellationToken);
+    }
+
 }

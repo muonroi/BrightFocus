@@ -17,6 +17,7 @@ public class UpdateMaterialWarehouseCommandHandler(IMapper mapper, MAuthenticate
         MResponse<bool> result = new();
 
         MaterialWarehouseEntity materialWarehouse = Mapper.Map<MaterialWarehouseEntity>(request);
+
         if (!materialWarehouse.IsValid())
         {
             result.StatusCode = StatusCodes.Status400BadRequest;
@@ -32,15 +33,22 @@ public class UpdateMaterialWarehouseCommandHandler(IMapper mapper, MAuthenticate
             return result;
         }
 
+        bool isDuplicateProductCode = await materialWarehouseQuery.ExistsAsync(
+            m => m.ProductCode == materialWarehouse.ProductCode && m.EntityId != request.MaterialWarehouseId, cancellationToken);
+
+        if (isDuplicateProductCode)
+        {
+            result.AddErrorMessage("ProductCode đã tồn tại trên một bản ghi khác.");
+            return result;
+        }
+
         _ = Mapper.Map(request, existMaterialEntity);
 
         _ = materialWarehouseRepository.Update(existMaterialEntity);
-
         _ = await materialWarehouseRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
 
         result.Result = true;
-
         return result;
-
     }
+
 }

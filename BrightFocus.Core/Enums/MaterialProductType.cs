@@ -1,6 +1,6 @@
 ﻿namespace BrightFocus.Core.Enums
 {
-    public enum MaterialProductTypeEnum
+    public enum MaterialProductType
     {
         None = 0,
         Error = 1,

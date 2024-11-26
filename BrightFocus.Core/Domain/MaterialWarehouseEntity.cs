@@ -111,5 +111,5 @@ public class MaterialWarehouseEntity : MEntity
     /// Type of product
     /// </summary>
 
-    public MaterialProductTypeEnum MaterialProductType { get; set; }
+    public MaterialProductType MaterialProductType { get; set; }
 }

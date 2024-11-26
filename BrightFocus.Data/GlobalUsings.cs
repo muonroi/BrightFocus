@@ -28,3 +28,4 @@ global using static MongoDB.Driver.WriteConcern;
 global using System.Text;
 global using BrightFocus.Core.Interfaces.Query.DeliveryWarehouse;
 global using BrightFocus.Core.Interfaces.Repository.DeliveryWarehouse;
+global using System.Linq.Expressions;
