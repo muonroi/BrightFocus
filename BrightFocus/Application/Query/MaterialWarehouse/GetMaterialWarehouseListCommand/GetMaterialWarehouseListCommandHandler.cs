@@ -10,8 +10,6 @@ namespace BrightFocus.Application.Query.MaterialWarehouse.GetMaterialWarehouseLi
         public async Task<MResponse<MPagedResult<MaterialWarehousesDto>>> Handle(GetMaterialWarehouseListCommand request, CancellationToken cancellationToken)
         {
 
-
-
             MResponse<MPagedResult<MaterialWarehousesDto>> pagedResult = await materialWarehouseQuery.GetMaterialListPagingAsync(
                  request.Page,
                  request.PageSize ?? DefaultPageSize,
