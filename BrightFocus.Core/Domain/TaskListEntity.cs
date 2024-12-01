@@ -66,4 +66,10 @@ public class TaskListEntity : MEntity
     public string FileUrl { get; set; } = string.Empty;
 
     public TaskType TaskType { get; set; }
+
+    public SourceType? SourceType { get; set; }
+
+    [MaxLength(500)]
+    [Column(TypeName = "nvarchar")]
+    public string? SourceDetails { get; set; } = string.Empty;
 }

@@ -8,6 +8,8 @@
 
 
 
+
+
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 Assembly assembly = Assembly.GetExecutingAssembly();
 ConfigurationManager configuration = builder.Configuration;
@@ -34,6 +36,7 @@ try
     _ = services.AddDbContextConfigure<BrightFocusDbContext, Permission>(configuration);
     _ = services.AddCors(configuration);
     _ = services.AddPermissionFilter<Permission>();
+    _ = services.RegisterService();
     _ = services.ConfigureMapper();
     WebApplication app = builder.Build();
     using (IServiceScope scope = app.Services.CreateScope())

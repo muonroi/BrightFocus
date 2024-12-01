@@ -1,12 +1,4 @@
-﻿
-
-
-
-
-
-
-
-namespace BrightFocus.Data.Query.Task;
+﻿namespace BrightFocus.Data.Query.Task;
 
 public class TaskListQuery(BrightFocusDbContext dbContext, MAuthenticateInfoContext authContext) : MQuery<TaskListEntity>(dbContext, authContext), ITaskListQuery
 {
@@ -25,6 +17,7 @@ public class TaskListQuery(BrightFocusDbContext dbContext, MAuthenticateInfoCont
 
         return result;
     }
+
 
     public async Task<MResponse<MPagedResult<TaskListDto>>> GetTaskListPagingAsync(
     int pageIndex, int pageSize, string keyword, string sortBy, string sortOrder)
@@ -53,6 +46,9 @@ public class TaskListQuery(BrightFocusDbContext dbContext, MAuthenticateInfoCont
                 DeadlineDate = taskList.DeadlineDate,
                 Note = taskList.Note ?? string.Empty,
                 FileUrl = taskList.FileUrl,
+                SourceType = taskList.SourceType,
+                Customer = taskList.Customer ?? string.Empty,
+                SourceDetails = taskList.SourceDetails ?? string.Empty,
                 CreationTime = taskList.CreationTime,
                 TaskDetails = dbContext.TaskDetails
                     .Where(td => td.TaskId == taskList.EntityId)
@@ -87,5 +83,4 @@ public class TaskListQuery(BrightFocusDbContext dbContext, MAuthenticateInfoCont
         result.Result = pagedResult;
         return result;
     }
-
 }

@@ -1,25 +1,20 @@
 ﻿
 
-
-
-
-
-
-
-
-
-
-
 namespace BrightFocus.Application.Command.TaskCommand.CreateTask;
 
-public class CreateTaskCommandHandler(IMapper mapper, MAuthenticateInfoContext tokenInfo, IAuthenticateRepository authenticateRepository, Serilog.ILogger logger, IMediator mediator, MPaginationConfig paginationConfig,
+public class CreateTaskCommandHandler(
+    IMapper mapper,
+    MAuthenticateInfoContext tokenInfo,
+    IAuthenticateRepository authenticateRepository,
+    Serilog.ILogger logger,
+    IMediator mediator,
+    MPaginationConfig paginationConfig,
     ITaskListRepository taskListRepository,
     ITaskDetailRepository taskDetailRepository,
     IDeliveryWarehouseRepository deliveryWarehouseRepository,
-    IWebHostEnvironment webHostEnvironment,
-    IMJsonSerializeService mJsonSerializeService
-    ) :
-    BaseCommandHandler(mapper, tokenInfo, authenticateRepository, logger, mediator, paginationConfig),
+    IMJsonSerializeService mJsonSerializeService,
+    IFileStorageService fileStorageService
+) : BaseCommandHandler(mapper, tokenInfo, authenticateRepository, logger, mediator, paginationConfig),
     IRequestHandler<CreateTaskCommand, MResponse<bool>>
 {
     public async Task<MResponse<bool>> Handle(CreateTaskCommand request, CancellationToken cancellationToken)
@@ -27,8 +22,6 @@ public class CreateTaskCommandHandler(IMapper mapper, MAuthenticateInfoContext t
         MResponse<bool> result = new();
 
         TaskListEntity taskEntity = Mapper.Map<CreateTaskCommand, TaskListEntity>(request);
-
-
         if (!taskEntity.IsValid())
         {
             result.StatusCode = StatusCodes.Status400BadRequest;
@@ -38,118 +31,97 @@ public class CreateTaskCommandHandler(IMapper mapper, MAuthenticateInfoContext t
 
         if (request.File != null)
         {
-            string savedFilePath = await SaveFileAsync(request.File);
-            if (!string.IsNullOrEmpty(savedFilePath))
-            {
-                taskEntity.FileUrl = savedFilePath;
-            }
+            taskEntity.FileUrl = await fileStorageService.SaveFileAsync(request.File, "uploads");
         }
 
-        IEnumerable<TaskDetailDto>? taskDetails = [];
-        if (!string.IsNullOrEmpty(request.TaskDetails))
-        {
-            taskDetails = mJsonSerializeService.Deserialize<IEnumerable<TaskDetailDto>>(request.TaskDetails);
-        }
+        IEnumerable<TaskDetailDto> taskDetails = ParseTaskDetails(request.TaskDetails);
 
-        await taskListRepository.ExecuteTransactionAsync(async () =>
-        {
-            _ = taskListRepository.Add(taskEntity);
+        await SaveTaskAsync(taskEntity, taskDetails, request);
 
-            if (taskDetails is not null)
-            {
-                await ProcessTaskDetailsAndDeliveryWarehouses(request, taskDetails.ToList(), taskEntity.EntityId);
-            }
-
-            await SaveAllChangesAsync();
-
-            result.Result = true;
-            return result;
-        });
-
-        return result;
+        return new MResponse<bool> { Result = true };
     }
 
-    private async Task<string> SaveFileAsync(IFormFile file)
+    private IEnumerable<TaskDetailDto> ParseTaskDetails(string? taskDetailsJson)
     {
-        string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "uploads");
-
-        if (!Directory.Exists(uploadsFolder))
-        {
-            _ = Directory.CreateDirectory(uploadsFolder);
-        }
-
-        string uniqueFileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(file.FileName);
-
-        string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-
-        using (FileStream fileStream = new(filePath, FileMode.Create))
-        {
-            await file.CopyToAsync(fileStream);
-        }
-
-        return Path.Combine("uploads", uniqueFileName);
+        return string.IsNullOrEmpty(taskDetailsJson)
+            ? []
+            : mJsonSerializeService.Deserialize<IEnumerable<TaskDetailDto>>(taskDetailsJson) ?? Enumerable.Empty<TaskDetailDto>();
     }
 
-    private async Task ProcessTaskDetailsAndDeliveryWarehouses(CreateTaskCommand request, List<TaskDetailDto> taskDetailsRequest, Guid taskId)
+    private async Task SaveTaskAsync(TaskListEntity taskEntity, IEnumerable<TaskDetailDto> taskDetails, CreateTaskCommand request)
     {
-        List<TaskDetailEntity> taskDetails = taskDetailsRequest.Select(taskDetail =>
+        _ = taskListRepository.Add(taskEntity);
+
+        if (taskDetails.Any())
         {
-            TaskDetailEntity taskDetailEntity = Mapper.Map<TaskDetailDto, TaskDetailEntity>(taskDetail);
-            taskDetailEntity.TaskId = taskId;
-            return taskDetailEntity;
-        }).ToList();
+            await ProcessTaskDetailsAndDeliveryWarehouses(taskDetails.ToList(), taskEntity.EntityId, request.Warehouse);
+        }
+
+        await CommitChangesAsync();
+    }
+
+    private async Task ProcessTaskDetailsAndDeliveryWarehouses(
+     IEnumerable<TaskDetailDto> taskDetailsRequest,
+     Guid taskId,
+     string toWarehouse)
+    {
+        List<TaskDetailEntity> taskDetails = MapTaskDetails(taskDetailsRequest, taskId);
+        List<DeliveryWarehouseEntity> deliveryWarehouses = MapDeliveryWarehouses(taskDetailsRequest, taskId, toWarehouse);
 
         _ = await taskDetailRepository.AddBatchAsync(taskDetails);
-
-        List<(string FromWarehouse, string ToWarehouse)> warehousePairs = DeliveryWarehouseDto.GetWarehousePairs(taskDetailsRequest);
-
-        List<DeliveryWarehouseDto> deliveryWarehouses = GenerateDeliveryWarehousesForPair(taskDetailsRequest, taskId, request.Warehouse).ToList();
-
-        List<DeliveryWarehouseEntity> deliveryWarehouseEntities = deliveryWarehouses
-            .Select(Mapper.Map<DeliveryWarehouseDto, DeliveryWarehouseEntity>)
-            .ToList();
-
-        _ = await deliveryWarehouseRepository.AddBatchAsync(deliveryWarehouseEntities);
-
+        _ = await deliveryWarehouseRepository.AddBatchAsync(deliveryWarehouses);
     }
 
-    private static IEnumerable<DeliveryWarehouseDto> GenerateDeliveryWarehousesForPair(
-    IEnumerable<TaskDetailDto> taskDetails, Guid taskId, string toWarehouse)
+    private List<TaskDetailEntity> MapTaskDetails(IEnumerable<TaskDetailDto> taskDetailsRequest, Guid taskId)
+    {
+        return taskDetailsRequest.Select(td =>
+        {
+            TaskDetailEntity entity = Mapper.Map<TaskDetailDto, TaskDetailEntity>(td);
+            entity.TaskId = taskId;
+            return entity;
+        }).ToList();
+    }
+
+    private List<DeliveryWarehouseEntity> MapDeliveryWarehouses(
+        IEnumerable<TaskDetailDto> taskDetailsRequest,
+        Guid taskId,
+        string toWarehouse)
+    {
+        return GenerateDeliveryWarehouses(taskDetailsRequest, taskId, toWarehouse)
+            .Select(Mapper.Map<DeliveryWarehouseDto, DeliveryWarehouseEntity>)
+            .ToList();
+    }
+
+    private static IEnumerable<DeliveryWarehouseDto> GenerateDeliveryWarehouses(
+        IEnumerable<TaskDetailDto> taskDetails,
+        Guid taskId,
+        string toWarehouse)
     {
         List<TaskDetailDto> taskDetailsList = taskDetails.ToList();
-
         if (taskDetailsList.Count == 0)
         {
             return [];
         }
 
-        IEnumerable<string> fromWarehouses = taskDetailsList.Skip(1).Select(td => td.Warehouse).Distinct();
-
-        List<DeliveryWarehouseDto> deliveryWarehouseDtos = fromWarehouses
-            .SelectMany(fromWarehouse => taskDetailsList
-                .Where(td => td.Warehouse == fromWarehouse)
-                .GroupBy(td => new { td.ProductName, td.Material, td.Employee })
-                .Select(group => new DeliveryWarehouseDto
-                {
-                    FromWarehouse = fromWarehouse,
-                    ToWarehouse = toWarehouse,
-                    ProductCode = group.Key.Material,
-                    ProductName = group.Key.ProductName,
-                    Quantity = group.Sum(td => td.Quantity),
-                    Employee = group.Key.Employee,
-                    DeliveryType = DeliveryType.Waiting,
-                    TaskId = taskId
-                }))
-            .ToList();
-
-        IEnumerable<DeliveryWarehouseDto> distinctDeliveryWarehouses = deliveryWarehouseDtos
-            .GroupBy(dw => new
-            {
-                dw.FromWarehouse,
-                dw.ToWarehouse,
-                dw.ProductCode,
-                dw.Employee
-            })
+        return taskDetailsList
+            .Skip(1)
+            .Select(td => td.Warehouse)
+            .Distinct()
+            .SelectMany(fromWarehouse =>
+                taskDetailsList.Where(td => td.Warehouse == fromWarehouse)
+                    .GroupBy(td => new { td.ProductName, td.Material, td.Employee })
+                    .Select(group => new DeliveryWarehouseDto
+                    {
+                        FromWarehouse = fromWarehouse,
+                        ToWarehouse = toWarehouse,
+                        ProductCode = group.Key.Material,
+                        ProductName = group.Key.ProductName,
+                        Quantity = group.Sum(td => td.Quantity),
+                        Employee = group.Key.Employee,
+                        DeliveryType = DeliveryType.Waiting,
+                        TaskId = taskId
+                    }))
+            .GroupBy(dw => new { dw.FromWarehouse, dw.ToWarehouse, dw.ProductCode, dw.Employee })
             .Select(group => new DeliveryWarehouseDto
             {
                 FromWarehouse = group.Key.FromWarehouse,
@@ -161,16 +133,13 @@ public class CreateTaskCommandHandler(IMapper mapper, MAuthenticateInfoContext t
                 DeliveryType = DeliveryType.Waiting,
                 TaskId = taskId
             });
-
-        return distinctDeliveryWarehouses;
     }
 
-
-
-    private async Task SaveAllChangesAsync()
+    private async Task CommitChangesAsync()
     {
+        _ = await taskListRepository.UnitOfWork.SaveChangesAsync();
         _ = await taskDetailRepository.UnitOfWork.SaveChangesAsync();
         _ = await deliveryWarehouseRepository.UnitOfWork.SaveChangesAsync();
-        _ = await taskListRepository.UnitOfWork.SaveChangesAsync();
     }
+
 }

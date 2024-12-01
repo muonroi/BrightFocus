@@ -37,6 +37,7 @@ public class GetTaskDetailCommandHandler(
             return result;
         }
 
+
         List<TaskDetailEntity>? taskDetailByParent = await taskDetailQuery.GetTaskDetailByTaskNoAsync(taskDetail.EntityId);
 
         TaskListDto data = Mapper.Map<TaskListEntity, TaskListDto>(taskDetail);
@@ -44,4 +45,6 @@ public class GetTaskDetailCommandHandler(
         result.Result = data;
         return result;
     }
+
+
 }

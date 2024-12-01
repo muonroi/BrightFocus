@@ -35,5 +35,11 @@ public class TaskListDto : IMapFrom<TaskListEntity>
 
     public string? FileUrl { get; set; }
 
+    public string? Customer { get; set; } = string.Empty;
+
+    public SourceType? SourceType { get; set; }
+
+    public string? SourceDetails { get; set; } = string.Empty;
+
     public IEnumerable<TaskDetailDto>? TaskDetails { get; set; }
 }

@@ -29,3 +29,6 @@ global using System.Text;
 global using BrightFocus.Core.Interfaces.Query.DeliveryWarehouse;
 global using BrightFocus.Core.Interfaces.Repository.DeliveryWarehouse;
 global using System.Linq.Expressions;
+global using Microsoft.AspNetCore.Http;
+global using Microsoft.AspNetCore.Hosting;
+global using BrightFocus.Core.Interfaces.Repository.Common;

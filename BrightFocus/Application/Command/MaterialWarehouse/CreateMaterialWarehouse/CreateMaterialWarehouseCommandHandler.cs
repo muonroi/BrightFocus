@@ -30,7 +30,7 @@ public class CreateMaterialWarehouseCommandHandler(
         }
 
         bool isDuplicateProductCode = await materialWarehouseQuery
-            .ExistsAsync(m => m.ProductCode == materialWarehouse.ProductCode, cancellationToken);
+            .ExistsAsync(m => m.ProductCode == materialWarehouse.ProductCode);
 
         if (isDuplicateProductCode)
         {

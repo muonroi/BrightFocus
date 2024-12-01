@@ -12,6 +12,7 @@ public class TaskDetailQuery(BrightFocusDbContext dbContext, MAuthenticateInfoCo
     }
 
 
+
     public async Task<MResponse<MPagedResult<TaskDetailDto>>> GetTaskDetailPagingAsync
     (Guid taskId, int pageIndex, int pageSize, string keyword, string sortBy, string sortOrder)
     {

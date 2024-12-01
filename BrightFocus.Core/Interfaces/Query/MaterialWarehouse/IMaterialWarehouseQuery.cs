@@ -22,5 +22,4 @@ public interface IMaterialWarehouseQuery : IMQueries<MaterialWarehouseEntity>
             double? quantity,
             string? warehouse);
 
-    Task<bool> ExistsAsync(Expression<Func<MaterialWarehouseEntity, bool>> predicate, CancellationToken cancellationToken = default);
 }

@@ -1,10 +1,4 @@
-﻿
-
-
-
-
-
-namespace BrightFocus.Application.Command.MaterialWarehouse.UpdateMaterialWarehouse;
+﻿namespace BrightFocus.Application.Command.MaterialWarehouse.UpdateMaterialWarehouse;
 
 public class UpdateMaterialWarehouseCommandHandler(IMapper mapper, MAuthenticateInfoContext tokenInfo, IAuthenticateRepository authenticateRepository, Serilog.ILogger logger, IMediator mediator, MPaginationConfig paginationConfig,
     IMaterialWarehouseRepository materialWarehouseRepository,
@@ -34,7 +28,7 @@ public class UpdateMaterialWarehouseCommandHandler(IMapper mapper, MAuthenticate
         }
 
         bool isDuplicateProductCode = await materialWarehouseQuery.ExistsAsync(
-            m => m.ProductCode == materialWarehouse.ProductCode && m.EntityId != request.MaterialWarehouseId, cancellationToken);
+            m => m.ProductCode == materialWarehouse.ProductCode && m.EntityId != request.MaterialWarehouseId);
 
         if (isDuplicateProductCode)
         {

@@ -51,7 +51,10 @@ public class DashboardController(
             File = request.File,
             Quantification = request.Quantification,
             Quantity = request.Quantity,
-            Characteristic = request.Characteristic
+            Characteristic = request.Characteristic,
+            SourceType = request.SourceType,
+            Customer = request.Customer,
+            SourceDetails = request.SourceDetails
         };
         MResponse<bool> result = await Mediator.Send(command, cancellationToken).ConfigureAwait(false);
         return result.GetActionResult();

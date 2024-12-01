@@ -472,6 +472,8 @@ namespace BrightFocus.Data.Persistence.Migrations
                     FileUrl = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     TaskType = table.Column<int>(type: "int", nullable: false),
+                    SourceType = table.Column<int>(type: "int", nullable: true),
+                    SourceDetails = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
                     CreatedDateTS = table.Column<double>(type: "double", nullable: false),
                     LastModificationTimeTs = table.Column<double>(type: "double", nullable: true),
                     DeletedDateTS = table.Column<double>(type: "double", nullable: true),

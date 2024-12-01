@@ -22,6 +22,7 @@ namespace BrightFocus.Application.Command.TaskCommand.DeleteTaskDetail
             foreach (Guid taskId in request.TaskDetailIds)
             {
                 TaskDetailEntity? taskDetail = await taskDetailQuery.GetByGuidAsync(taskId);
+
                 if (taskDetail == null)
                 {
                     notFoundIds.Add(taskId);
@@ -37,7 +38,7 @@ namespace BrightFocus.Application.Command.TaskCommand.DeleteTaskDetail
                 return result;
             }
 
-            _ = await taskDetailRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
+            _ = await taskDetailRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken).ConfigureAwait(false);
 
             result.Result = true;
             return result;

@@ -37,4 +37,10 @@ public class CreateOrUpdateTaskRequest : IMapFrom<TaskListEntity>
     public string? TaskDetails { get; set; } = string.Empty;
 
     public IFormFile? File { get; set; }
+
+    public SourceType SourceType { get; set; }
+
+    public string? Customer { get; set; } = string.Empty;
+
+    public string? SourceDetails { get; set; } = string.Empty;
 }

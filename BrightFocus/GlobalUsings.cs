@@ -64,3 +64,6 @@ global using BrightFocus.Application.Query.DeliveryWarehouse.GetDeliveryWarehous
 global using Microsoft.AspNetCore.Hosting;
 global using Grpc.Core;
 global using Newtonsoft.Json;
+global using BrightFocus.Core.Interfaces.Repository.Common;
+global using BrightFocus.Data.Repository.Common;
+global using BrightFocus.Extensions;

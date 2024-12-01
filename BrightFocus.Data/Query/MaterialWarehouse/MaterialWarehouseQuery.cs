@@ -94,10 +94,4 @@ public class MaterialWarehouseQuery(BrightFocusDbContext dbContext, MAuthenticat
         result.Result = pagedResult;
         return result;
     }
-
-    public async Task<bool> ExistsAsync(Expression<Func<MaterialWarehouseEntity, bool>> predicate, CancellationToken cancellationToken = default)
-    {
-        return await Queryable.AnyAsync(predicate, cancellationToken);
-    }
-
 }
