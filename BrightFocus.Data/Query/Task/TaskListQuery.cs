@@ -4,7 +4,7 @@ public class TaskListQuery(BrightFocusDbContext dbContext, MAuthenticateInfoCont
 {
     public async Task<IEnumerable<TaskListEntity>> GetTaskByGuidsAsync(List<Guid> guids)
     {
-        if (guids == null || guids.Count == 0)
+        if (guids.Count == 0)
         {
             return [];
         }
@@ -32,23 +32,11 @@ public class TaskListQuery(BrightFocusDbContext dbContext, MAuthenticateInfoCont
             {
                 EntityId = taskList.EntityId,
                 TaskName = taskList.TaskName,
-                ProductName = taskList.ProductName,
-                Material = taskList.Material,
-                Size = taskList.Size,
-                Weight = taskList.Weight,
-                Quantification = taskList.Quantification,
-                Color = taskList.Color,
-                Characteristic = taskList.Characteristic ?? string.Empty,
-                Quantity = taskList.Quantity,
                 Employee = taskList.Employee,
-                FactoryName = taskList.FactoryName ?? string.Empty,
-                Warehouse = taskList.Warehouse ?? string.Empty,
                 DeadlineDate = taskList.DeadlineDate,
                 Note = taskList.Note ?? string.Empty,
                 FileUrl = taskList.FileUrl,
-                SourceType = taskList.SourceType,
                 Customer = taskList.Customer ?? string.Empty,
-                SourceDetails = taskList.SourceDetails ?? string.Empty,
                 CreationTime = taskList.CreationTime,
                 TaskDetails = dbContext.TaskDetails
                     .Where(td => td.TaskId == taskList.EntityId)
@@ -57,21 +45,19 @@ public class TaskListQuery(BrightFocusDbContext dbContext, MAuthenticateInfoCont
                         EntityId = td.EntityId,
                         ProductName = td.ProductName ?? string.Empty,
                         Material = td.Material ?? string.Empty,
-                        Quantification = td.Quantification ?? 0.0,
-                        Width = td.Width ?? 0.0,
+                        Quantification = td.Quantification,
                         Color = td.Color,
                         Characteristic = td.Characteristic,
                         Quantity = td.Quantity,
                         Warehouse = td.Warehouse,
                         FileNumber = td.FileNumber,
                         Employee = td.Employee,
-                        DeadlineDate = td.DeadlineDate,
                         Note = td.Note,
                         TaskId = td.TaskId
                     }).ToList()
             },
             keyword,
-            x => string.IsNullOrEmpty(keyword) || x.ProductName.Contains(keyword),
+            x => string.IsNullOrEmpty(keyword),
             queryable =>
             {
                 string validSortBy = string.IsNullOrWhiteSpace(sortBy) ? "CreationTime" : sortBy;

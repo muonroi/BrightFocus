@@ -1,4 +1,6 @@
-﻿namespace BrightFocus.Application.Command.TaskCommand.UpdateTask;
+﻿
+
+namespace BrightFocus.Application.Command.TaskCommand.UpdateTask;
 
 public class UpdateTaskCommandHandler(
     IMapper mapper,
@@ -12,7 +14,6 @@ public class UpdateTaskCommandHandler(
     ITaskDetailRepository taskDetailRepository,
     ITaskDetailQuery taskDetailQuery,
     IDeliveryWarehouseRepository deliveryWarehouseRepository,
-    IDeliveryWarehouseQuery deliveryWarehouseQuery,
     IMJsonSerializeService mJsonSerializeService,
     IFileStorageService fileStorageService
 ) : BaseCommandHandler(mapper, tokenInfo, authenticateRepository, logger, mediator, paginationConfig),
@@ -52,21 +53,22 @@ public class UpdateTaskCommandHandler(
 
     private IEnumerable<TaskDetailDto> ParseTaskDetails(string? taskDetailsJson)
     {
-        return string.IsNullOrEmpty(taskDetailsJson)
+        IEnumerable<TaskDetailDto> taskDetails = string.IsNullOrEmpty(taskDetailsJson)
             ? []
-            : mJsonSerializeService.Deserialize<IEnumerable<TaskDetailDto>>(taskDetailsJson) ?? Enumerable.Empty<TaskDetailDto>();
+            : mJsonSerializeService.Deserialize<IEnumerable<TaskDetailDto>>(taskDetailsJson) ?? [];
+
+        return taskDetails;
     }
 
     private async Task UpdateTaskAsync(TaskListEntity existTask, IEnumerable<TaskDetailDto> taskDetails, UpdateTaskCommand request)
     {
         _ = taskListRepository.Update(existTask);
 
-        if (taskDetails.Any())
+        IEnumerable<TaskDetailDto> taskDetailDtos = taskDetails as TaskDetailDto[] ?? taskDetails.ToArray();
+        if (taskDetailDtos.Any())
         {
-            List<TaskDetailEntity> existingTaskDetails = await taskDetailQuery.GetTaskDetailByTaskNoAsync(request.EntityId ?? Guid.Empty) ?? [];
-            await UpdateTaskDetails(existingTaskDetails, taskDetails.ToList(), existTask.EntityId);
-
-            await UpdateDeliveryWarehouses(taskDetails, existTask.EntityId, existTask.Warehouse ?? string.Empty);
+            List<TaskDetailEntity> existingTaskDetails = await taskDetailQuery.GetTaskDetailByTaskNoAsync(request.EntityId ?? Guid.Empty);
+            await UpdateTaskDetails(existingTaskDetails, taskDetailDtos.ToList(), existTask.EntityId);
         }
 
         await CommitChangesAsync();
@@ -84,10 +86,10 @@ public class UpdateTaskCommandHandler(
             .ToList();
         if (toDelete.Count != 0)
         {
-            _ = await Mediator.Send(new DeleteTaskDetailCommand
+            foreach (TaskDetailEntity? detail in toDelete)
             {
-                TaskDetailIds = toDelete.Select(x => x.EntityId).ToList()
-            });
+                _ = await taskDetailRepository.DeleteAsync(detail);
+            }
         }
 
         foreach (TaskDetailDto detailDto in taskDetails)
@@ -106,93 +108,6 @@ public class UpdateTaskCommandHandler(
                 _ = taskDetailRepository.Add(newDetail);
             }
         }
-    }
-
-    private async Task UpdateDeliveryWarehouses(
-        IEnumerable<TaskDetailDto> taskDetails,
-        Guid taskId,
-        string toWarehouse)
-    {
-        List<DeliveryWarehouseEntity> existingWarehouses = await deliveryWarehouseQuery.GetByConditionAsync(x => x.TaskId == taskId);
-
-        List<DeliveryWarehouseEntity> deliveryWarehouses = GenerateDeliveryWarehouses(taskDetails, taskId, toWarehouse)
-            .Select(Mapper.Map<DeliveryWarehouseDto, DeliveryWarehouseEntity>)
-            .ToList();
-
-        foreach (DeliveryWarehouseEntity? warehouse in deliveryWarehouses)
-        {
-            DeliveryWarehouseEntity? existingWarehouse = existingWarehouses.FirstOrDefault(w =>
-                w.FromWarehouse == warehouse.FromWarehouse &&
-                w.ToWarehouse == warehouse.ToWarehouse &&
-                w.ProductCode == warehouse.ProductCode &&
-                w.Employee == warehouse.Employee);
-
-            if (existingWarehouse != null)
-            {
-                _ = Mapper.Map(warehouse, existingWarehouse);
-                _ = deliveryWarehouseRepository.Update(existingWarehouse);
-            }
-            else
-            {
-                _ = deliveryWarehouseRepository.Add(warehouse);
-            }
-        }
-
-        HashSet<(string FromWarehouse, string ToWarehouse)> currentPairs = deliveryWarehouses
-            .Select(dw => (dw.FromWarehouse, dw.ToWarehouse))
-            .ToHashSet();
-
-        List<DeliveryWarehouseEntity> toDelete = existingWarehouses
-            .Where(w => !currentPairs.Contains((w.FromWarehouse, w.ToWarehouse)))
-            .ToList();
-
-        foreach (DeliveryWarehouseEntity? warehouse in toDelete)
-        {
-            _ = await deliveryWarehouseRepository.DeleteAsync(warehouse);
-        }
-    }
-
-    private static IEnumerable<DeliveryWarehouseDto> GenerateDeliveryWarehouses(
-       IEnumerable<TaskDetailDto> taskDetails,
-       Guid taskId,
-       string toWarehouse)
-    {
-        List<TaskDetailDto> taskDetailsList = taskDetails.ToList();
-        if (taskDetailsList.Count == 0)
-        {
-            return [];
-        }
-
-        return taskDetailsList
-            .Skip(1)
-            .Select(td => td.Warehouse)
-            .Distinct()
-            .SelectMany(fromWarehouse =>
-                taskDetailsList.Where(td => td.Warehouse == fromWarehouse)
-                    .GroupBy(td => new { td.ProductName, td.Material, td.Employee })
-                    .Select(group => new DeliveryWarehouseDto
-                    {
-                        FromWarehouse = fromWarehouse,
-                        ToWarehouse = toWarehouse,
-                        ProductCode = group.Key.Material,
-                        ProductName = group.Key.ProductName,
-                        Quantity = group.Sum(td => td.Quantity),
-                        Employee = group.Key.Employee,
-                        DeliveryType = DeliveryType.Waiting,
-                        TaskId = taskId
-                    }))
-            .GroupBy(dw => new { dw.FromWarehouse, dw.ToWarehouse, dw.ProductCode, dw.Employee })
-            .Select(group => new DeliveryWarehouseDto
-            {
-                FromWarehouse = group.Key.FromWarehouse,
-                ToWarehouse = group.Key.ToWarehouse,
-                ProductCode = group.Key.ProductCode,
-                ProductName = group.First().ProductName,
-                Quantity = group.Sum(dw => dw.Quantity),
-                Employee = group.Key.Employee,
-                DeliveryType = DeliveryType.Waiting,
-                TaskId = taskId
-            });
     }
 
     private async Task CommitChangesAsync()

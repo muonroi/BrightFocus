@@ -27,14 +27,12 @@ public class TaskDetailQuery(BrightFocusDbContext dbContext, MAuthenticateInfoCo
                 EntityId = td.EntityId,
                 ProductName = td.ProductName ?? string.Empty,
                 Material = td.Material ?? string.Empty,
-                Quantification = td.Quantification ?? 0,
-                Width = td.Width ?? 0,
+                Quantification = td.Quantification,
                 Color = td.Color,
                 Characteristic = td.Characteristic,
                 Quantity = td.Quantity,
                 Employee = td.Employee,
                 Warehouse = td.Warehouse,
-                DeadlineDate = td.DeadlineDate,
                 Note = td.Note ?? string.Empty,
                 TaskId = td.TaskId
             },
@@ -53,7 +51,7 @@ public class TaskDetailQuery(BrightFocusDbContext dbContext, MAuthenticateInfoCo
     }
 
 
-    public async Task<List<TaskDetailEntity>> GetTaskDetailsByTaskIdsAsync(List<Guid> foundTaskIds)
+    public async Task<List<TaskDetailEntity>> GetTaskDetailsByTaskIdsAsync(List<Guid>? foundTaskIds)
     {
         return foundTaskIds == null || foundTaskIds.Count == 0
             ? ([])

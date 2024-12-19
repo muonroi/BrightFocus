@@ -12,14 +12,11 @@ public class MaterialWarehouseQuery(BrightFocusDbContext dbContext, MAuthenticat
             string keyword,
             string sortBy,
             string sortOrder,
-            string? productCode,
             string? productName,
             string? material,
             double? quantification,
-            double? width,
             string? color,
             string? characteristic,
-            double? quantity,
             string? warehouse)
     {
         MResponse<MPagedResult<MaterialWarehousesDto>> result = new();
@@ -39,11 +36,6 @@ public class MaterialWarehouseQuery(BrightFocusDbContext dbContext, MAuthenticat
         if (quantification.HasValue)
         {
             query = query.Where(x => x.Quantification == quantification.Value);
-        }
-
-        if (width.HasValue)
-        {
-            query = query.Where(x => x.Width == width.Value);
         }
 
         if (!string.IsNullOrWhiteSpace(color))
@@ -72,14 +64,20 @@ public class MaterialWarehouseQuery(BrightFocusDbContext dbContext, MAuthenticat
                 ProductName = materialWarehouse.ProductName,
                 Material = materialWarehouse.Material,
                 Quantification = materialWarehouse.Quantification,
-                Width = materialWarehouse.Width,
                 Color = materialWarehouse.Color,
-                Factory = materialWarehouse.Factory,
                 Characteristic = materialWarehouse.Characteristic,
                 Quantity = materialWarehouse.Quantity,
                 Warehouse = materialWarehouse.Warehouse,
                 ReceiptNumber = materialWarehouse.ReceiptNumber,
                 MaterialProductType = materialWarehouse.MaterialProductType,
+                Note = materialWarehouse.Note,
+                CreatedDate = materialWarehouse.CreationTime,
+                FileNumber = materialWarehouse.FileNumber,
+                Volume = materialWarehouse.Volume,
+                Price = materialWarehouse.Price,
+                Amount = materialWarehouse.Amount
+
+
             },
             keyword,
             x => string.IsNullOrEmpty(keyword) || x.ProductName.Contains(keyword),

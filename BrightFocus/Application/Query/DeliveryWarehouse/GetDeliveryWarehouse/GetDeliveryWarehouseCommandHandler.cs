@@ -11,12 +11,6 @@ namespace BrightFocus.Application.Query.DeliveryWarehouse.GetDeliveryWarehouse
         {
             MResponse<IEnumerable<DeliveryWarehouseDto>> result = new();
             List<DeliveryWarehouseEntity> deliveryWarehouse = await deliveryWarehouseQuery.GetByConditionAsync(x => x.TaskId == request.TaskId);
-            if (deliveryWarehouse == null)
-            {
-                result.StatusCode = StatusCodes.Status404NotFound;
-                result.AddErrorMessage("DeliveryWarehouse not found");
-                return result;
-            }
             result.Result = Mapper.Map<IEnumerable<DeliveryWarehouseDto>>(deliveryWarehouse);
             return result;
         }

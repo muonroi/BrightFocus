@@ -4,106 +4,121 @@
 [Index(nameof(ProductName))]
 public class TaskDetailEntity : MEntity
 {
-    /// <summary>
-    /// Name of the product (supports Vietnamese characters, max 255 characters)
-    /// </summary>
-    [MaxLength(255)]
-    [Column(TypeName = "nvarchar(255)")]
-    public string? ProductName { get; set; } = string.Empty;
+        /// <summary>
+        /// Mã sản phẩm
+        /// </summary>
+        [MaxLength(255)]
+        [Required]
+        [Column(TypeName = "varchar(255)")]
+        public string ProductCode { get; set; } = string.Empty;
 
-    /// <summary>
-    /// Type of material, stored as non-Unicode (varchar)
-    /// </summary>
-    [MaxLength(100)]
-    [Column(TypeName = "varchar(100)")]
-    public string? Material { get; set; } = string.Empty;
+        /// <summary>
+        /// Tên sản phẩm
+        /// </summary>
+        [MaxLength(255)]
+        [Required]
+        [Column(TypeName = "nvarchar(255)")]
+        public string ProductName { get; set; } = string.Empty;
 
-    /// <summary>
-    /// Quantification value as integer (e.g., quantity in numeric terms)
-    /// </summary>
-    public double? Quantification { get; set; }
+        /// <summary>
+        /// Loại nguyên liệu
+        /// </summary>
+        [MaxLength(100)]
+        [Required]
+        [Column(TypeName = "varchar(100)")]
+        public string Material { get; set; } = string.Empty;
+        
+        /// <summary>
+        /// Giá trị định lượng
+        /// </summary>
+        [Required]
+        public double Quantification { get; set; }
+        
+        
+        /// <summary>
+        /// Màu sắc
+        /// </summary>
+        [MaxLength(50)]
+        [Column(TypeName = "varchar(50)")]
+        public string Color { get; set; } = string.Empty;
+        
+        
+        /// <summary>
+        /// Đặc điểm sản phẩm
+        /// </summary>
+        [MaxLength(100)]
+        [Column(TypeName = "varchar(100)")]
+        public string Characteristic { get; set; } = string.Empty;
 
+       
+        
 
-    /// <summary>
-    /// Width of the material in integer units (e.g., cm or mm)
-    /// </summary>
-    public double? Width { get; set; }
+        /// <summary>
+        /// Số lượng sản phẩm
+        /// </summary>
+        [Required]
+        public double Quantity { get; set; }
 
-    /// <summary>
-    /// Color of the material, stored as varchar
-    /// </summary>
-    [MaxLength(50)]
-    [Column(TypeName = "varchar(50)")]
-    public string? Color { get; set; } = string.Empty;
+        /// <summary>
+        /// Thể tích sản phẩm
+        /// </summary>
+        [Required]
+        public double Volume { get; set; }
+        
+        /// <summary>
+        /// Giá sản phẩm
+        /// </summary>
+        [Required]
+        public double Price { get; set; }
 
-    /// <summary>
-    /// Distinct characteristic of the material, stored as varchar
-    /// </summary>
-    [MaxLength(100)]
-    [Column(TypeName = "varchar(100)")]
-    public string? Characteristic { get; set; } = string.Empty;
+        /// <summary>
+        /// Tổng tiền
+        /// </summary>
+        [Required]
+        public double Amount { get; set; }
 
-    /// <summary>
-    /// Quantity of material available as integer
-    /// </summary>
-    [Required]
-    public double Quantity { get; set; }
+        /// <summary>
+        /// Vị trí kho lưu trữ
+        /// </summary>
+        [MaxLength(255)]
+        [Column(TypeName = "varchar(255)")]
+        public string Warehouse { get; set; } = string.Empty;
 
-    /// <summary>
-    /// Factory where the item is produced or stored, stored as varchar
-    /// </summary>
-    [MaxLength(255)]
-    [Column(TypeName = "varchar(255)")]
-    public string? Factory { get; set; } = string.Empty;
+        /// <summary>
+        /// Số biên nhận
+        /// </summary>
+        [MaxLength(100)]
+        [Column(TypeName = "varchar(100)")]
+        public string ReceiptNumber { get; set; } = string.Empty;
 
-    /// <summary>
-    /// Warehouse location of the item, stored as varchar
-    /// </summary>
-    [MaxLength(255)]
-    [Column(TypeName = "varchar(255)")]
-    public string Warehouse { get; set; } = string.Empty;
+        /// <summary>
+        /// Số hồ sơ lưu trữ
+        /// </summary>
+        [MaxLength(100)]
+        [Column(TypeName = "varchar(100)")]
+        public string FileNumber { get; set; } = string.Empty;
 
-    /// <summary>
-    /// Receipt number for inventory entry, stored as varchar
-    /// </summary>
-    [MaxLength(100)]
-    [Column(TypeName = "varchar(100)")]
-    public string? ReceiptNumber { get; set; } = string.Empty;
+        /// <summary>
+        /// Name of the employee responsible, stored as varchar
+        /// </summary>
+        [MaxLength(150)]
+        [Column(TypeName = "varchar(150)")]
+        public string Employee { get; set; } = string.Empty;
+        
+        /// <summary>
+        /// Deadline date
+        /// </summary>
+        
+        public DateTime DeadlineDate { get; set; }
 
-    /// <summary>
-    /// File or record number for documentation and tracking, stored as varchar
-    /// </summary>
-    [MaxLength(100)]
-    [Column(TypeName = "varchar(100)")]
-    public string? FileNumber { get; set; } = string.Empty;
+        
+        /// <summary>
+        /// Ghi chú thêm
+        /// </summary>
+        [MaxLength(500)]
+        [Column(TypeName = "nvarchar(500)")]
+        public string Note { get; set; } = string.Empty;
 
-    /// <summary>
-    /// Name of the employee responsible, stored as varchar
-    /// </summary>
-    [MaxLength(150)]
-    [Column(TypeName = "varchar(150)")]
-    public string Employee { get; set; } = string.Empty;
-
-    /// <summary>
-    /// Source of product
-    /// </summary>
-    [MaxLength(150)]
-    [Column(TypeName = "varchar(150)")]
-    public string Source { get; set; } = string.Empty;
-
-    /// <summary>
-    /// Deadline or expiration date of the material (if applicable)
-    /// </summary>
-    [Column(TypeName = "datetime")]
-    public DateTime DeadlineDate { get; set; }
-
-    /// <summary>
-    /// Additional notes or comments, stored as varchar
-    /// </summary>
-    [MaxLength(500)]
-    [Column(TypeName = "nvarchar(500)")]
-    public string? Note { get; set; } = string.Empty;
-
-    [Required]
-    public Guid TaskId { get; set; }
+        [Required]
+        public Guid TaskId { get; set; }
 }

@@ -1,5 +1,7 @@
 ﻿
 
+
+
 namespace BrightFocus.Controllers
 {
     [AllowAnonymous]
@@ -8,13 +10,19 @@ namespace BrightFocus.Controllers
         Serilog.ILogger logger,
         IMapper mapper) : MControllerBase(mediator, logger, mapper)
     {
-        [HttpPost("material-warehouse", Name = nameof(CreateMaterialWarehouse))]
+        [HttpPost(Name = nameof(CreateMaterialWarehouse))]
         public async Task<IActionResult> CreateMaterialWarehouse([FromBody] CreateMaterialWarehouseCommand command, CancellationToken cancellationToken)
         {
             MResponse<bool> result = await Mediator.Send(command, cancellationToken).ConfigureAwait(false);
             return result.GetActionResult();
         }
-        [HttpGet("material-warehouse")]
+        [HttpPost("material-warehouse/import", Name = nameof(ImportMaterialWarehouse))]
+        public async Task<IActionResult> ImportMaterialWarehouse([FromForm] ImportMaterialWarehouseCommand command, CancellationToken cancellationToken)
+        {
+            MResponse<bool> result = await Mediator.Send(command, cancellationToken).ConfigureAwait(false);
+            return result.GetActionResult();
+        }
+        [HttpGet()]
         public async Task<IActionResult> GetMaterialWarehouseById([FromQuery] GetMaterialWarehouseDetailCommand command, CancellationToken cancellationToken)
         {
             MResponse<MaterialWarehousesDto> result = await Mediator.Send(command, cancellationToken).ConfigureAwait(false);
@@ -26,7 +34,7 @@ namespace BrightFocus.Controllers
             MResponse<MPagedResult<MaterialWarehousesDto>> result = await Mediator.Send(command, cancellationToken).ConfigureAwait(false);
             return result.GetActionResult();
         }
-        [HttpPut("material-warehouse")]
+        [HttpPut]
         public async Task<IActionResult> UpdateMaterialWarehouse([FromQuery] Guid materialWarehouseId, [FromBody] CreateOrUpdateMaterialWarehousesRequest request, CancellationToken cancellationToken)
         {
             UpdateMaterialWarehouseCommand command = Mapper.Map<UpdateMaterialWarehouseCommand>(request);
@@ -34,7 +42,14 @@ namespace BrightFocus.Controllers
             MResponse<bool> result = await Mediator.Send(command, cancellationToken).ConfigureAwait(false);
             return result.GetActionResult();
         }
-        [HttpDelete("material-warehouse")]
+        [HttpPut("quantity-notes")]
+        public async Task<IActionResult> UpdateQuantityNotesMaterialWarehouse([FromBody] UpdateQuantityNotesMaterialWarehouseRequest request, CancellationToken cancellationToken)
+        {
+            UpdateMaterialWarehouseCommand command = Mapper.Map<UpdateMaterialWarehouseCommand>(request);
+            MResponse<bool> result = await Mediator.Send(command, cancellationToken).ConfigureAwait(false);
+            return result.GetActionResult();
+        }
+        [HttpDelete]
         public async Task<IActionResult> DeleteMaterialWarehouse([FromQuery] DeleteMaterialWarehouseCommand command, CancellationToken cancellationToken)
         {
             MResponse<bool> result = await Mediator.Send(command, cancellationToken).ConfigureAwait(false);

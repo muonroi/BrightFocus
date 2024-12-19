@@ -37,24 +37,14 @@ public class DashboardController(
         {
             EntityId = request.EntityId,
             TaskName = request.TaskName,
-            ProductName = request.ProductName,
-            Material = request.Material,
-            Size = request.Size,
-            Weight = request.Weight,
-            Color = request.Color,
             Employee = request.Employee,
-            FactoryName = request.FactoryName,
-            Warehouse = request.Warehouse,
             DeadlineDate = request.DeadlineDate,
             Note = request.Note,
             TaskDetails = request.TaskDetails,
             File = request.File,
-            Quantification = request.Quantification,
-            Quantity = request.Quantity,
-            Characteristic = request.Characteristic,
-            SourceType = request.SourceType,
             Customer = request.Customer,
-            SourceDetails = request.SourceDetails
+            Process = request.Process,
+            TaskType = request.File != null ? TaskType.Green : TaskType.Red
         };
         MResponse<bool> result = await Mediator.Send(command, cancellationToken).ConfigureAwait(false);
         return result.GetActionResult();

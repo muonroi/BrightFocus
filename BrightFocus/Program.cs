@@ -1,15 +1,3 @@
-
-
-
-
-
-
-
-
-
-
-
-
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 Assembly assembly = Assembly.GetExecutingAssembly();
 ConfigurationManager configuration = builder.Configuration;
@@ -42,7 +30,7 @@ try
     using (IServiceScope scope = app.Services.CreateScope())
     {
         BrightFocusDbContext dbContext = scope.ServiceProvider.GetRequiredService<BrightFocusDbContext>();
-        dbContext.Database.Migrate();
+        await dbContext.Database.MigrateAsync();
     }
     _ = app.UseDefaultMiddleware<BrightFocusDbContext, Permission>();
     _ = app.UseCors("MAllowDomains");

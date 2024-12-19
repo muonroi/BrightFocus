@@ -23,10 +23,6 @@ public class CreateMaterialWarehouseCommandValidator
         _ = RuleFor(command => command.Quantification)
             .GreaterThan(0).WithMessage("Quantification must be greater than 0.");
 
-        // Validate Width
-        _ = RuleFor(command => command.Width)
-            .GreaterThan(0).WithMessage("Width must be greater than 0.");
-
         // Validate Color
         _ = RuleFor(command => command.Color)
             .MaximumLength(50).WithMessage("Color must not exceed 50 characters.");
@@ -39,10 +35,6 @@ public class CreateMaterialWarehouseCommandValidator
         _ = RuleFor(command => command.Quantity)
             .GreaterThan(0).WithMessage("Quantity must be greater than 0.");
 
-        // Validate Factory
-        _ = RuleFor(command => command.Factory)
-            .MaximumLength(100).WithMessage("Factory name must not exceed 100 characters.");
-
         // Validate Warehouse
         _ = RuleFor(command => command.Warehouse)
             .MaximumLength(100).WithMessage("Warehouse name must not exceed 100 characters.");
@@ -51,8 +43,5 @@ public class CreateMaterialWarehouseCommandValidator
         _ = RuleFor(command => command.ReceiptNumber)
             .MaximumLength(50).WithMessage("Receipt number must not exceed 50 characters.");
 
-        // Validate EntryDate
-        _ = RuleFor(command => command.EntryDate)
-            .LessThanOrEqualTo(DateTime.Now).WithMessage("Entry date cannot be in the future.");
     }
 }

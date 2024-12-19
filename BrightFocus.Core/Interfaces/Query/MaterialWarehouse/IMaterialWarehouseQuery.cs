@@ -12,14 +12,11 @@ public interface IMaterialWarehouseQuery : IMQueries<MaterialWarehouseEntity>
             string keyword,
             string sortBy,
             string sortOrder,
-            string? productCode,
             string? productName,
             string? material,
             double? quantification,
-            double? width,
             string? color,
             string? characteristic,
-            double? quantity,
             string? warehouse);
 
 }

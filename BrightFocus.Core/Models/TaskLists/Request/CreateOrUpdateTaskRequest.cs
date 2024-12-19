@@ -8,39 +8,18 @@ public class CreateOrUpdateTaskRequest : IMapFrom<TaskListEntity>
 
     public string TaskName { get; set; } = string.Empty;
 
-    public string ProductName { get; set; } = string.Empty;
-
-    public string Material { get; set; } = string.Empty;
-
-    public double Size { get; set; }
-
-    public double Weight { get; set; }
-
-    public double Quantification { get; set; }
-
-    public string Color { get; set; } = string.Empty;
-
-    public string? Characteristic { get; set; } = string.Empty;
-
-    public double Quantity { get; set; }
-
     public string Employee { get; set; } = string.Empty;
 
-    public string FactoryName { get; set; } = string.Empty;
-
-    public string Warehouse { get; set; } = string.Empty;
+    public string? Customer { get; set; } = string.Empty;
 
     public DateTime DeadlineDate { get; set; }
 
     public string? Note { get; set; } = string.Empty;
 
-    public string? TaskDetails { get; set; } = string.Empty;
+    public string Process { get; set; } = string.Empty;
 
     public IFormFile? File { get; set; }
+    public string? TaskDetails { get; set; } = string.Empty;
 
-    public SourceType SourceType { get; set; }
-
-    public string? Customer { get; set; } = string.Empty;
-
-    public string? SourceDetails { get; set; } = string.Empty;
+    public TaskType TaskType { get; set; } = TaskType.Red;
 }
