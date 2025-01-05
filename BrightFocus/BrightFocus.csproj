@@ -39,6 +39,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Application\Query\" />
     <Folder Include="wwwroot\" />
     <Folder Include="wwwroot\uploads\" />
   </ItemGroup>

@@ -1,6 +1,7 @@
-﻿namespace BrightFocus.Core.Enums;
-
-public enum TaskType
+﻿namespace BrightFocus.Core.Enums
 {
-    Green, Yellow, Red
+    public enum TaskType
+    {
+        Green, Yellow, Red
+    }
 }

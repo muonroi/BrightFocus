@@ -13,4 +13,8 @@
   <ItemGroup>
     <ProjectReference Include="..\BrightFocus.Core\BrightFocus.Core.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Query\" />
+    <Folder Include="Repository\" />
+  </ItemGroup>
 </Project>

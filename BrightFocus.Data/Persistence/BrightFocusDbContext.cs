@@ -2,11 +2,17 @@
 
 public class BrightFocusDbContext : MDbContext
 {
-    public DbSet<TaskListEntity> TaskLists { get; set; }
-    public DbSet<TaskDetailEntity> TaskDetails { get; set; }
-    public DbSet<DeliveryWarehouseEntity> DeliveryWarehouses { get; set; }
+    public DbSet<CustomerEntity> CustomerEntities { get; set; }
+    public DbSet<ExportEntity> ExportEntities { get; set; }
+    public DbSet<ImportEntity> ImportEntities { get; set; }
+    public DbSet<TaskImportExportEntity> TaskImportExportEntities { get; set; }
+    public DbSet<ExportOrderEntity> ExportOrderEntities { get; set; }
+    public DbSet<TaskOrderEntity> TaskOrderEntities { get; set; }
+    public DbSet<ProcessProductEntity> ProcessProductEntities { get; set; }
+    public DbSet<ProductMaterialEntity> ProductMaterialEntities { get; set; }
+    public DbSet<TaskDetailEntity> TaskDetailEntities { get; set; }
+    public DbSet<TaskProductionEntity> TaskProductionEntities { get; set; }
     public DbSet<MaterialWarehouseEntity> MaterialWarehouses { get; set; }
-    public DbSet<WarehouseEntity> Warehouses { get; set; }
 
     public BrightFocusDbContext(DbContextOptions options)
         : base(options, new NoMediator())
