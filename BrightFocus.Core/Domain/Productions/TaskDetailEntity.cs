@@ -78,21 +78,8 @@ public class TaskDetailEntity : MEntity
     [Column(TypeName = "nvarchar(500)")]
     public string Note { get; set; } = string.Empty;
 
-
-    /// <summary>
-    /// Task detail status
-    /// </summary>
-    public TaskType TaskType { get; set; }
-
-
     [Required]
     public Guid TaskId { get; set; }
 
 
-    [Required]
-    public Guid ProductMaterialId { get; set; }
-
-
-    [Required]
-    public Guid ProcessId { get; set; }
 }

@@ -1,7 +1,7 @@
 ﻿namespace BrightFocus.Core.Domain.Productions
 {
-    [Table("ProcessProducts")]
-    public class ProcessProductEntity : MEntity
+    [Table("ProductProcess")]
+    public class ProductProcessEntity : MEntity
     {
         [MaxLength(100)]
         [Required]
@@ -35,5 +35,8 @@
         [Required]
         [Column(TypeName = "nvarchar(100)")]
         public string ProductEight { get; set; } = string.Empty;
+
+        [Required]
+        public Guid TaskId { get; set; }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace BrightFocus.Core.Interfaces.Query.ProductionTask
 {
-    public interface IProcessProductQuery : IMQueries<ProcessProductEntity>
+    public interface IProcessProductQuery : IMQueries<ProductProcessEntity>
     {
     }
 }

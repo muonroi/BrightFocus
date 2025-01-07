@@ -1,6 +1,6 @@
 ﻿namespace BrightFocus.Core.Models.TaskLists.Request.ProductionTask
 {
-    public class TaskProcessRequest
+    public class TaskProcessRequest : IMapFrom<ProductProcessEntity>
     {
         public string ProductOne { get; set; } = string.Empty;
         public string ProductTwo { get; set; } = string.Empty;

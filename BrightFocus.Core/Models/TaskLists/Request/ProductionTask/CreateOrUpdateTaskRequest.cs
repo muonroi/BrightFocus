@@ -2,21 +2,13 @@
 
 namespace BrightFocus.Core.Models.TaskLists.Request.ProductionTask;
 
-public class CreateOrUpdateTaskRequest : IMapFrom<TaskProductionEntity>
+public class CreateOrUpdateTaskRequest
 {
-    public Guid? EntityId { get; set; }
+    public int WrapperId { get; set; }
 
-    public string TaskName { get; set; } = string.Empty;
+    public List<TaskMaterialRequest> TaskProducts { get; set; } = [];
 
-    public string Employee { get; set; } = string.Empty;
+    public List<TaskMaterialRequest> TaskMaterials { get; set; } = [];
 
-    public string Factory { get; set; } = string.Empty;
-
-    public DateTime DeadlineDate { get; set; }
-
-    public IEnumerable<TaskMaterialRequest> TaskProducts { get; set; } = [];
-
-    public IEnumerable<TaskMaterialRequest> TaskMaterials { get; set; } = [];
-
-    public IEnumerable<TaskProcessRequest> TaskProcesses { get; set; } = [];
+    public TaskProcessRequest TaskProcesses { get; set; } = new();
 }
