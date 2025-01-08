@@ -7,7 +7,6 @@ public class BrightFocusDbContext : MDbContext
     public DbSet<CustomerEntity> CustomerEntities { get; set; }
     public DbSet<ExportEntity> ExportEntities { get; set; }
     public DbSet<ImportEntity> ImportEntities { get; set; }
-    public DbSet<TaskImportExportEntity> TaskImportExportEntities { get; set; }
     public DbSet<ExportOrderEntity> ExportOrderEntities { get; set; }
     public DbSet<TaskOrderEntity> TaskOrderEntities { get; set; }
     public DbSet<ProductProcessEntity> ProcessProductEntities { get; set; }

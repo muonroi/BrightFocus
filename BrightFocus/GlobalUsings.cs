@@ -36,3 +36,6 @@ global using System.Threading;
 global using BrightFocus.Application.Command.TaskCommand.ProductionTask;
 global using BrightFocus.Core.Models.TaskLists.Request.Regulars;
 global using BrightFocus.Application.Command.TaskCommand.ProductionTask.Profiles;
+global using BrightFocus.Core.Enums;
+global using BrightFocus.Application.Command.TaskCommand.ImportExportTask;
+global using BrightFocus.Core.Interfaces.Repository.ImportExportTask;

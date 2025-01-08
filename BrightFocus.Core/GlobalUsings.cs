@@ -14,3 +14,4 @@ global using System.Linq;
 global using System.Text;
 global using BrightFocus.Core.Models.TaskLists.Request.Regulars;
 global using BrightFocus.Core.Models.TaskLists.Request.ProductionTask;
+global using BrightFocus.Core.Domain.ImportExports;
