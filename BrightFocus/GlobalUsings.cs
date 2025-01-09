@@ -39,3 +39,14 @@ global using BrightFocus.Application.Command.TaskCommand.ProductionTask.Profiles
 global using BrightFocus.Core.Enums;
 global using BrightFocus.Application.Command.TaskCommand.ImportExportTask;
 global using BrightFocus.Core.Interfaces.Repository.ImportExportTask;
+global using BrightFocus.Core.Domain.ImportExports;
+global using BrightFocus.Data.Repository;
+global using System.Collections.Generic;
+global using BrightFocus.Application.Command.TaskCommand.ImportExportTask.Profiles;
+global using BrightFocus.Core.Domain.Orders;
+global using BrightFocus.Core.Interfaces.Repository.OrderTask;
+global using BrightFocus.Core.Domain.Customers;
+global using BrightFocus.Core.Interfaces.Repository.CustomerTask;
+global using BrightFocus.Application.Command.TaskCommand.OrderTask.Profiles;
+global using BrightFocus.Application.Command.TaskCommand.OrderTask;
+global using BrightFocus.Application.Command.TaskCommand.CustomerTask;

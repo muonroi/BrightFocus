@@ -1,6 +1,9 @@
 ﻿namespace BrightFocus.Core.Domain.Orders
 {
-    public class OrderEntity : MEntity
+    [Table("Order")]
+    [Index(nameof(TaskId), Name = "IX_Order_TaskId")]
+    public class OrderEntity
+        : MEntity
     {
         /// <summary>
         /// Tên sản phẩm
@@ -75,5 +78,7 @@
         [MaxLength(500)]
         [Column(TypeName = "nvarchar(500)")]
         public string Note { get; set; } = string.Empty;
+
+        public Guid TaskId { get; set; }
     }
 }

@@ -1,5 +1,9 @@
 
 
+
+
+
+
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 Assembly assembly = Assembly.GetExecutingAssembly();
 ConfigurationManager configuration = builder.Configuration;
@@ -28,6 +32,8 @@ try
     _ = services.AddPermissionFilter<Permission>();
     _ = services.RegisterService();
     _ = services.AddAutoMapper(typeof(ProductionTaskMappingProfile));
+    _ = services.AddAutoMapper(typeof(ImportExportTaskProfile));
+    _ = services.AddAutoMapper(typeof(OrderTaskProfile));
     WebApplication app = builder.Build();
     using (IServiceScope scope = app.Services.CreateScope())
     {

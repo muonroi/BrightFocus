@@ -77,5 +77,7 @@
         [MaxLength(500)]
         [Column(TypeName = "nvarchar(500)")]
         public string Note { get; set; } = string.Empty;
+        public Guid TaskId { get; set; }
+
     }
 }

@@ -17,3 +17,5 @@ global using BrightFocus.Core.Interfaces.Repository.ProductionTask;
 global using System.Collections.Generic;
 global using System.Linq;
 global using BrightFocus.Core.Interfaces.Repository.ImportExportTask;
+global using BrightFocus.Core.Interfaces.Repository.OrderTask;
+global using BrightFocus.Core.Interfaces.Repository.CustomerTask;

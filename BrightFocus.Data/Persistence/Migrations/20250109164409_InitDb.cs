@@ -47,27 +47,18 @@ namespace BrightFocus.Data.Persistence.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "ExportOrderEntities",
+                name: "ImportExportTask",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     EntityId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    ProductName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    Material = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Ingredient = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Characteristic = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    ColorCode = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    FileNumber = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Volume = table.Column<double>(type: "double", nullable: false),
-                    Warehouse = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    OrderNumber = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Note = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    TaskName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    Ingredient = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    Source = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    EmployeeName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    FactoryName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    DeadlineDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     CreatedDateTS = table.Column<double>(type: "double", nullable: false),
                     LastModificationTimeTs = table.Column<double>(type: "double", nullable: true),
                     DeletedDateTS = table.Column<double>(type: "double", nullable: true),
@@ -81,7 +72,7 @@ namespace BrightFocus.Data.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ExportOrderEntities", x => x.Id);
+                    table.PrimaryKey("PK_ImportExportTask", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -432,6 +423,46 @@ namespace BrightFocus.Data.Persistence.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "OrderExport",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    EntityId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    ProductName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    Material = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Ingredient = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Characteristic = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    ColorCode = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    FileNumber = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Volume = table.Column<double>(type: "double", nullable: false),
+                    Warehouse = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    OrderNumber = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Note = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    TaskId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    CreatedDateTS = table.Column<double>(type: "double", nullable: false),
+                    LastModificationTimeTs = table.Column<double>(type: "double", nullable: true),
+                    DeletedDateTS = table.Column<double>(type: "double", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    CreationTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    CreatorUserId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    LastModificationTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    LastModificationUserId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    DeletionTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    DeletedUserId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OrderExport", x => x.Id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "ProductMaterials",
                 columns: table => new
                 {
@@ -566,6 +597,7 @@ namespace BrightFocus.Data.Persistence.Migrations
                     OrderNumber = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Note = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    TaskId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     CreatedDateTS = table.Column<double>(type: "double", nullable: false),
                     LastModificationTimeTs = table.Column<double>(type: "double", nullable: true),
                     DeletedDateTS = table.Column<double>(type: "double", nullable: true),
@@ -605,6 +637,7 @@ namespace BrightFocus.Data.Persistence.Migrations
                     OrderNumber = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Note = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    TaskId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     CreatedDateTS = table.Column<double>(type: "double", nullable: false),
                     LastModificationTimeTs = table.Column<double>(type: "double", nullable: true),
                     DeletedDateTS = table.Column<double>(type: "double", nullable: true),
@@ -623,41 +656,6 @@ namespace BrightFocus.Data.Persistence.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "TaskImportExport",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    EntityId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    TaskName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    Material = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Source = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    ProductName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    Ingredient = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    DeadlineDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    EmployeeId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    FileUrl = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    FactoryName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    TaskType = table.Column<int>(type: "int", nullable: false),
-                    CreatedDateTS = table.Column<double>(type: "double", nullable: false),
-                    LastModificationTimeTs = table.Column<double>(type: "double", nullable: true),
-                    DeletedDateTS = table.Column<double>(type: "double", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    CreationTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    CreatorUserId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    LastModificationTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    LastModificationUserId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    DeletionTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    DeletedUserId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TaskImportExport", x => x.Id);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
                 name: "TaskOrders",
                 columns: table => new
                 {
@@ -668,12 +666,8 @@ namespace BrightFocus.Data.Persistence.Migrations
                     CustomerCode = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     CustomerName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    ProductName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    EmployeeName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     DeadlineDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    EmployeeId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    FileUrl = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    TaskType = table.Column<int>(type: "int", nullable: false),
                     CreatedDateTS = table.Column<double>(type: "double", nullable: false),
                     LastModificationTimeTs = table.Column<double>(type: "double", nullable: true),
                     DeletedDateTS = table.Column<double>(type: "double", nullable: true),
@@ -725,6 +719,11 @@ namespace BrightFocus.Data.Persistence.Migrations
                 column: "CustomerCode");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ImportExportTask_TaskName",
+                table: "ImportExportTask",
+                column: "TaskName");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_MaterialWarehouses_ProductName_Characteristic_FileNumber",
                 table: "MaterialWarehouses",
                 columns: new[] { "ProductName", "Characteristic", "FileNumber" });
@@ -764,6 +763,11 @@ namespace BrightFocus.Data.Persistence.Migrations
                 column: "LoginProvider");
 
             migrationBuilder.CreateIndex(
+                name: "IX_OrderExport_TaskId",
+                table: "OrderExport",
+                column: "TaskId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ProductMaterials_ProductName",
                 table: "ProductMaterials",
                 column: "ProductName");
@@ -784,8 +788,8 @@ namespace BrightFocus.Data.Persistence.Migrations
                 column: "ProductName");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TaskImportExport_TaskName",
-                table: "TaskImportExport",
+                name: "IX_TaskOrders_TaskName",
+                table: "TaskOrders",
                 column: "TaskName");
 
             migrationBuilder.CreateIndex(
@@ -801,7 +805,7 @@ namespace BrightFocus.Data.Persistence.Migrations
                 name: "Customers");
 
             migrationBuilder.DropTable(
-                name: "ExportOrderEntities");
+                name: "ImportExportTask");
 
             migrationBuilder.DropTable(
                 name: "MaterialWarehouses");
@@ -834,6 +838,9 @@ namespace BrightFocus.Data.Persistence.Migrations
                 name: "MUserTokens");
 
             migrationBuilder.DropTable(
+                name: "OrderExport");
+
+            migrationBuilder.DropTable(
                 name: "ProductMaterials");
 
             migrationBuilder.DropTable(
@@ -847,9 +854,6 @@ namespace BrightFocus.Data.Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "TaskImport");
-
-            migrationBuilder.DropTable(
-                name: "TaskImportExport");
 
             migrationBuilder.DropTable(
                 name: "TaskOrders");

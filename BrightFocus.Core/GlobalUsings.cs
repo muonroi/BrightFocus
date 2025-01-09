@@ -15,3 +15,6 @@ global using System.Text;
 global using BrightFocus.Core.Models.TaskLists.Request.Regulars;
 global using BrightFocus.Core.Models.TaskLists.Request.ProductionTask;
 global using BrightFocus.Core.Domain.ImportExports;
+global using Muonroi.BuildingBlock.External.SeedWorks;
+global using BrightFocus.Core.Domain.Orders;
+global using BrightFocus.Core.Domain.Customers;

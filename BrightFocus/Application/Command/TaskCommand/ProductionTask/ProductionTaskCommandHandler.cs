@@ -67,7 +67,8 @@ namespace BrightFocus.Application.Command.TaskCommand.ProductionTask
 
             _ = await Task.WhenAll(detailTask, materialTask, processTask);
             _ = await taskDetailRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
-
+            _ = await productMaterialRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
+            _ = await processProductRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
             result.Result = true;
             return result;
         }

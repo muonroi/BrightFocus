@@ -4,17 +4,14 @@
     {
         public ProductionTaskMappingProfile()
         {
-            // ✅ Ánh xạ `TaskMaterialRequest` -> `TaskDetailEntity`
             _ = CreateMap<TaskMaterialRequest, TaskDetailEntity>()
-                .ForMember(dest => dest.TaskId, opt => opt.Ignore());
+                .ForMember(destination => destination.TaskId, opt => opt.Ignore());
 
-            // ✅ Ánh xạ `TaskMaterialRequest` -> `ProductMaterialEntity`
             _ = CreateMap<TaskMaterialRequest, ProductMaterialEntity>()
-                .ForMember(dest => dest.TaskId, opt => opt.Ignore());
+                .ForMember(destination => destination.TaskId, opt => opt.Ignore());
 
-            // ✅ Ánh xạ `TaskProcessRequest` -> `ProductProcessEntity`
             _ = CreateMap<TaskProcessRequest, ProductProcessEntity>()
-                .ForMember(dest => dest.TaskId, opt => opt.Ignore());
+                .ForMember(destination => destination.TaskId, opt => opt.Ignore());
         }
     }
 }
