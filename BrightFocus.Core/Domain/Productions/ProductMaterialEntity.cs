@@ -80,5 +80,8 @@
 
         [Required]
         public Guid TaskId { get; set; }
+
+        public int WrapperId { get; set; }
+
     }
 }

@@ -18,3 +18,7 @@ global using BrightFocus.Core.Domain.ImportExports;
 global using Muonroi.BuildingBlock.External.SeedWorks;
 global using BrightFocus.Core.Domain.Orders;
 global using BrightFocus.Core.Domain.Customers;
+global using BrightFocus.Core.Models.Customers;
+global using Muonroi.BuildingBlock.External.Models;
+global using BrightFocus.Core.Domain.Dashboards;
+global using BrightFocus.Core.Models.Dashboard;

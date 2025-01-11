@@ -12,7 +12,8 @@ namespace BrightFocus.Application.Command.TaskCommand.OrderTask
         MPaginationConfig paginationConfig,
         IOrderRepository orderRepository,
         IOrderExportRepository orderExportRepository,
-        IOrderTaskRepository orderTaskRepository
+        IOrderTaskRepository orderTaskRepository,
+        IDashboardRepository dashboardRepository
     ) : BaseCommandHandler(mapper, tokenInfo, authenticateRepository, logger, mediator, paginationConfig),
         IRequestHandler<OrderTaskCommand, MResponse<bool>>
     {
@@ -36,12 +37,26 @@ namespace BrightFocus.Application.Command.TaskCommand.OrderTask
 
             List<OrderEntity> orders = [];
             List<OrderExportEntity> orderExports = [];
+            List<DashboardEntity> dashboardEntities = [];
 
             foreach (TaskMaterialRequest order in request.Orders)
             {
                 OrderEntity orderData = Mapper.Map<OrderEntity>(order);
                 orderData.TaskId = taskId;
                 orders.Add(orderData);
+
+                DashboardEntity dashboard = new()
+                {
+                    TaskId = taskId,
+                    TaskName = request.TaskName,
+                    ProductName = order.ProductName,
+                    Material = order.Material,
+                    Volume = order.Volume.ToString(),
+                    DeadlineDate = request.DeadlineDate,
+                    Employee = request.Employee,
+                    Factory = request.Factory
+                };
+                dashboardEntities.Add(dashboard);
             }
 
             foreach (TaskMaterialRequest orderExport in request.ExportOrders)
@@ -49,13 +64,32 @@ namespace BrightFocus.Application.Command.TaskCommand.OrderTask
                 OrderExportEntity orderExportData = Mapper.Map<OrderExportEntity>(orderExport);
                 orderExportData.TaskId = taskId;
                 orderExports.Add(orderExportData);
+
+
+                DashboardEntity dashboard = new()
+                {
+                    TaskId = taskId,
+                    TaskName = request.TaskName,
+                    ProductName = orderExport.ProductName,
+                    Material = orderExport.Material,
+                    Volume = orderExport.Volume.ToString(),
+                    DeadlineDate = request.DeadlineDate,
+                    Employee = request.Employee,
+                    Factory = request.Factory
+                };
+                dashboardEntities.Add(dashboard);
             }
+
+
+            Task<int> dashboardTask = dashboardRepository.AddBatchAsync(dashboardEntities);
 
             Task<int> importProductTask = orderRepository.AddBatchAsync(orders);
 
             Task<int> exportProductTask = orderExportRepository.AddBatchAsync(orderExports);
 
-            _ = await Task.WhenAll(importProductTask, exportProductTask);
+            _ = await Task.WhenAll(importProductTask, exportProductTask, dashboardTask);
+
+            _ = await dashboardRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
             _ = await orderRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
 

@@ -1,6 +1,6 @@
-﻿namespace BrightFocus.Core.Models.TaskLists.Response
+﻿namespace BrightFocus.Core.Models.Dashboard
 {
-    public class CommonTaskResponse
+    public class DashboardResponseModel
     {
         public Guid? EntityId { get; set; }
 
@@ -17,5 +17,6 @@
         public string Employee { get; set; } = string.Empty;
 
         public string Factory { get; set; } = string.Empty;
+        public Guid TaskId { get; set; }
     }
 }

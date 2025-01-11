@@ -1,9 +1,12 @@
 ﻿
 
+
+
 namespace BrightFocus.Data.Persistence;
 
 public class BrightFocusDbContext : MDbContext
 {
+    public DbSet<DashboardEntity> DashboardEntities { get; set; }
     public DbSet<CustomerEntity> CustomerEntities { get; set; }
     public DbSet<ExportEntity> ExportEntities { get; set; }
     public DbSet<ImportEntity> ImportEntities { get; set; }

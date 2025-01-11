@@ -47,6 +47,38 @@ namespace BrightFocus.Data.Persistence.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "Dashboard",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    EntityId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    TaskName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    ProductName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Material = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Volume = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    DeadlineDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    Employee = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Factory = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    TaskId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    CreatedDateTS = table.Column<double>(type: "double", nullable: false),
+                    LastModificationTimeTs = table.Column<double>(type: "double", nullable: true),
+                    DeletedDateTS = table.Column<double>(type: "double", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    CreationTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    CreatorUserId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    LastModificationTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    LastModificationUserId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    DeletionTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    DeletedUserId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Dashboard", x => x.Id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "ImportExportTask",
                 columns: table => new
                 {
@@ -485,6 +517,7 @@ namespace BrightFocus.Data.Persistence.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Note = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     TaskId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    WrapperId = table.Column<int>(type: "int", nullable: false),
                     CreatedDateTS = table.Column<double>(type: "double", nullable: false),
                     LastModificationTimeTs = table.Column<double>(type: "double", nullable: true),
                     DeletedDateTS = table.Column<double>(type: "double", nullable: true),
@@ -518,6 +551,7 @@ namespace BrightFocus.Data.Persistence.Migrations
                     ProductSeven = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     ProductEight = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     TaskId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    WrapperId = table.Column<int>(type: "int", nullable: false),
                     CreatedDateTS = table.Column<double>(type: "double", nullable: false),
                     LastModificationTimeTs = table.Column<double>(type: "double", nullable: true),
                     DeletedDateTS = table.Column<double>(type: "double", nullable: true),
@@ -558,6 +592,7 @@ namespace BrightFocus.Data.Persistence.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Note = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     TaskId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    WrapperId = table.Column<int>(type: "int", nullable: false),
                     CreatedDateTS = table.Column<double>(type: "double", nullable: false),
                     LastModificationTimeTs = table.Column<double>(type: "double", nullable: true),
                     DeletedDateTS = table.Column<double>(type: "double", nullable: true),
@@ -719,6 +754,11 @@ namespace BrightFocus.Data.Persistence.Migrations
                 column: "CustomerCode");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Dashboard_TaskName",
+                table: "Dashboard",
+                column: "TaskName");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ImportExportTask_TaskName",
                 table: "ImportExportTask",
                 column: "TaskName");
@@ -803,6 +843,9 @@ namespace BrightFocus.Data.Persistence.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Customers");
+
+            migrationBuilder.DropTable(
+                name: "Dashboard");
 
             migrationBuilder.DropTable(
                 name: "ImportExportTask");

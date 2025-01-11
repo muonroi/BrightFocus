@@ -19,4 +19,5 @@ public class TaskProductionEntity : MEntity
     public string FactoryName { get; set; } = string.Empty;
 
     public DateTime DeadlineDate { get; set; }
+
 }

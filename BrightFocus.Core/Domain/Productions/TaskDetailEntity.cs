@@ -81,5 +81,6 @@ public class TaskDetailEntity : MEntity
     [Required]
     public Guid TaskId { get; set; }
 
+    public int WrapperId { get; set; }
 
 }
