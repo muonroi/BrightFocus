@@ -1,8 +1,10 @@
-﻿namespace BrightFocus.Core.Models.TaskLists.Request.Regulars
+﻿namespace BrightFocus.Core.Models.TaskLists.Response
 {
-    public class TaskMaterialRequest : IMapFrom<ProductMaterialEntity>
+    public class TaskMaterialResponse
     {
         public string ProductName { get; set; } = string.Empty;
+
+        public string Material { get; set; } = string.Empty;
 
         public string Ingredient { get; set; } = string.Empty;
 
@@ -19,8 +21,7 @@
         public string OrderNumber { get; set; } = string.Empty;
 
         public string Note { get; set; } = string.Empty;
-
         public string Structure { get; set; } = string.Empty;
-
+        public int WrapperId { get; set; }
     }
 }

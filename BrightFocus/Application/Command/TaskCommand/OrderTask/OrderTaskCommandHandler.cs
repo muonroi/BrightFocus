@@ -1,7 +1,4 @@
-﻿
-
-
-namespace BrightFocus.Application.Command.TaskCommand.OrderTask
+﻿namespace BrightFocus.Application.Command.TaskCommand.OrderTask
 {
     public class OrderTaskCommandHandler(
         IMapper mapper,
@@ -21,6 +18,9 @@ namespace BrightFocus.Application.Command.TaskCommand.OrderTask
         {
             MResponse<bool> result = new();
 
+            List<OrderEntity> orders = [];
+            List<OrderExportEntity> orderExports = [];
+
             TaskOrderEntity taskOrderEntity = new()
             {
                 TaskName = request.TaskName,
@@ -35,69 +35,78 @@ namespace BrightFocus.Application.Command.TaskCommand.OrderTask
 
             Guid taskId = taskOrderEntity.EntityId;
 
-            List<OrderEntity> orders = [];
-            List<OrderExportEntity> orderExports = [];
-            List<DashboardEntity> dashboardEntities = [];
-
             foreach (TaskMaterialRequest order in request.Orders)
             {
-                OrderEntity orderData = Mapper.Map<OrderEntity>(order);
-                orderData.TaskId = taskId;
-                orders.Add(orderData);
-
-                DashboardEntity dashboard = new()
-                {
-                    TaskId = taskId,
-                    TaskName = request.TaskName,
-                    ProductName = order.ProductName,
-                    Material = order.Material,
-                    Volume = order.Volume.ToString(),
-                    DeadlineDate = request.DeadlineDate,
-                    Employee = request.Employee,
-                    Factory = request.Factory
-                };
-                dashboardEntities.Add(dashboard);
+                OrderEntity orderEntity = MapOrderEntity(order, taskId);
+                orders.Add(orderEntity);
             }
 
             foreach (TaskMaterialRequest orderExport in request.ExportOrders)
             {
-                OrderExportEntity orderExportData = Mapper.Map<OrderExportEntity>(orderExport);
-                orderExportData.TaskId = taskId;
-                orderExports.Add(orderExportData);
-
-
-                DashboardEntity dashboard = new()
-                {
-                    TaskId = taskId,
-                    TaskName = request.TaskName,
-                    ProductName = orderExport.ProductName,
-                    Material = orderExport.Material,
-                    Volume = orderExport.Volume.ToString(),
-                    DeadlineDate = request.DeadlineDate,
-                    Employee = request.Employee,
-                    Factory = request.Factory
-                };
-                dashboardEntities.Add(dashboard);
+                OrderExportEntity orderExportEntity = MapOrderExportEntity(orderExport, taskId);
+                orderExports.Add(orderExportEntity);
             }
 
+            DashboardEntity dashboard = new()
+            {
+                TaskId = taskId,
+                TaskName = request.TaskName,
+                DeadlineDate = request.DeadlineDate,
+                Employee = request.Employee,
+                Factory = request.Factory
+            };
 
-            Task<int> dashboardTask = dashboardRepository.AddBatchAsync(dashboardEntities);
+            await orderTaskRepository.ExecuteTransactionAsync(async () =>
+            {
+                _ = await orderRepository.AddBatchAsync(orders);
+                _ = await orderExportRepository.AddBatchAsync(orderExports);
+                _ = dashboardRepository.Add(dashboard);
 
-            Task<int> importProductTask = orderRepository.AddBatchAsync(orders);
+                _ = await orderRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
+                _ = await orderExportRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
+                _ = await dashboardRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
-            Task<int> exportProductTask = orderExportRepository.AddBatchAsync(orderExports);
-
-            _ = await Task.WhenAll(importProductTask, exportProductTask, dashboardTask);
-
-            _ = await dashboardRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
-
-            _ = await orderRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
-
-            _ = await orderExportRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
+                return result;
+            });
 
             result.Result = true;
-
             return result;
+        }
+
+        private static OrderEntity MapOrderEntity(TaskMaterialRequest order, Guid taskId)
+        {
+            return new OrderEntity
+            {
+                ProductName = order.ProductName,
+                Ingredient = order.Ingredient,
+                Characteristic = order.Characteristic,
+                ColorCode = order.ColorCode,
+                FileNumber = order.FileNumber,
+                Volume = order.Volume,
+                Warehouse = order.Warehouse,
+                OrderNumber = order.OrderNumber,
+                Note = order.Note,
+                TaskId = taskId,
+                Structure = order.Structure
+            };
+        }
+
+        private static OrderExportEntity MapOrderExportEntity(TaskMaterialRequest orderExport, Guid taskId)
+        {
+            return new OrderExportEntity
+            {
+                ProductName = orderExport.ProductName,
+                Ingredient = orderExport.Ingredient,
+                Characteristic = orderExport.Characteristic,
+                ColorCode = orderExport.ColorCode,
+                FileNumber = orderExport.FileNumber,
+                Volume = orderExport.Volume,
+                Warehouse = orderExport.Warehouse,
+                OrderNumber = orderExport.OrderNumber,
+                Note = orderExport.Note,
+                TaskId = taskId,
+                Structure = orderExport.Structure
+            };
         }
     }
 }

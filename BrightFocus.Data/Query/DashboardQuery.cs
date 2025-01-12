@@ -6,20 +6,51 @@
         public async Task<MPagedResult<DashboardResponseModel>> GetDashboardData(int pageIndex, int pageSize)
         {
             IOrderedQueryable<DashboardEntity> query = Queryable.OrderBy(x => x.TaskName);
-            MPagedResult<DashboardResponseModel> response = await GetPagedAsync(query, pageIndex, pageSize,
-              x => new DashboardResponseModel
-              {
-                  EntityId = x.EntityId,
-                  TaskName = x.TaskName,
-                  ProductName = x.ProductName,
-                  Material = x.Material,
-                  Volume = x.Volume,
-                  DeadlineDate = x.DeadlineDate,
-                  Employee = x.Employee,
-                  Factory = x.Factory,
-                  TaskId = x.TaskId
-              });
-            return response;
+
+            List<DashboardResponseModel> rawData = await query
+                .Select(x => new DashboardResponseModel
+                {
+                    EntityId = x.EntityId,
+                    TaskName = x.TaskName,
+                    ProductName = x.ProductName,
+                    Material = x.Characteristic,
+                    Volume = x.Volume,
+                    DeadlineDate = x.DeadlineDate.ToString("dd/MM/yyyy"),
+                    Employee = x.Employee,
+                    Factory = x.Factory,
+                    TaskId = x.TaskId
+                })
+                .ToListAsync();
+
+            List<DashboardResponseModel> groupedTasks = rawData
+                .GroupBy(x => new { x.DeadlineDate, x.Employee, x.Factory })
+                .Select(group =>
+                {
+                    List<DashboardResponseModel> taskList = [.. group];
+                    DashboardResponseModel parentTask = taskList.First();
+
+                    parentTask.ExpandTask = taskList
+                        .Where(x => x.TaskId != parentTask.TaskId)
+                        .ToList();
+
+                    return parentTask;
+                })
+                .ToList();
+
+            int totalRowCount = groupedTasks.Count;
+
+            List<DashboardResponseModel> pagedItems = groupedTasks
+                .Skip((pageIndex - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            return new MPagedResult<DashboardResponseModel>
+            {
+                Items = pagedItems,
+                CurrentPage = pageIndex,
+                PageSize = pageSize,
+                RowCount = totalRowCount
+            };
         }
     }
 }

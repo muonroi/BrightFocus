@@ -3,38 +3,30 @@
     [Table("ProductProcess")]
     public class ProductProcessEntity : MEntity
     {
-        [MaxLength(100)]
         [Required]
-        [Column(TypeName = "nvarchar(100)")]
-        public string ProductOne { get; set; } = string.Empty;
-        [MaxLength(100)]
+        [Column(TypeName = "nvarchar(255)")]
+        public string StepOne { get; set; } = string.Empty;
         [Required]
-        [Column(TypeName = "nvarchar(100)")]
-        public string ProductTwo { get; set; } = string.Empty;
-        [MaxLength(100)]
+        [Column(TypeName = "nvarchar(255)")]
+        public string StepTwo { get; set; } = string.Empty;
         [Required]
-        [Column(TypeName = "nvarchar(100)")]
-        public string ProductThree { get; set; } = string.Empty;
-        [MaxLength(100)]
+        [Column(TypeName = "nvarchar(255)")]
+        public string StepThree { get; set; } = string.Empty;
         [Required]
-        [Column(TypeName = "nvarchar(100)")]
-        public string ProductFour { get; set; } = string.Empty;
-        [MaxLength(100)]
+        [Column(TypeName = "nvarchar(255)")]
+        public string StepFour { get; set; } = string.Empty;
         [Required]
-        [Column(TypeName = "nvarchar(100)")]
-        public string ProductFive { get; set; } = string.Empty;
-        [MaxLength(100)]
+        [Column(TypeName = "nvarchar(255)")]
+        public string StepFive { get; set; } = string.Empty;
         [Required]
-        [Column(TypeName = "nvarchar(100)")]
-        public string ProductSix { get; set; } = string.Empty;
-        [MaxLength(100)]
+        [Column(TypeName = "nvarchar(255)")]
+        public string StepSix { get; set; } = string.Empty;
         [Required]
-        [Column(TypeName = "nvarchar(100)")]
-        public string ProductSeven { get; set; } = string.Empty;
-        [MaxLength(100)]
+        [Column(TypeName = "nvarchar(255)")]
+        public string StepSeven { get; set; } = string.Empty;
         [Required]
-        [Column(TypeName = "nvarchar(100)")]
-        public string ProductEight { get; set; } = string.Empty;
+        [Column(TypeName = "nvarchar(255)")]
+        public string StepEight { get; set; } = string.Empty;
 
         [Required]
         public Guid TaskId { get; set; }

@@ -3,6 +3,10 @@
 
 
 
+
+
+
+
 namespace BrightFocus.Controllers;
 
 [AllowAnonymous]
@@ -11,6 +15,19 @@ public class DashboardController(
     IMapper mapper,
     Serilog.ILogger logger) : MControllerBase(mediator, logger, mapper)
 {
+
+    [HttpDelete("task", Name = nameof(DeleteTask))]
+    public async Task<IActionResult> DeleteTask([FromQuery] DeleteTaskCommand command, CancellationToken cancellationToken)
+    {
+        MResponse<bool> result = await Mediator.Send(command, cancellationToken).ConfigureAwait(false);
+        return result.GetActionResult();
+    }
+    [HttpGet("task-detail", Name = nameof(GetTaskDetail))]
+    public async Task<IActionResult> GetTaskDetail([FromQuery] GetTaskDetailCommand command, CancellationToken cancellationToken)
+    {
+        MResponse<ProductionTaskResponse> result = await Mediator.Send(command, cancellationToken).ConfigureAwait(false);
+        return result.GetActionResult();
+    }
     [HttpGet("task", Name = nameof(GetDashboardTask))]
     public async Task<IActionResult> GetDashboardTask([FromQuery] GetDashboardTaskCommand command, CancellationToken cancellationToken)
     {

@@ -19,7 +19,7 @@
         [Required]
         [Column(TypeName = "nvarchar(100)")]
 
-        public string Material { get; set; } = string.Empty;
+        public string Characteristic { get; set; } = string.Empty;
 
         [MaxLength(100)]
         [Required]
@@ -27,7 +27,7 @@
 
         public string Volume { get; set; } = string.Empty;
 
-        public DateTime DeadlineDate { get; set; }
+        public required DateTime DeadlineDate { get; set; }
 
         [MaxLength(100)]
         [Required]

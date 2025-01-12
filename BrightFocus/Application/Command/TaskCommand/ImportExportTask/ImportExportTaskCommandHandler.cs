@@ -1,6 +1,4 @@
-﻿
-
-namespace BrightFocus.Application.Command.TaskCommand.ImportExportTask
+﻿namespace BrightFocus.Application.Command.TaskCommand.ImportExportTask
 {
     public class ImportExportTaskCommandHandler(
         IMapper mapper,
@@ -10,7 +8,7 @@ namespace BrightFocus.Application.Command.TaskCommand.ImportExportTask
         IMediator mediator,
         MPaginationConfig paginationConfig,
         IImportRepository taskImportRepository,
-        IExportRepository taskExportRepositor,
+        IExportRepository taskExportRepository,
         IImportExportTaskRepository importExportTaskRepository,
         IDashboardRepository dashboardRepository
     ) : BaseCommandHandler(mapper, tokenInfo, authenticateRepository, logger, mediator, paginationConfig),
@@ -19,6 +17,9 @@ namespace BrightFocus.Application.Command.TaskCommand.ImportExportTask
         public async Task<MResponse<bool>> Handle(ImportExportTaskCommand request, CancellationToken cancellationToken)
         {
             MResponse<bool> result = new();
+
+            List<ImportEntity> productsImport = [];
+            List<ExportEntity> productsExport = [];
 
             ImportExportTaskEntity taskProductEntity = new()
             {
@@ -35,67 +36,78 @@ namespace BrightFocus.Application.Command.TaskCommand.ImportExportTask
 
             Guid taskId = taskProductEntity.EntityId;
 
-            List<ImportEntity> productsImport = [];
-            List<ExportEntity> productsExport = [];
-            List<DashboardEntity> dashboardEntities = [];
-
             foreach (TaskMaterialRequest productImport in request.ProductsImport)
             {
-                ImportEntity productImportData = Mapper.Map<ImportEntity>(productImport);
-                productImportData.TaskId = taskId;
-                productsImport.Add(productImportData);
-
-                DashboardEntity dashboard = new()
-                {
-                    TaskId = taskId,
-                    TaskName = request.TaskName,
-                    ProductName = productImport.ProductName,
-                    Material = productImport.Material,
-                    Volume = productImport.Volume.ToString(),
-                    DeadlineDate = request.DeadlineDate,
-                    Employee = request.Employee,
-                    Factory = request.Factory
-                };
-                dashboardEntities.Add(dashboard);
+                ImportEntity importEntity = MapImportEntity(productImport, taskId);
+                productsImport.Add(importEntity);
             }
 
             foreach (TaskMaterialRequest productExport in request.ProductsExport)
             {
-                ExportEntity productExportData = Mapper.Map<ExportEntity>(productExport);
-                productExportData.TaskId = taskId;
-                productsExport.Add(productExportData);
-
-                DashboardEntity dashboard = new()
-                {
-                    TaskId = taskId,
-                    TaskName = request.TaskName,
-                    ProductName = productExport.ProductName,
-                    Material = productExport.Material,
-                    Volume = productExport.Volume.ToString(),
-                    DeadlineDate = request.DeadlineDate,
-                    Employee = request.Employee,
-                    Factory = request.Factory
-                };
-                dashboardEntities.Add(dashboard);
+                ExportEntity exportEntity = MapExportEntity(productExport, taskId);
+                productsExport.Add(exportEntity);
             }
 
-            Task<int> dashboardTask = dashboardRepository.AddBatchAsync(dashboardEntities);
+            DashboardEntity dashboard = new()
+            {
+                TaskId = taskId,
+                TaskName = request.TaskName,
+                DeadlineDate = request.DeadlineDate,
+                Employee = request.Employee,
+                Factory = request.Factory
+            };
 
-            Task<int> importProductTask = taskImportRepository.AddBatchAsync(productsImport);
+            await importExportTaskRepository.ExecuteTransactionAsync(async () =>
+            {
+                _ = await taskImportRepository.AddBatchAsync(productsImport);
+                _ = await taskExportRepository.AddBatchAsync(productsExport);
+                _ = dashboardRepository.Add(dashboard);
 
-            Task<int> exportProductTask = taskExportRepositor.AddBatchAsync(productsExport);
+                _ = await taskImportRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
+                _ = await taskExportRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
+                _ = await dashboardRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
-            _ = await Task.WhenAll(importProductTask, exportProductTask, dashboardTask);
-
-            _ = await dashboardRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
-
-            _ = await taskImportRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
-
-            _ = await taskExportRepositor.UnitOfWork.SaveChangesAsync(cancellationToken);
+                return result;
+            });
 
             result.Result = true;
-
             return result;
+        }
+
+        private static ImportEntity MapImportEntity(TaskMaterialRequest product, Guid taskId)
+        {
+            return new ImportEntity
+            {
+                ProductName = product.ProductName,
+                Ingredient = product.Ingredient,
+                Characteristic = product.Characteristic,
+                ColorCode = product.ColorCode,
+                FileNumber = product.FileNumber,
+                Volume = product.Volume,
+                Warehouse = product.Warehouse,
+                OrderNumber = product.OrderNumber,
+                Note = product.Note,
+                TaskId = taskId,
+                Structure = product.Structure
+            };
+        }
+
+        private static ExportEntity MapExportEntity(TaskMaterialRequest product, Guid taskId)
+        {
+            return new ExportEntity
+            {
+                ProductName = product.ProductName,
+                Ingredient = product.Ingredient,
+                Characteristic = product.Characteristic,
+                ColorCode = product.ColorCode,
+                FileNumber = product.FileNumber,
+                Volume = product.Volume,
+                Warehouse = product.Warehouse,
+                OrderNumber = product.OrderNumber,
+                Note = product.Note,
+                TaskId = taskId,
+                Structure = product.Structure
+            };
         }
     }
 }

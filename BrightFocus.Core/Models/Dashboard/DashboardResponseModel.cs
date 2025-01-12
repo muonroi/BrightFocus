@@ -12,11 +12,13 @@
 
         public string Volume { get; set; } = string.Empty;
 
-        public DateTime DeadlineDate { get; set; }
+        public string DeadlineDate { get; set; } = string.Empty;
 
         public string Employee { get; set; } = string.Empty;
 
         public string Factory { get; set; } = string.Empty;
         public Guid TaskId { get; set; }
+
+        public IEnumerable<DashboardResponseModel> ExpandTask { get; set; } = [];
     }
 }

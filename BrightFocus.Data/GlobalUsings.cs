@@ -26,3 +26,7 @@ global using BrightFocus.Core.Domain.Dashboards;
 global using BrightFocus.Core.Interfaces.Repository.Dashboard;
 global using BrightFocus.Core.Models.Dashboard;
 global using BrightFocus.Core.Interfaces.Query.Dashboard;
+global using BrightFocus.Core.Models.TaskLists.Response;
+global using BrightFocus.Core.Interfaces.Query.ProductionTask;
+global using BrightFocus.Core.Models.TaskLists.Request.ProductionTask;
+global using BrightFocus.Core.Models.TaskLists.Request.Regulars;

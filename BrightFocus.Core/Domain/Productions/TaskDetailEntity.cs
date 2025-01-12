@@ -13,14 +13,6 @@ public class TaskDetailEntity : MEntity
     public string ProductName { get; set; } = string.Empty;
 
     /// <summary>
-    /// Loại nguyên liệu
-    /// </summary>
-    [MaxLength(100)]
-    [Required]
-    [Column(TypeName = "nvarchar(100)")]
-    public string Material { get; set; } = string.Empty;
-
-    /// <summary>
     /// Cấu trúc
     /// </summary>
     [MaxLength(100)]
@@ -78,9 +70,14 @@ public class TaskDetailEntity : MEntity
     [Column(TypeName = "nvarchar(500)")]
     public string Note { get; set; } = string.Empty;
 
+    [MaxLength(100)]
+    [Column(TypeName = "varchar(100)")]
+    public string Structure { get; set; } = string.Empty;
+
     [Required]
     public Guid TaskId { get; set; }
 
     public int WrapperId { get; set; }
+
 
 }
