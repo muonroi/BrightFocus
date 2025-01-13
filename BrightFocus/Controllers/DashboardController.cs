@@ -25,7 +25,7 @@ public class DashboardController(
     [HttpGet("task-detail", Name = nameof(GetTaskDetail))]
     public async Task<IActionResult> GetTaskDetail([FromQuery] GetTaskDetailCommand command, CancellationToken cancellationToken)
     {
-        MResponse<ProductionTaskResponse> result = await Mediator.Send(command, cancellationToken).ConfigureAwait(false);
+        MResponse<TaskResponse> result = await Mediator.Send(command, cancellationToken).ConfigureAwait(false);
         return result.GetActionResult();
     }
     [HttpGet("task", Name = nameof(GetDashboardTask))]

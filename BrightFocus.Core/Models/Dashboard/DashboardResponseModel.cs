@@ -19,6 +19,8 @@
         public string Factory { get; set; } = string.Empty;
         public Guid TaskId { get; set; }
 
+        public TaskType TaskType { get; set; }
+
         public IEnumerable<DashboardResponseModel> ExpandTask { get; set; } = [];
     }
 }

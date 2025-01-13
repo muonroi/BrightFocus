@@ -41,6 +41,8 @@
 
         public string Factory { get; set; } = string.Empty;
 
+        public TaskType TaskType { get; set; }
+
         public Guid TaskId { get; set; }
     }
 }

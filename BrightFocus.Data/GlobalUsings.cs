@@ -30,3 +30,7 @@ global using BrightFocus.Core.Models.TaskLists.Response;
 global using BrightFocus.Core.Interfaces.Query.ProductionTask;
 global using BrightFocus.Core.Models.TaskLists.Request.ProductionTask;
 global using BrightFocus.Core.Models.TaskLists.Request.Regulars;
+global using Microsoft.Extensions.Logging;
+global using BrightFocus.Core.Interfaces.Query.ImportExportTask;
+global using BrightFocus.Core.Enums;
+global using BrightFocus.Core.Interfaces.Query.OrderTask;

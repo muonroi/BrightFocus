@@ -1,6 +1,8 @@
 ﻿
 
 
+
+
 namespace BrightFocus.Application.Command.TaskCommand.CustomerTask
 {
     public class CustomerTaskCommandHandler(
@@ -10,7 +12,8 @@ namespace BrightFocus.Application.Command.TaskCommand.CustomerTask
         Serilog.ILogger logger,
         IMediator mediator,
         MPaginationConfig paginationConfig,
-        ICustomerTaskRepository customerTaskRepository
+        ICustomerTaskRepository customerTaskRepository,
+        IDashboardRepository dashboardRepository
     ) : BaseCommandHandler(mapper, tokenInfo, authenticateRepository, logger, mediator, paginationConfig),
         IRequestHandler<CustomerTaskCommand, MResponse<bool>>
     {
@@ -28,6 +31,21 @@ namespace BrightFocus.Application.Command.TaskCommand.CustomerTask
             };
             _ = customerTaskRepository.Add(customerTaskEntity);
             _ = await customerTaskRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
+
+            Guid taskId = customerTaskEntity.EntityId;
+
+            DashboardEntity dashboard = new()
+            {
+                TaskId = taskId,
+                TaskName = request.TaskName,
+                DeadlineDate = DateTime.Now,
+                TaskType = TaskType.kh
+            };
+
+            _ = dashboardRepository.Add(dashboard);
+
+            _ = await dashboardRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
+
             return result;
         }
     }

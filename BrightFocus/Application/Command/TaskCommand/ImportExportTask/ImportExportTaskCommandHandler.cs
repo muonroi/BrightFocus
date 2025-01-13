@@ -54,7 +54,8 @@
                 TaskName = request.TaskName,
                 DeadlineDate = request.DeadlineDate,
                 Employee = request.Employee,
-                Factory = request.Factory
+                Factory = request.Factory,
+                TaskType = TaskType.xn
             };
 
             await importExportTaskRepository.ExecuteTransactionAsync(async () =>

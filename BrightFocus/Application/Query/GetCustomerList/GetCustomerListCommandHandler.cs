@@ -9,7 +9,7 @@ namespace BrightFocus.Application.Query.GetCustomerList
         Serilog.ILogger logger,
         IMediator mediator,
         MPaginationConfig paginationConfig,
-        ICustomerQuery customerQuery
+        ITaskCustomerQuery customerQuery
     ) : BaseCommandHandler(mapper, tokenInfo, authenticateRepository, logger, mediator, paginationConfig),
         IRequestHandler<GetCustomerListCommand, MResponse<IEnumerable<CustomerModel>>>
     {

@@ -53,7 +53,7 @@
                 TaskName = request.TaskName,
                 DeadlineDate = request.DeadlineDate,
                 Employee = request.Employee,
-                Factory = request.Factory
+                TaskType = TaskType.dh
             };
 
             await orderTaskRepository.ExecuteTransactionAsync(async () =>

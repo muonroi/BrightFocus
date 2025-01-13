@@ -18,7 +18,9 @@
                     DeadlineDate = x.DeadlineDate.ToString("dd/MM/yyyy"),
                     Employee = x.Employee,
                     Factory = x.Factory,
-                    TaskId = x.TaskId
+                    TaskId = x.TaskId,
+                    TaskType = x.TaskType
+
                 })
                 .ToListAsync();
 

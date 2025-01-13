@@ -2,6 +2,6 @@
 {
     public enum TaskType
     {
-        Green, Yellow, Red
+        sx, xn, dh, kh
     }
 }
