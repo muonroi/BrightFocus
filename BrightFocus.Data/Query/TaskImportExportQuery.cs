@@ -11,7 +11,7 @@ namespace BrightFocus.Data.Query
             ImportExportTaskEntity? taskInfo = await Queryable.FirstOrDefaultAsync(x => x.EntityId == entityId);
             if (taskInfo is null)
             {
-                return null;
+                return new TaskResponse { };
             }
             List<ImportEntity> importEntities = dbContext.ImportEntities.Where(x => x.TaskId == entityId && !x.IsDeleted)?.ToList() ?? [];
 

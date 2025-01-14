@@ -2,6 +2,6 @@
 {
     public enum TaskType
     {
-        sx, xn, dh, kh
+        sx = 1, xn = 2, dh = 3, kh = 4
     }
 }

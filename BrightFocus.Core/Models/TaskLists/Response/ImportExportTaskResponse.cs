@@ -7,7 +7,7 @@
         public string Ingredient { get; set; } = string.Empty;
         public SourceImport Source { get; set; }
         public string Employee { get; set; } = string.Empty;
-        public string Factory { get; set; } = string.Empty;
+        public required string Factory { get; set; }
         public string DeadlineDate { get; set; } = string.Empty;
         public List<TaskMaterialResponse> ProductsImport { get; set; } = [];
         public List<TaskMaterialResponse> ProductsExport { get; set; } = [];
