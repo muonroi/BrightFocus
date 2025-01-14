@@ -64,3 +64,4 @@ global using BrightFocus.Application.Command.TaskCommand.ProductionTask.Profiles
 global using BrightFocus.Core.Interfaces.Query.ImportExportTask;
 global using BrightFocus.Core.Interfaces.Query.OrderTask;
 global using BrightFocus.Data.Repository;
+global using Org.BouncyCastle.Bcpg.OpenPgp;

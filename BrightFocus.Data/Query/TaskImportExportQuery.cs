@@ -41,7 +41,7 @@ namespace BrightFocus.Data.Query
                         Note = x.Note,
                         Structure = x.Structure
                     }).ToList(),
-                    ProductsExport = importEntities.Select(x => new TaskMaterialResponse()
+                    ProductsExport = exportEntities.Select(x => new TaskMaterialResponse()
                     {
                         ProductName = x.ProductName,
                         Volume = x.Volume,
