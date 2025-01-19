@@ -2,10 +2,12 @@
 
 
 
+
 namespace BrightFocus.Data.Query
 {
     public class TaskImportExportQuery(BrightFocusDbContext dbContext, MAuthenticateInfoContext authContext) : MQuery<ImportExportTaskEntity>(dbContext, authContext), ITaskImportExportQuery
     {
+
         public async Task<TaskResponse?> GetImportExportTaskById(Guid entityId)
         {
             ImportExportTaskEntity? taskInfo = await Queryable.FirstOrDefaultAsync(x => x.EntityId == entityId);

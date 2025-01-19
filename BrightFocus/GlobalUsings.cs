@@ -65,3 +65,5 @@ global using BrightFocus.Core.Interfaces.Query.ImportExportTask;
 global using BrightFocus.Core.Interfaces.Query.OrderTask;
 global using BrightFocus.Data.Repository;
 global using Org.BouncyCastle.Bcpg.OpenPgp;
+global using BrightFocus.Core.Validators;
+global using BrightFocus.Application.Query.GetWarehouse;

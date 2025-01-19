@@ -7,16 +7,24 @@
         Serilog.ILogger logger,
         IMediator mediator,
         MPaginationConfig paginationConfig,
-        ITaskProductionQuery taskProductionQuery,
-        ITaskImportExportQuery taskImportExportQuery,
-        ITaskCustomerQuery taskCustomerQuery,
-        ITaskOrderQuery taskOrderQuery
+        ITaskImportQuery taskImportQuery
     ) : BaseCommandHandler(mapper, tokenInfo, authenticateRepository, logger, mediator, paginationConfig),
-        IRequestHandler<GetWarehouseCommand, MResponse<IEnumerable<TaskMaterialResponse>>>
+        IRequestHandler<GetWarehouseCommand, MResponse<MPagedResult<TaskMaterialResponse>>>
     {
-        public Task<MResponse<IEnumerable<TaskMaterialResponse>>> Handle(GetWarehouseCommand request, CancellationToken cancellationToken)
+        public async Task<MResponse<MPagedResult<TaskMaterialResponse>>> Handle(GetWarehouseCommand request, CancellationToken cancellationToken)
         {
-            return default;
+            MResponse<MPagedResult<TaskMaterialResponse>> result = new();
+
+            MPagedResult<TaskMaterialResponse> data = await taskImportQuery.GetWarehouseData(
+                request.ProductName,
+                request.IngredientName,
+                request.StructureName,
+                request.CharacteristicName,
+                PaginationConfig.DefaultPageIndex,
+                PaginationConfig.DefaultPageSize
+            );
+            result.Result = data;
+            return result;
         }
     }
 }

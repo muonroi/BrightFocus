@@ -20,8 +20,6 @@ public class BrightFocusDbContext : MDbContext
     public DbSet<ProductMaterialEntity> ProductMaterialEntities { get; set; }
     public DbSet<TaskDetailEntity> TaskDetailEntities { get; set; }
     public DbSet<TaskProductionEntity> TaskProductionEntities { get; set; }
-    public DbSet<MaterialWarehouseEntity> MaterialWarehouses { get; set; }
-
     public DbSet<ImportExportTaskEntity> ImportExportTaskEntities { get; set; }
 
 

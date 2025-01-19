@@ -23,3 +23,4 @@ global using Muonroi.BuildingBlock.External.Models;
 global using BrightFocus.Core.Domain.Dashboards;
 global using BrightFocus.Core.Models.Dashboard;
 global using BrightFocus.Core.Models.TaskLists.Response;
+global using FluentValidation;
