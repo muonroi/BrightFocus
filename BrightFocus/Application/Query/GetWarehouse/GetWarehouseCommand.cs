@@ -6,7 +6,7 @@ namespace BrightFocus.Application.Query.GetWarehouse
     {
         public int PageIndex { get; set; }
 
-        public DateTime SearchByDate { get; set; }
+        public DateTime? SearchByDate { get; set; }
 
         public string ProductName { get; set; } = string.Empty;
 
@@ -15,5 +15,7 @@ namespace BrightFocus.Application.Query.GetWarehouse
         public string IngredientName { get; set; } = string.Empty;
 
         public string CharacteristicName { get; set; } = string.Empty;
+
+        public bool IsSearchAll { get; set; } = false;
     }
 }

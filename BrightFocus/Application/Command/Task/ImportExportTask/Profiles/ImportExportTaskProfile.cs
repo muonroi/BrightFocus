@@ -1,4 +1,4 @@
-﻿namespace BrightFocus.Application.Command.TaskCommand.ImportExportTask.Profiles
+﻿namespace BrightFocus.Application.Command.Task.ImportExportTask.Profiles
 {
     public class ImportExportTaskProfile : Profile
     {

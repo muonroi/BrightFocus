@@ -1,4 +1,4 @@
-﻿namespace BrightFocus.Application.Command.TaskCommand.OrderTask
+﻿namespace BrightFocus.Application.Command.Task.OrderTask
 {
     public class OrderTaskCommandHandler(
         IMapper mapper,

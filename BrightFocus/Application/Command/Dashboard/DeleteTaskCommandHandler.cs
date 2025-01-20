@@ -1,4 +1,4 @@
-﻿namespace BrightFocus.Application.Command.DashboardCommand
+﻿namespace BrightFocus.Application.Command.Dashboard
 {
     public class DeleteTaskCommandHandler(
         IMapper mapper,

@@ -1,6 +1,4 @@
-﻿
-
-namespace BrightFocus.Application.Command.TaskCommand.ImportExportTask
+﻿namespace BrightFocus.Application.Command.Task.ImportExportTask
 {
     public class ImportExportTaskCommand : IRequest<MResponse<bool>>
     {

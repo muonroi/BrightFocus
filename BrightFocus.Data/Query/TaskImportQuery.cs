@@ -3,7 +3,7 @@
 
 namespace BrightFocus.Data.Query
 {
-    public class TaskImportQuery(MDbContext dbContext, MAuthenticateInfoContext authContext) : MQuery<ImportEntity>(dbContext, authContext), ITaskImportQuery
+    public class TaskImportQuery(BrightFocusDbContext dbContext, MAuthenticateInfoContext authContext) : MQuery<ImportEntity>(dbContext, authContext), ITaskImportQuery
     {
         public async Task<MPagedResult<TaskMaterialResponse>> GetWarehouseData(
             string productName,
@@ -14,6 +14,22 @@ namespace BrightFocus.Data.Query
             int pageSize)
         {
             IQueryable<ImportEntity> query = Queryable.AsQueryable();
+
+            bool noFilterApplied = string.IsNullOrEmpty(productName) &&
+                         string.IsNullOrEmpty(ingredient) &&
+                         string.IsNullOrEmpty(structure) &&
+                         string.IsNullOrEmpty(characteristic);
+
+            if (noFilterApplied)
+            {
+                return new MPagedResult<TaskMaterialResponse>
+                {
+                    CurrentPage = pageIndex,
+                    PageSize = pageSize,
+                    RowCount = 0,
+                    Items = []
+                };
+            }
 
             if (!string.IsNullOrEmpty(productName))
             {
@@ -35,41 +51,26 @@ namespace BrightFocus.Data.Query
                 query = query.Where(x => x.Characteristic.Contains(characteristic));
             }
 
+
+
             IQueryable<TaskMaterialResponse> groupedQuery = query
-                .GroupBy(x => new { x.ProductName, x.Ingredient, x.Structure, x.Characteristic })
-                .Select(group =>
+                .Select(x =>
                 new TaskMaterialResponse
                 {
 
-                    ProductName = group.Key.ProductName,
-                    Ingredient = group.Key.Ingredient,
-                    Structure = group.Key.Structure,
-                    Characteristic = group.Key.Characteristic,
-                    Details = group.Select(x => new TaskMaterialResponse
-                    {
-                        EntityId = x.EntityId,
-                        ProductName = x.ProductName,
-                        Material = x.Material,
-                        Ingredient = x.Ingredient,
-                        Characteristic = x.Characteristic,
-                        ColorCode = x.ColorCode,
-                        FileNumber = x.FileNumber,
-                        Volume = x.Volume,
-                        Warehouse = x.Warehouse,
-                        OrderNumber = x.OrderNumber,
-                        Note = x.Note,
-                        Structure = x.Structure
-                    }).ToList()
-                });
-
-            groupedQuery = groupedQuery.Select(x => new TaskMaterialResponse
-            {
-                ProductName = x.ProductName,
-                Ingredient = x.Ingredient,
-                Structure = x.Structure,
-                Characteristic = x.Characteristic,
-                Details = x.Details != null ? x.Details.Where(detail => detail.EntityId != x.EntityId).Select(detail => detail) : null
-            });
+                    EntityId = x.EntityId,
+                    ProductName = x.ProductName,
+                    Material = x.Material,
+                    Ingredient = x.Ingredient,
+                    Characteristic = x.Characteristic,
+                    ColorCode = x.ColorCode,
+                    FileNumber = x.FileNumber,
+                    Volume = x.Volume,
+                    Warehouse = x.Warehouse,
+                    OrderNumber = x.OrderNumber,
+                    Note = x.Note,
+                    Structure = x.Structure
+                }).Where(x => x.Volume > 0);
 
             MPagedResult<TaskMaterialResponse> pagedResult = await GetListPagingForResponse(groupedQuery, pageIndex, pageSize);
 

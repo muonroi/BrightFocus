@@ -1,6 +1,4 @@
-﻿
-
-namespace BrightFocus.Application.Command.TaskCommand.OrderTask
+﻿namespace BrightFocus.Application.Command.Task.OrderTask
 {
     public class OrderTaskCommandValidator : AbstractValidator<OrderTaskCommand>
     {

@@ -1,4 +1,4 @@
-﻿namespace BrightFocus.Application.Command.TaskCommand.ProductionTask
+﻿namespace BrightFocus.Application.Command.Task.ProductionTask
 {
     public class ProductionTaskCommand : IRequest<MResponse<bool>>
     {

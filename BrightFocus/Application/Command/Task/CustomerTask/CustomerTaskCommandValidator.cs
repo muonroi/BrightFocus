@@ -1,4 +1,4 @@
-﻿namespace BrightFocus.Application.Command.TaskCommand.CustomerTask
+﻿namespace BrightFocus.Application.Command.Task.CustomerTask
 {
     public class CustomerTaskCommandValidator : AbstractValidator<CustomerTaskCommand>
     {

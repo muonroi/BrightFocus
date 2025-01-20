@@ -1,4 +1,4 @@
-﻿namespace BrightFocus.Application.Command.TaskCommand.OrderTask.Profiles
+﻿namespace BrightFocus.Application.Command.Task.OrderTask.Profiles
 {
     public class OrderTaskProfile : Profile
     {

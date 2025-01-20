@@ -1,3 +1,7 @@
+using BrightFocus.Application.Command.Task.ImportExportTask.Profiles;
+using BrightFocus.Application.Command.Task.OrderTask.Profiles;
+using BrightFocus.Application.Command.Task.ProductionTask.Profiles;
+
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 Assembly assembly = Assembly.GetExecutingAssembly();
 ConfigurationManager configuration = builder.Configuration;
