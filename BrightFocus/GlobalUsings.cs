@@ -60,3 +60,4 @@ global using System.Collections.Generic;
 global using System.Reflection;
 global using System.Threading;
 global using BrightFocus.Application.Command.UpdateWarehouse;
+global using BrightFocus.Application.Query.GetWarehousePaging;

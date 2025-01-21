@@ -14,7 +14,7 @@
         public async Task<MResponse<MPagedResult<DashboardResponseModel>>> Handle(GetDashboardTaskCommand request, CancellationToken cancellationToken)
         {
             MResponse<MPagedResult<DashboardResponseModel>> result = new();
-            MPagedResult<DashboardResponseModel> dashboards = await dashboardQuery.GetDashboardData(PaginationConfig.DefaultPageIndex, PaginationConfig.DefaultPageSize);
+            MPagedResult<DashboardResponseModel> dashboards = await dashboardQuery.GetDashboardData(request.PageIndex, PaginationConfig.DefaultPageSize);
             result.Result = dashboards;
             return result;
         }

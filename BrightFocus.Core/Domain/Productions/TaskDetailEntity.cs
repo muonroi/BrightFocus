@@ -49,11 +49,10 @@ public class TaskDetailEntity : MEntity
     public double Volume { get; set; }
 
     /// <summary>
-    /// Vị trí kho lưu trữ
+    /// Đơn giá sản phẩm
     /// </summary>
-    [MaxLength(255)]
-    [Column(TypeName = "varchar(255)")]
-    public string Warehouse { get; set; } = string.Empty;
+    [Required]
+    public double Price { get; set; }
 
     /// <summary>
     /// Mã đơn hàng

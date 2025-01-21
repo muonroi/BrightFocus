@@ -12,11 +12,11 @@ namespace BrightFocus.Data.Query
             {
                 return null;
             }
-            List<TaskDetailEntity> taskDetail = dbContext.TaskDetailEntities.Where(x => x.TaskId == entityId && !x.IsDeleted)?.ToList() ?? [];
+            List<TaskDetailEntity> taskDetail = await dbContext.TaskDetailEntities.Where(x => x.TaskId == entityId && !x.IsDeleted).ToListAsync();
 
-            List<ProductMaterialEntity> taskProductMaterial = dbContext.ProductMaterialEntities.Where(x => x.TaskId == entityId && !x.IsDeleted)?.ToList() ?? [];
+            List<ProductMaterialEntity> taskProductMaterial = await dbContext.ProductMaterialEntities.Where(x => x.TaskId == entityId && !x.IsDeleted).ToListAsync();
 
-            List<ProductProcessEntity> taskProcess = dbContext.ProcessProductEntities.Where(x => x.TaskId == entityId && !x.IsDeleted)?.ToList() ?? [];
+            List<ProductProcessEntity> taskProcess = await dbContext.ProcessProductEntities.Where(x => x.TaskId == entityId && !x.IsDeleted).ToListAsync();
 
             TaskResponse result = new()
             {
@@ -37,7 +37,7 @@ namespace BrightFocus.Data.Query
                             Characteristic = x.Characteristic,
                             ColorCode = x.ColorCode,
                             FileNumber = x.FileNumber,
-                            Warehouse = x.Warehouse,
+                            Price = x.Price,
                             OrderNumber = x.OrderNumber,
                             Note = x.Note,
                             WrapperId = x.WrapperId,
@@ -51,7 +51,7 @@ namespace BrightFocus.Data.Query
                             Characteristic = x.Characteristic,
                             ColorCode = x.ColorCode,
                             FileNumber = x.FileNumber,
-                            Warehouse = x.Warehouse,
+                            Factory = x.Factory,
                             OrderNumber = x.OrderNumber,
                             Note = x.Note,
                             WrapperId = x.WrapperId,
@@ -72,7 +72,7 @@ namespace BrightFocus.Data.Query
                         }).ToList(),
                     }
                 }
-                
+
             };
             return result;
         }

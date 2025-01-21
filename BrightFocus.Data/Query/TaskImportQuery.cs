@@ -5,7 +5,7 @@ namespace BrightFocus.Data.Query
 {
     public class TaskImportQuery(BrightFocusDbContext dbContext, MAuthenticateInfoContext authContext) : MQuery<ImportEntity>(dbContext, authContext), ITaskImportQuery
     {
-        public async Task<MPagedResult<TaskMaterialResponse>> GetWarehouseData(
+        public async Task<MPagedResult<TaskMaterialResponse>> GetWarehouseDataUsesAsync(
             string productName,
             string ingredient,
             string structure,
@@ -57,7 +57,6 @@ namespace BrightFocus.Data.Query
                 .Select(x =>
                 new TaskMaterialResponse
                 {
-
                     EntityId = x.EntityId,
                     ProductName = x.ProductName,
                     Material = x.Material,
@@ -66,7 +65,7 @@ namespace BrightFocus.Data.Query
                     ColorCode = x.ColorCode,
                     FileNumber = x.FileNumber,
                     Volume = x.Volume,
-                    Warehouse = x.Warehouse,
+                    Price = x.Price,
                     OrderNumber = x.OrderNumber,
                     Note = x.Note,
                     Structure = x.Structure
@@ -101,6 +100,63 @@ namespace BrightFocus.Data.Query
                 PageSize = pageSize,
                 RowCount = totalItems,
                 Items = items
+            };
+        }
+
+        public async Task<MPagedResult<TaskMaterialResponse>> GetWarehouseDataPagingAsync(int pageIndex, int pageSize)
+        {
+            IQueryable<ImportEntity> query = Queryable.AsQueryable();
+
+            List<TaskMaterialResponse> rawData = await query
+               .Select(x => new TaskMaterialResponse
+               {
+                   EntityId = x.EntityId,
+                   ProductName = x.ProductName,
+                   Material = x.Material,
+                   Ingredient = x.Ingredient,
+                   Characteristic = x.Characteristic,
+                   ColorCode = x.ColorCode,
+                   FileNumber = x.FileNumber,
+                   Volume = x.Volume,
+                   Price = x.Price,
+                   OrderNumber = x.OrderNumber,
+                   Note = x.Note,
+                   Structure = x.Structure,
+                   Factory = x.Factory,
+                   CreatedDate = x.CreationTime.ToString("dd/MM/yyyy"),
+                   TotalAmount = x.Price * x.Volume
+               })
+               .ToListAsync();
+
+
+            List<TaskMaterialResponse> groupedWarehouseData = rawData
+               .GroupBy(x => new { x.ProductName, x.Ingredient, x.Characteristic, x.Factory })
+               .Select(group =>
+               {
+                   List<TaskMaterialResponse> warehouseList = [.. group];
+                   TaskMaterialResponse parentData = warehouseList[0];
+
+                   parentData.Details = warehouseList
+                       .Where(x => x.EntityId != parentData.EntityId)
+                       .ToList();
+
+                   return parentData;
+               })
+               .ToList();
+
+            int totalRowCount = groupedWarehouseData.Count;
+
+            List<TaskMaterialResponse> pagedItems = groupedWarehouseData
+                .Skip((pageIndex - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            return new MPagedResult<TaskMaterialResponse>
+            {
+                Items = pagedItems,
+                CurrentPage = pageIndex,
+                PageSize = pageSize,
+                RowCount = totalRowCount
             };
         }
     }

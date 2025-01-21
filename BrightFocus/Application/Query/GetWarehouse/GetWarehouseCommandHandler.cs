@@ -15,12 +15,14 @@
         {
             MResponse<MPagedResult<TaskMaterialResponse>> result = new();
 
-            MPagedResult<TaskMaterialResponse> data = await taskImportQuery.GetWarehouseData(
+            MPagedResult<TaskMaterialResponse> data =
+
+                await taskImportQuery.GetWarehouseDataUsesAsync(
                 request.ProductName,
                 request.IngredientName,
                 request.StructureName,
                 request.CharacteristicName,
-                PaginationConfig.DefaultPageIndex,
+                request.PageIndex,
                 PaginationConfig.DefaultPageSize
             );
             result.Result = data;

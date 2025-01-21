@@ -1,4 +1,6 @@
-﻿namespace BrightFocus.Core.Validators
+﻿
+
+namespace BrightFocus.Core.Validators
 {
     public class TaskMaterialRequestValidator : AbstractValidator<TaskMaterialRequest>
     {
@@ -22,7 +24,7 @@
             _ = RuleFor(x => x.Volume)
                 .GreaterThan(0).WithMessage("Khối lượng phải lớn hơn 0.");
 
-            _ = RuleFor(x => x.Warehouse)
+            _ = RuleFor(x => x.Factory)
                 .NotEmpty().WithMessage("Kho không được để trống.");
 
             _ = RuleFor(x => x.OrderNumber)

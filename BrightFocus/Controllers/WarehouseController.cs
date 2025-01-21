@@ -2,6 +2,9 @@
 
 
 
+
+
+
 namespace BrightFocus.Controllers
 {
     [AllowAnonymous]
@@ -12,6 +15,13 @@ namespace BrightFocus.Controllers
     {
         [HttpGet("list-warehouse", Name = nameof(GetWarehouse))]
         public async Task<IActionResult> GetWarehouse([FromQuery] GetWarehouseCommand command, CancellationToken cancellationToken)
+        {
+            MResponse<MPagedResult<TaskMaterialResponse>> result = await Mediator.Send(command, cancellationToken).ConfigureAwait(false);
+            return result.GetActionResult();
+        }
+
+        [HttpGet("list-warehouse-paging", Name = nameof(GetWarehousePaging))]
+        public async Task<IActionResult> GetWarehousePaging([FromQuery] GetWarehousePagingCommand command, CancellationToken cancellationToken)
         {
             MResponse<MPagedResult<TaskMaterialResponse>> result = await Mediator.Send(command, cancellationToken).ConfigureAwait(false);
             return result.GetActionResult();

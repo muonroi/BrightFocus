@@ -59,9 +59,15 @@
         /// <summary>
         /// Vị trí kho lưu trữ
         /// </summary>
+        [Required]
+        public double Price { get; set; }
+
+        /// <summary>
+        /// Vị trí kho lưu trữ
+        /// </summary>
         [MaxLength(255)]
         [Column(TypeName = "varchar(255)")]
-        public string Warehouse { get; set; } = string.Empty;
+        public string Factory { get; set; } = string.Empty;
 
         /// <summary>
         /// Mã đơn hàng

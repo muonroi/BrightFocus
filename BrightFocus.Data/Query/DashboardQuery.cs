@@ -29,7 +29,7 @@
                 .Select(group =>
                 {
                     List<DashboardResponseModel> taskList = [.. group];
-                    DashboardResponseModel parentTask = taskList.First();
+                    DashboardResponseModel parentTask = taskList[0];
 
                     parentTask.ExpandTask = taskList
                         .Where(x => x.TaskId != parentTask.TaskId)

@@ -61,7 +61,7 @@
         /// </summary>
         [MaxLength(255)]
         [Column(TypeName = "varchar(255)")]
-        public string Warehouse { get; set; } = string.Empty;
+        public string Factory { get; set; } = string.Empty;
 
         /// <summary>
         /// Mã đơn hàng

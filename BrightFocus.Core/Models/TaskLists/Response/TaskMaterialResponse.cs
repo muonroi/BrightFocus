@@ -17,13 +17,19 @@
 
         public double Volume { get; set; }
 
-        public string Warehouse { get; set; } = string.Empty;
+        public double Price { get; set; }
+
+        public double TotalAmount { get; set; }
+
+        public string Factory { get; set; } = string.Empty;
 
         public string OrderNumber { get; set; } = string.Empty;
 
         public string Note { get; set; } = string.Empty;
         public string Structure { get; set; } = string.Empty;
         public int WrapperId { get; set; }
+
+        public string CreatedDate { get; set; } = string.Empty;
 
         public IEnumerable<TaskMaterialResponse>? Details { get; set; }
     }

@@ -4,6 +4,7 @@ using BrightFocus.Data.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BrightFocus.Data.Persistence.Migrations
 {
     [DbContext(typeof(BrightFocusDbContext))]
-    partial class BrightFocusDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250121075723_Add Price Colume and change warehouse to factory")]
+    partial class AddPriceColumeandchangewarehousetofactory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -377,37 +380,31 @@ namespace BrightFocus.Data.Persistence.Migrations
 
                     b.Property<double>("CreatedDateTS")
                         .HasColumnType("double")
-                        .HasColumnOrder(25);
+                        .HasColumnOrder(24);
 
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime(6)")
-                        .HasColumnOrder(29);
+                        .HasColumnOrder(28);
 
                     b.Property<Guid>("CreatorUserId")
                         .HasColumnType("char(36)")
-                        .HasColumnOrder(30);
+                        .HasColumnOrder(29);
 
                     b.Property<double?>("DeletedDateTS")
                         .HasColumnType("double")
-                        .HasColumnOrder(27);
+                        .HasColumnOrder(26);
 
                     b.Property<Guid?>("DeletedUserId")
                         .HasColumnType("char(36)")
-                        .HasColumnOrder(34);
+                        .HasColumnOrder(33);
 
                     b.Property<DateTime?>("DeletionTime")
                         .HasColumnType("datetime(6)")
-                        .HasColumnOrder(33);
+                        .HasColumnOrder(32);
 
                     b.Property<Guid>("EntityId")
                         .HasColumnType("char(36)")
                         .HasColumnOrder(1);
-
-                    b.Property<string>("Factory")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)")
-                        .HasColumnOrder(10);
 
                     b.Property<string>("FileNumber")
                         .IsRequired()
@@ -423,19 +420,19 @@ namespace BrightFocus.Data.Persistence.Migrations
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("tinyint(1)")
-                        .HasColumnOrder(28);
+                        .HasColumnOrder(27);
 
                     b.Property<DateTime?>("LastModificationTime")
                         .HasColumnType("datetime(6)")
-                        .HasColumnOrder(31);
+                        .HasColumnOrder(30);
 
                     b.Property<double?>("LastModificationTimeTs")
                         .HasColumnType("double")
-                        .HasColumnOrder(26);
+                        .HasColumnOrder(25);
 
                     b.Property<Guid?>("LastModificationUserId")
                         .HasColumnType("char(36)")
-                        .HasColumnOrder(32);
+                        .HasColumnOrder(31);
 
                     b.Property<string>("Material")
                         .IsRequired()
@@ -447,13 +444,13 @@ namespace BrightFocus.Data.Persistence.Migrations
                         .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)")
-                        .HasColumnOrder(12);
+                        .HasColumnOrder(11);
 
                     b.Property<string>("OrderNumber")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)")
-                        .HasColumnOrder(11);
+                        .HasColumnOrder(10);
 
                     b.Property<double>("Price")
                         .HasColumnType("double")
@@ -469,11 +466,11 @@ namespace BrightFocus.Data.Persistence.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)")
-                        .HasColumnOrder(13);
+                        .HasColumnOrder(12);
 
                     b.Property<Guid>("TaskId")
                         .HasColumnType("char(36)")
-                        .HasColumnOrder(14);
+                        .HasColumnOrder(13);
 
                     b.Property<double>("Volume")
                         .HasColumnType("double")

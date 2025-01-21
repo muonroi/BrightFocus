@@ -1,13 +1,13 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿
+
+
 
 #nullable disable
 
 namespace BrightFocus.Data.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class addtasktype : Migration
+    public partial class AddTaskType : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

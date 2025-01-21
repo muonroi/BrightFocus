@@ -33,7 +33,7 @@ namespace BrightFocus.Data.Query
                         Characteristic = x.Characteristic,
                         ColorCode = x.ColorCode,
                         FileNumber = x.FileNumber,
-                        Warehouse = x.Warehouse,
+                        Price = x.Price,
                         OrderNumber = x.OrderNumber,
                         Note = x.Note,
                         Structure = x.Structure
@@ -46,7 +46,7 @@ namespace BrightFocus.Data.Query
                         Characteristic = x.Characteristic,
                         ColorCode = x.ColorCode,
                         FileNumber = x.FileNumber,
-                        Warehouse = x.Warehouse,
+                        Factory = x.Factory,
                         OrderNumber = x.OrderNumber,
                         Note = x.Note,
                         Structure = x.Structure

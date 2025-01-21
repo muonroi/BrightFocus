@@ -13,7 +13,7 @@ namespace BrightFocus.Data.Persistence.Migrations
 {
     [DbContext(typeof(BrightFocusDbContext))]
     [Migration("20250113171333_add task type")]
-    partial class addtasktype
+    partial class AddTaskType
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

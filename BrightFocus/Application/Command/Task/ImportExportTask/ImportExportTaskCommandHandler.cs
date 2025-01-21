@@ -38,6 +38,7 @@
 
             foreach (TaskMaterialRequest productImport in request.ProductsImport)
             {
+                productImport.Factory = request.Factory;
                 ImportEntity importEntity = MapImportEntity(productImport, taskId);
                 productsImport.Add(importEntity);
             }
@@ -85,10 +86,11 @@
                 ColorCode = product.ColorCode,
                 FileNumber = product.FileNumber,
                 Volume = product.Volume,
-                Warehouse = product.Warehouse,
+                Price = product.Price,
                 OrderNumber = product.OrderNumber,
                 Note = product.Note,
                 TaskId = taskId,
+                Factory = product.Factory,
                 Structure = product.Structure
             };
         }
@@ -103,7 +105,7 @@
                 ColorCode = product.ColorCode,
                 FileNumber = product.FileNumber,
                 Volume = product.Volume,
-                Warehouse = product.Warehouse,
+                Factory = product.Factory,
                 OrderNumber = product.OrderNumber,
                 Note = product.Note,
                 TaskId = taskId,
