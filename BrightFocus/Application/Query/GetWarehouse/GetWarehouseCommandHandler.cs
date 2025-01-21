@@ -15,9 +15,7 @@
         {
             MResponse<MPagedResult<TaskMaterialResponse>> result = new();
 
-            MPagedResult<TaskMaterialResponse> data =
-
-                await taskImportQuery.GetWarehouseDataUsesAsync(
+            MPagedResult<TaskMaterialResponse> data = await taskImportQuery.GetWarehouseDataUsesAsync(
                 request.ProductName,
                 request.IngredientName,
                 request.StructureName,

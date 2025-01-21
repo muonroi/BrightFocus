@@ -15,7 +15,5 @@ namespace BrightFocus.Application.Query.GetWarehouse
         public string IngredientName { get; set; } = string.Empty;
 
         public string CharacteristicName { get; set; } = string.Empty;
-
-        public bool IsSearchAll { get; set; } = false;
     }
 }
