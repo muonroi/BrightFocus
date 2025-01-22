@@ -10,9 +10,5 @@
         public string StepSix { get; set; } = string.Empty;
         public string StepSeven { get; set; } = string.Empty;
         public string StepEight { get; set; } = string.Empty;
-
-        public Guid TaskId { get; set; }
-
-        public int WrapperId { get; set; }
     }
 }

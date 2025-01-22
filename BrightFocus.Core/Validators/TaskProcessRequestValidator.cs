@@ -27,9 +27,6 @@
 
             _ = RuleFor(x => x.StepEight)
                 .NotEmpty().WithMessage("Bước 8 không được để trống.");
-
-            _ = RuleFor(x => x.TaskId)
-                .NotEmpty().WithMessage("Mã công việc không được để trống.");
         }
     }
 }

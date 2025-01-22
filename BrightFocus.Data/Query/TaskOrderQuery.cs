@@ -4,6 +4,7 @@ namespace BrightFocus.Data.Query
 {
     public class TaskOrderQuery(BrightFocusDbContext dbContext, MAuthenticateInfoContext authContext) : MQuery<TaskOrderEntity>(dbContext, authContext), ITaskOrderQuery
     {
+
         public async Task<TaskResponse?> GetOrderTaskById(Guid entityId)
         {
             TaskOrderEntity? taskInfo = await Queryable.FirstOrDefaultAsync(x => x.EntityId == entityId);
@@ -11,9 +12,9 @@ namespace BrightFocus.Data.Query
             {
                 return null;
             }
-            List<OrderEntity> orderEntities = dbContext.OrderEntities.Where(x => x.TaskId == entityId && !x.IsDeleted)?.ToList() ?? [];
+            List<OrderEntity> orderEntities = await dbContext.OrderEntities.Where(x => x.TaskId == entityId && !x.IsDeleted).ToListAsync();
 
-            List<OrderExportEntity> exportOrderEntities = dbContext.ExportOrderEntities.Where(x => x.TaskId == entityId && !x.IsDeleted)?.ToList() ?? [];
+            List<OrderExportEntity> exportOrderEntities = await dbContext.ExportOrderEntities.Where(x => x.TaskId == entityId && !x.IsDeleted).ToListAsync();
 
             TaskResponse result = new()
             {

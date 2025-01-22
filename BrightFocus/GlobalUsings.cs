@@ -61,3 +61,8 @@ global using System.Reflection;
 global using System.Threading;
 global using BrightFocus.Application.Command.UpdateWarehouse;
 global using BrightFocus.Application.Query.GetWarehousePaging;
+global using BrightFocus.Application.Command.Task.ProductionTask;
+global using BrightFocus.Application.Command.Task.OrderTask;
+global using BrightFocus.Application.Command.Dashboard;
+global using BrightFocus.Application.Command.Task.ImportExportTask;
+global using BrightFocus.Application.Query.GetOrderByCode;

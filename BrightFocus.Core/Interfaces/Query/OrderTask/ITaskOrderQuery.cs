@@ -4,5 +4,6 @@
         : IMQueries<TaskOrderEntity>
     {
         Task<TaskResponse?> GetOrderTaskById(Guid entityId);
+
     }
 }
