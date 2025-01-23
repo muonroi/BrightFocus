@@ -12,7 +12,7 @@
         [MaxLength(255)]
         [Required]
         [Column(TypeName = "nvarchar")]
-        public string Ingredient { get; set; } = string.Empty;
+        public string Material { get; set; } = string.Empty;
 
         [MaxLength(255)]
         [Required]

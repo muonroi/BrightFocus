@@ -7,7 +7,7 @@
             _ = RuleFor(x => x.TaskName)
                 .NotEmpty().WithMessage("Tên công việc không được để trống.");
 
-            _ = RuleFor(x => x.Ingredient)
+            _ = RuleFor(x => x.Material)
                 .NotEmpty().WithMessage("Nguyên liệu không được để trống.");
 
             _ = RuleFor(x => x.Source)
@@ -26,7 +26,8 @@
                 .SetValidator(new TaskMaterialRequestValidator());
 
             _ = RuleForEach(x => x.ProductsExport)
-                .SetValidator(new TaskMaterialRequestValidator());
+                           .SetValidator(new TaskMaterialRequestValidator())
+                           .When(x => x.ProductsExport != null && x.ProductsExport.Exists(e => e != null), ApplyConditionTo.CurrentValidator);
         }
     }
 }

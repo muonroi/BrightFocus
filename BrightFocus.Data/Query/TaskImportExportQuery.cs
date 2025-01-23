@@ -26,7 +26,7 @@ namespace BrightFocus.Data.Query
                     EntityId = entityId,
                     TaskName = taskInfo.TaskName,
                     Employee = taskInfo.EmployeeName,
-                    Ingredient = taskInfo.Ingredient,
+                    Ingredient = taskInfo.Material,
                     Source = sourceValue,
                     Factory = taskInfo.FactoryName,
                     DeadlineDate = taskInfo.DeadlineDate.ToString(format: "dd/MM/yyyy"),

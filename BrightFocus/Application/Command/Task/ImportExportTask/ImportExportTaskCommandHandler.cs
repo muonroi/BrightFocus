@@ -24,7 +24,7 @@
             ImportExportTaskEntity taskProductEntity = new()
             {
                 TaskName = request.TaskName,
-                Ingredient = request.Ingredient,
+                Material = request.Material,
                 Source = request.Source.ToString(),
                 EmployeeName = request.Employee,
                 FactoryName = request.Factory,
@@ -43,7 +43,7 @@
                 productsImport.Add(importEntity);
             }
 
-            foreach (TaskMaterialRequest productExport in request.ProductsExport)
+            foreach (TaskMaterialRequest productExport in request.ProductsExport ?? [])
             {
                 ExportEntity exportEntity = MapExportEntity(productExport, taskId);
                 productsExport.Add(exportEntity);
